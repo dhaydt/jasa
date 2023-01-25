@@ -527,7 +527,7 @@ code {
 }
 
 .gradient-footer {
-    background: linear-gradient(135deg, #fefaf4 0%, #e3dbee 100%);
+    background: linear-gradient(135deg, #b12bb1 0%, #e3dbee 100%);
 }
 
 .bg-image {
@@ -5020,7 +5020,8 @@ ul {
 
 .widget .footer-inner .footer-para {
     font-size: 16px;
-    color: var(--light-color);
+    /* color: var(--light-color); */
+    color: #fff;
     line-height: 28px;
 }
 

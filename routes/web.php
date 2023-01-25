@@ -2,10 +2,25 @@
 
 use App\Http\Controllers\PageBuilderController;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
 // frontend starts
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    dd('Storage linked!');
+});
+Route::get('/config-cache', function () {
+    Artisan::call('config:cache');
+    dd('config cleared!');
+});
+Route::get('/migrate', function () {
+    Artisan::call('migrate', [
+        '--force' => true,
+     ]);
+    dd('migrated!');
+});
 Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], function () {
 
     Route::get('/check', [PageBuilderController::class, 'store_new_addon_content'])->name('builder');
