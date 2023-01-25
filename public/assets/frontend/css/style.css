@@ -527,7 +527,7 @@ code {
 }
 
 .gradient-footer {
-    background: linear-gradient(135deg, #b12bb1 0%, #e3dbee 100%);
+    background: #b12bb1;
 }
 
 .bg-image {
@@ -4997,7 +4997,7 @@ ul {
 }
 
 .color-two .widget .footer-inner .footer-socials .footer-social-list .lists a {
-    color: var(--light-color);
+    color: #fff;
 }
 
 .color-two .widget .footer-inner .footer-socials .footer-social-list .lists a:hover {
@@ -5011,7 +5011,7 @@ ul {
     text-transform: capitalize;
     position: relative;
     font-family: var(--heading-font);
-    color: var(--heading-color);
+    color: #fff;
 }
 
 .widget .footer-inner {
@@ -5054,7 +5054,7 @@ ul {
 .widget .footer-inner .footer-link-list .list a {
     font-size: 16px;
     font-weight: 400;
-    color: var(--heading-color);
+    color: #fff;
     position: relative;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
@@ -5076,7 +5076,7 @@ ul {
     font-size: 16px;
     line-height: 26px;
     display: block;
-    color: var(--light-color);
+    color: #fff;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
