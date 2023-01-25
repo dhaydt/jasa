@@ -77,10 +77,12 @@ class CommunityWidget extends WidgetBase
 
         $community_markup.= <<<SOCIALICON
         <li class="lists">
-            <li class="list"><a href="{$seller_link}">Menjadi vendor</a></li>
+            <li class="list"><a href="javascript:">Menjadi vendor</a></li>
+            <!-- <li class="list"><a href="{$seller_link}">Menjadi vendor</a></li> -->
         </li>
         <li class="lists">
-            <li class="list"><a href="{$buyer_link}">Menjadi Pembeli</a></li>
+            <li class="list"><a href="javascript:">Menjadi Pembeli</a></li>
+            <!-- <li class="list"><a href="{$buyer_link}">Menjadi Pembeli</a></li> -->
         </li>
 
 SOCIALICON;
