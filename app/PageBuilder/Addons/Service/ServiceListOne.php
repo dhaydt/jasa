@@ -132,7 +132,7 @@ class ServiceListOne extends PageBuilderBase
         $category_text = $settings['category'] ??  __('Pilih Kategori Layanan');
         $subcategory_text = $settings['subcategory'] ??  __('Select Subcategory');
         $child_category_text = $settings['child_category'] ??  __('Select Child Category');
-        $book_now_text = $settings['book_now'] ??  __('Book Now');
+        $book_now_text = $settings['book_now'] ??  __('Booking');
         $read_more_text = $settings['read_more'] ??  __('View Details');
         
         $service_quyery = Service::query();
@@ -267,7 +267,7 @@ foreach ($all_services as $service)
             <span class="reviews">'.ratting_star($rating). '('.$total_count.')'. '</span>
         </a>';
     }
-  $starting = __('Starting at');
+  $starting = __('Harga mulai');
         $service_markup.= <<<SERVICES
         <div class="{$columns} col-md-6 margin-top-30">
         <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
@@ -281,7 +281,12 @@ foreach ($all_services as $service)
             </a>
     
             <div class="services-contents">
-                <ul class="author-tag">
+            <h5 class="common-title"> <a href="{$route}"> {$title} </a> </h5>
+            <div class="service-price flex-column align-items-start">
+                <span class="starting"> {$starting} </span>
+                <span class="prices">{$price}</span>
+            </div>
+                <ul class="author-tag flex-column align-items-start">
                     <li class="tag-list">
                         <a href="{$seller_profile}">
                             <div class="authors">
@@ -296,22 +301,12 @@ foreach ($all_services as $service)
                     <li class="tag-list">
                         {$rating_and_review}
                     </li>
-                </ul>
+                </ul>              
     
-                <h5 class="common-title"> <a href="{$route}"> {$title} </a> </h5>
-    
-    
-                <p class="common-para">{$description}</p>
-    
-                <div class="service-price">
-                    <span class="starting"> {$starting} </span>
-                    
-                    <span class="prices">{$price}</span>
-    
-                </div>
-                <div class="btn-wrapper d-flex flex-wrap">
-                    <a href="{$book_now}" class="cmn-btn btn-small btn-bg-1"> {$book_now_text} </a>
-                    <a href="{$route}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {$read_more_text} </a>
+                <!-- <p class="common-para">{$description}</p> -->
+                    <div class="btn-wrapper d-flex flex-wrap">
+                    <a href="{$book_now}" class="cmn-btn btn-small btn-bg-1 w-100"> {$book_now_text} </a>
+                    <!-- <a href="{$route}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {$read_more_text} </a> -->
                 </div>
             </div>
         </div>
