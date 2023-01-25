@@ -2044,3 +2044,15 @@
 [stacktrace]
 #0 {main}
 "} 
+[2023-01-25 04:16:58] production.ERROR: Trait "Spatie\Translatable\HasTranslations" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Spatie\\Translatable\\HasTranslations\" not found at D:\\CODE\\jasa\\app\\GalleryCategory.php:9)
+[stacktrace]
+#0 {main}
+"} 
+[2023-01-25 04:17:58] production.ERROR: Trait "Spatie\Translatable\HasTranslations" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Spatie\\Translatable\\HasTranslations\" not found at D:\\CODE\\jasa\\app\\GalleryCategory.php:9)
+[stacktrace]
+#0 {main}
+"} 
+[2023-01-25 04:18:58] production.ERROR: Trait "Spatie\Translatable\HasTranslations" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Spatie\\Translatable\\HasTranslations\" not found at D:\\CODE\\jasa\\app\\GalleryCategory.php:9)
+[stacktrace]
+#0 {main}
+"} 
