@@ -30,7 +30,7 @@
     <div class="login-account" style="padding: 0 28px;">
         <a class="accounts text-light" href="javascript:void(0)"> <span class="account">{{ __('Account') }}</span> <i class="las la-user"></i> </a>
         <ul class="account-list-item mt-2">
-            <li class="list text-light"> <a href="{{ route('user.register') }}"> {{ __('Sign Up') }} </a> </li>
+            {{-- <li class="list text-light"> <a href="{{ route('user.register') }}"> {{ __('Sign Up') }} </a> </li> --}}
             <li class="list text-light"> <a href="{{ route('user.login') }}">{{ __('Sign In') }} </a> </li>
         </ul>
     </div>
