@@ -5,6 +5,13 @@
 
     RewriteEngine On
 
+    RewriteCond %{REQUEST_URI} !^public
+
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -18,4 +25,14 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # cors
+    Header set Access-Control-Allow-Origin "*"
 </IfModule>
+
+
+# Hide a specific file
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
