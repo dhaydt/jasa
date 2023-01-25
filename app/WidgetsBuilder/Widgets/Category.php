@@ -62,6 +62,7 @@ class Category extends WidgetBase
     {
         $settings = $this->get_settings();
         $title_text = purify_html($settings['title'] ?? '');
+        $title_text = "Kategori";
         $order_by = purify_html($settings['order_by'] ?? 'id');
         $IDorDate = purify_html($settings['order'] ?? 'asc');
         $items = purify_html($settings['items'] ?? '');

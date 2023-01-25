@@ -58,7 +58,8 @@ class CommunityWidget extends WidgetBase
     public function frontend_render()
     {
         $settings = $this->get_settings();
-        $title = purify_html($settings['title'] ?? '');
+        // $title = purify_html($settings['title'] ?? '');
+        $title = "Komunitas";
         $seller_title = purify_html($settings['seller_title'] ?? '');
         $seller_link = purify_html($settings['seller_link'] ?? '');
         $buyer_title = purify_html($settings['buyer_title'] ?? '');

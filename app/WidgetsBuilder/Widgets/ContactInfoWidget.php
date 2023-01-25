@@ -84,7 +84,8 @@ class ContactInfoWidget extends WidgetBase
     public function frontend_render()
     {
         $settings = $this->get_settings();
-        $title = purify_html($settings['title']);
+        // $title = purify_html($settings['title']);
+        $title = "Informasi Kontak";
         $address = purify_html($settings['address']);
         $address_icon = purify_html($settings['address_icon']);
         $phone = purify_html($settings['phone']);
@@ -112,9 +113,9 @@ SOCIALICON;
             <h6 class="widget-title">{$title}</h6>
             <div class="footer-inner">
                 <ul class="footer-link-address">
-                    <li class="list"><span class="address"> <i class="{$address_icon}"></i> {$address}</span></li>
-                    <li class="list"> <span class="address"> <i class="{$phone_icon}"></i> {$phone}</span></li>
-                    <li class="list"> <span class="address"> <i class="{$email_icon}"></i> {$email}</span></li>
+                    <li class="list"><span class="address"> <i class="{$address_icon}"></i> Jakarta, Indonesia</span></li>
+                    <li class="list"> <span class="address"> <i class="{$phone_icon}"></i> 021-12345678</span></li>
+                    <li class="list"> <span class="address"> <i class="{$email_icon}"></i> jasakita@mail.com</span></li>
                 </ul>
                 <div class="footer-socials">
                     <ul class="footer-social-list">
