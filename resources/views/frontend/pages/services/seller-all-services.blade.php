@@ -101,7 +101,13 @@
                                     </div>
                                 </a>
                                 <div class="services-contents">
-                                    <ul class="author-tag">
+                                    <h5 class="common-title"> <a href="{{ route('service.list.details',$service->slug) }}"> {{ $service->title }} </a> </h5>
+                                    <div class="service-price flex-column align-items-start">
+                                        <span class="starting"> {{ __('Starting at') }} </span>
+                                        <span class="prices"> {{ amount_with_currency_symbol($service->price) }} </span>
+                                    </div>
+
+                                    <ul class="author-tag flex-column align-items-start">
                                         <li class="tag-list">
                                             <a href="{{ route('about.seller.profile',optional($service->seller)->username) }}">
                                                 <div class="authors">
@@ -125,16 +131,12 @@
                                         </li>
                                         @endif
                                     </ul>
-                                    <h5 class="common-title"> <a href="{{ route('service.list.details',$service->slug) }}"> {{ $service->title }} </a> </h5>
-                                    <p class="common-para"> {{ Str::limit(strip_tags($service->description,100)) }} </p>
+                                    
+                                    {{-- <p class="common-para"> {{ Str::limit(strip_tags($service->description,100)) }} </p> --}}
 
-                                    <div class="service-price">
-                                        <span class="starting"> {{ __('Starting at') }} </span>
-                                        <span class="prices"> {{ amount_with_currency_symbol($service->price) }} </span>
-                                    </div>
                                     <div class="btn-wrapper d-flex flex-wrap">
-                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1"> {{ __('Book Now') }} </a>
-                                        <a href="{{ route('service.list.details',$service->slug) }}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {{ __('View Details') }} </a>
+                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Booking') }} </a>
+                                        {{-- <a href="{{ route('service.list.details',$service->slug) }}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {{ __('View Details') }} </a> --}}
                                     </div>
                                 </div>
                             </div>
