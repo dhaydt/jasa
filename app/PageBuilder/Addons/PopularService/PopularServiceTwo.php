@@ -302,6 +302,8 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 if (++$i == 4) break;
             }
 
+            $routeCat = route('service.list.category',$ca->slug);
+
             $category_markup .= <<<CATEGORY
                 <section class="services-area"  data-padding-top="100" data-padding-bottom="{$padding_bottom}" style="background-color:{$section_bg}">
                     <div class="container container-two">
@@ -309,7 +311,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                             <div class="col-lg-12">
                                 <div class="section-title-two">
                                     <h3 class="title">{$catTitle}</h3>
-                                    <a href="{$catTitle}" class="section-btn">Telusuri semua</a>
+                                    <a href="{$routeCat}" class="section-btn">Telusuri semua</a>
                                 </div>
                             </div>
                         </div>
