@@ -145,9 +145,10 @@ class JasaPopuler extends \App\PageBuilder\PageBuilderBase
             }
             $featured = '';
             if ($service->featured == 1) {
-                $featured .= '<div class="award-icons">
-                <i class="las la-award"></i>
-                </div>';
+                // $featured .= '<div class="award-icons">
+                // <i class="las la-award"></i>
+                // </div>';
+                $featured .= '';
             }
 
             $service_markup .= <<<SERVICE

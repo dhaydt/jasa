@@ -32,9 +32,9 @@
                                         </span>
                                     </div>
                                     @if($service->is_featured)
-                                    <div class="award-icons">
+                                    {{-- <div class="award-icons">
                                         <i class="las la-award"></i>
-                                    </div>
+                                    </div> --}}
                                     @endif
                                 </a>
                                 <div class="services-contents">

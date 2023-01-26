@@ -155,11 +155,11 @@ class FeatureServiceTwo extends \App\PageBuilder\PageBuilderBase
             <div class="single-service service-two style-03 service-padding section-bg-2 wow fadeInUp" data-wow-delay=".2s">
                 <a href="{$route}" class="service-thumb service-bg-thumb-format" {$image}>
                    
-                    <div class="award-icons style-02">
+                <!-- <div class="award-icons style-02">
                         <i class="las la-award"></i>
-                    </div>
+                    </div> -->
                     <div class="country_city_location color-three">
-                    <span class="single_location"> <i class="las la-map-marker-alt"></i> {$service_country}, {$service_city} </span>
+                    <span class="single_location"> <i class="las la-map-marker-alt"></i>{$service_city} </span>
                     </div>
                 </a>
                 <div class="services-contents content-padding-reverse">

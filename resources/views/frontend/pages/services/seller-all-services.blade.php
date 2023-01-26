@@ -92,9 +92,9 @@
                                 <a href="{{ route('service.list.details',$service->slug) }}" class="service-thumb">
                                     {!! render_image_markup_by_attachment_id($service->image) !!}
                                     @if($service->featured == 1)
-                                    <div class="award-icons">
+                                    {{-- <div class="award-icons">
                                         <i class="las la-award"></i>
-                                    </div>
+                                    </div> --}}
                                     @endif
                                     <div class="country_city_location">
                                         <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ optional($service->serviceCity)->service_city }}, {{ optional(optional($service->serviceCity)->countryy)->country }} </span>

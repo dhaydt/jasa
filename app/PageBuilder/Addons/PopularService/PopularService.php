@@ -186,9 +186,10 @@ class PopularService extends \App\PageBuilder\PageBuilderBase
             }
             $featured ='';
             if($service->featured == 1){
-                $featured .='<div class="award-icons">
-                <i class="las la-award"></i>
-                </div>';
+                // $featured .='<div class="award-icons">
+                // <i class="las la-award"></i>
+                // </div>';
+                $featured .='';
             }
 
             $service_markup.= <<<SERVICE
@@ -198,7 +199,7 @@ class PopularService extends \App\PageBuilder\PageBuilderBase
                         <a href="{$route}" class="service-thumb service-bg-thumb-format" {$image}>
                             {$featured}
                             <div class="country_city_location">
-                            <span class="single_location"> <i class="las la-map-marker-alt"></i> {$service_country}, {$service_city} </span>
+                            <span class="single_location"> <i class="las la-map-marker-alt"></i>{$service_city} </span>
                             </div>
                         </a>
                         <div class="services-contents">

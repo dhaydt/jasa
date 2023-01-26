@@ -355,16 +355,22 @@
                                             <a href="{{ route('service.list.details',$service->slug) }}" class="service-thumb service-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($service->image) !!}>
 
                                                 @if($service->featured == 1)
-                                                    <div class="award-icons">
+                                                    {{-- <div class="award-icons">
                                                         <i class="las la-award"></i>
-                                                    </div>
+                                                    </div> --}}
                                                 @endif
                                                 <div class="country_city_location">
-                                                    <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ optional($service->serviceCity)->service_city }}, {{ optional(optional($service->serviceCity)->countryy)->country }} </span>
+                                                    <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ optional($service->serviceCity)->service_city }}</span>
                                                 </div>
                                             </a>
                                             <div class="services-contents">
-                                                <ul class="author-tag">
+                                                <h5 class="common-title"> <a href="{{ route('service.list.details',$service->slug) }}">{{ $service->title }}</a> </h5>
+                                                <div class="service-price d-flex flex-column align-items-start">
+                                                    <span class="starting">{{ __('Mulai dari') }}</span>
+                                                    <span class="prices"> {{ amount_with_currency_symbol($service->price) }} </span>
+                                                </div>
+
+                                                <ul class="author-tag flex-column align-items-start">
                                                     <li class="tag-list">
                                                         <a href="{{ route('about.seller.profile',optional($service->seller)->username) }}">
                                                             <div class="authors">
@@ -387,14 +393,10 @@
                                                         </li>
                                                     @endif
                                                 </ul>
-                                                <h5 class="common-title"> <a href="{{ route('service.list.details',$service->slug) }}">{{ $service->title }}</a> </h5>
-                                                <p class="common-para"> {{ Str::limit(strip_tags($service->description),100) }} </p>
-                                                <div class="service-price">
-                                                    <span class="starting">{{ __('Starting at') }}</span>
-                                                    <span class="prices"> {{ amount_with_currency_symbol($service->price) }} </span>
-                                                </div>
+                                                
+                                                {{-- <p class="common-para"> {{ Str::limit(strip_tags($service->description),100) }} </p> --}}
                                                 <div class="btn-wrapper d-flex flex-wrap">
-                                                    <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1"> {{ __('Book Now') }} </a>
+                                                    <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Book Now') }} </a>
                                                 </div>
                                             </div>
                                         </div>

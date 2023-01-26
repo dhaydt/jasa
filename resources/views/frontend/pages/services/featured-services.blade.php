@@ -26,9 +26,9 @@
                             <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
                                 <a href="{{ route('service.list.book',$service->slug) }}" class="service-thumb service-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($service->image) !!}>
 
-                                    <div class="award-icons">
+                                    {{-- <div class="award-icons">
                                         <i class="las la-award"></i>
-                                    </div>
+                                    </div> --}}
                                 </a>
                                 <div class="services-contents">
                                     <ul class="author-tag">

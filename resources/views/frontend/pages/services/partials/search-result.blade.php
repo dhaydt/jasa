@@ -7,9 +7,9 @@
         <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
             <a href="{{ route('service.list.details',$service->slug) }}" class="service-thumb">
                 {!! render_image_markup_by_attachment_id($service->image) !!}
-                <div class="award-icons">
+                {{-- <div class="award-icons">
                     <i class="las la-award"></i>
-                </div>
+                </div> --}}
             </a>
             <div class="services-contents">
                 <ul class="author-tag">

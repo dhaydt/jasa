@@ -242,7 +242,8 @@ foreach ($all_services as $service)
     $seller_image =  render_image_markup_by_attachment_id(optional($service->seller)->image,'','','thumb');
     $seller_name =  optional($service->seller)->name;
     if($service->featured == 1){
-        $featured = '<div class="award-icons"><i class="las la-award"></i></div>';
+        // $featured = '<div class="award-icons"><i class="las la-award"></i></div>';
+        $featured = '';
     }else{
         $featured ='';
     }
@@ -276,7 +277,7 @@ foreach ($all_services as $service)
                 
                 {$featured}
                 <div class="country_city_location">
-                    <span class="single_location"> <i class="las la-map-marker-alt"></i> {$service_country}, {$service_city} </span>
+                    <span class="single_location"> <i class="las la-map-marker-alt"></i>{$service_city} </span>
                 </div>
             </a>
     

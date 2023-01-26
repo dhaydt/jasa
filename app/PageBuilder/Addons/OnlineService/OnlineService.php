@@ -169,9 +169,9 @@ class OnlineService extends \App\PageBuilder\PageBuilderBase
             <div class="single-services-item wow fadeInUp" data-wow-delay=".2s">
                 <div class="single-service {$dot_color_slider}">
                     <a href="{$route}" class="service-thumb location_relative service-bg-thumb-format" {$image}>
-                        <div class="award-icons">
+                    <!-- <div class="award-icons">
                             <i class="las la-award"></i>
-                        </div>
+                        </div> -->
 
                         <div class="country_city_location">
                             <span class="single_location"> <i class="las la-map-marker-alt"></i> {$service_country}, {$service_city} </span>
