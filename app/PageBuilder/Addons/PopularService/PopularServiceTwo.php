@@ -258,12 +258,12 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 }
 
                 $servis_markup .= <<<SERVIS
-                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 wow fadeInUp" data-wow-delay=".2s">
+                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 wow fadeInUp" data-wow-delay=".2s">
                     <div class="single-service service-two style-03 section-bg-2">
                         <a href="{$servisRroute}" class="service-thumb service-bg-thumb-format" {$servisImage}>
                         {$servisFeatured}
                         <div class="country_city_location color-three">
-                        <span class="single_location"> <i class="las la-map-marker-alt"></i> {$servisService_country}, {$servisService_city} </span>
+                        <span class="single_location"> <i class="las la-map-marker-alt"></i>{$servisService_city} </span>
                         </div>
                         </a>
                         <div class="services-contents">
@@ -288,7 +288,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                                     {$servisRating_and_review}
                                 </li>
                             </ul>
-                            <div class="service-price-wrapper">
+                            <div class="service-price-wrapper mb-4">
                                 <div class="btn-wrapper w-100">
                                     <a href="{$servisBook_now}" class="cmn-btn w-100 btn-book btn-small btn-outline-3"> {$book_appoinment} </a>
                                 </div>

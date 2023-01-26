@@ -157,7 +157,7 @@ class JasaPopuler extends \App\PageBuilder\PageBuilderBase
                         <a href="{$route}" class="service-thumb service-bg-thumb-format" {$image}>
                         {$featured}
                         <div class="country_city_location color-three">
-                        <span class="single_location"> <i class="las la-map-marker-alt"></i> {$service_country}, {$service_city} </span>
+                        <span class="single_location"> <i class="las la-map-marker-alt"></i>{$service_city} </span>
                         </div>
                         </a>
                         <div class="services-contents">
@@ -182,7 +182,7 @@ class JasaPopuler extends \App\PageBuilder\PageBuilderBase
                                     {$rating_and_review}
                                 </li>
                             </ul>
-                            <div class="service-price-wrapper">
+                            <div class="service-price-wrapper mb-4">
                                 <div class="btn-wrapper w-100">
                                     <a href="{$book_now}" class="cmn-btn w-100 btn-book btn-small btn-outline-3"> {$book_appoinment} </a>
                                 </div>
