@@ -253,9 +253,9 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 }
                 $servisFeatured = '';
                 if ($servis->featured == 1) {
-                    $servisFeatured .= '<div class="award-icons">
-                    <i class="las la-award"></i>
-                    </div>';
+                    // $servisFeatured .= '<div class="award-icons">
+                    // <i class="las la-award"></i>
+                    // </div>';
                 }
 
                 $servis_markup .= <<<SERVIS
