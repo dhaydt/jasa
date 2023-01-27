@@ -40,7 +40,7 @@
                             <div class="icon category-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($sub_cat->image) !!}></div>
                             <div class="category-contents">
                                 <h4 class="category-title"> <a href="{{ route('service.list.subcategory',$sub_cat->slug) }}">{{ $sub_cat->name }}</a> </h4>
-                                <span class="category-para">  {{sprintf(__('%s Service'),$sub_cat->total_service)}} </span>
+                                {{-- <span class="category-para">  {{sprintf(__('%s Service'),$sub_cat->total_service)}} </span> --}}
                             </div>
                         </div>
                     </div>

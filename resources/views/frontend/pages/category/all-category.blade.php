@@ -27,7 +27,7 @@
                     </div>
                     <div class="category-contents">
                         <h4 class="category-title"> <a href="{{ route('service.list.category',$cat->slug) }}"> {{ $cat->name }} </a> </h4>
-                        <span class="category-para"> {{ $cat->services->count() }}+ {{ __('Service') }} </span>
+                        {{-- <span class="category-para"> {{ $cat->services->count() }}+ {{ __('Service') }} </span> --}}
                     </div>
                 </div>
             </div>

@@ -140,13 +140,13 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
 
  $category_markup.= <<<CATEGORY
     <div class="col-xl-2 col-lg-3 col-sm-6 margin-top-30 category-child">
-        <div class="single-category style-02 wow fadeInUp" data-wow-delay=".2s">
+        <div class="single-category shadow-lg style-02 wow fadeInUp" data-wow-delay=".2s">
             <div class="icon category-bg-thumb-format"  {$category_image}>
                
             </div>
-            <div class="category-contents">
+            <div class="category-contents mb-5">
                 <h4 class="category-title"> <a href="{$route}/{$slug}"> {$name} </a> </h4>
-                <span class="category-para"> {$service_count}+ {$static_text['service']} </span>
+               <!-- <span class="category-para"> {$service_count}+ {$static_text['service']} </span> -->
             </div>
         </div>
     </div>
