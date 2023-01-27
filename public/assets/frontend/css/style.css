@@ -4061,7 +4061,7 @@ ul {
 
 .single-category.style-02 .icon {
     color: var(--heading-color);
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     font-size: 60px;
 }
 
@@ -4106,7 +4106,7 @@ ul {
 }
 
 .single-category .category-contents .category-title {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
     color: #fff;
     -webkit-transition: all 0.3s;
@@ -13711,7 +13711,7 @@ ul.onlilne-special-list li i {
 }
 
 .category-bg-thumb-format {
-    height: 164px;
+    height: 110px;
     width: 100%;
     background-size: contain;
     background-position: center;

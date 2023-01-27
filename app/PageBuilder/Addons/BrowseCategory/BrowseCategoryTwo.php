@@ -144,7 +144,7 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
             <div class="icon category-bg-thumb-format"  {$category_image}>
                
             </div>
-            <div class="category-contents mb-5">
+            <div class="category-contents mb-1">
                 <h4 class="category-title"> <a href="{$route}/{$slug}"> {$name} </a> </h4>
                <!-- <span class="category-para"> {$service_count}+ {$static_text['service']} </span> -->
             </div>
