@@ -195,7 +195,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 </div>
 
             SERVICE;
-            
+
             $service_markup .= <<<SERVICE
             <a href="{$route}" class="badge badge-custom mx-2">{$title}</a>
             SERVICE;
@@ -204,14 +204,27 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         $city_markup = '';
         $serv = Service::where('status', 1)->get();
         $cities = [];
-        foreach($serv as $s){
-            array_push($cities, $s->serviceCity->service_city);
+        $ids = [];
+        $merged = [];
+        foreach ($serv as $s) {
+            $id_city = $s->serviceCity->id;
+            $name = $s->serviceCity->service_city;
+            array_push($ids, $id_city);
+            array_push($cities, $name);
         }
 
-        foreach(array_unique($cities) as $city){
-            $cityN = $city;
+        foreach(array_unique($cities) as $key => $cit){
+            $data = [
+                'id' => $ids[$key],
+                'name' => $cities[$key]
+            ];
+            array_push($merged, $data);
+        }
+
+        foreach ($merged as $city) {
+            $cityN = $city['name'];
             $city_markup .= <<<CITY
-            <a href="{$cityN}" class="badge badge-custom mx-2">{$cityN}</a>
+            <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a>
             CITY;
         }
 
@@ -219,11 +232,11 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
 
         $category_markup = '';
 
-        foreach($cat as $ca){
+        foreach ($cat as $ca) {
             $catTitle = $ca->name;
             $servis_markup = '';
             $i = 0;
-            foreach($ca->services as $k => $servis){
+            foreach ($ca->services as $k => $servis) {
                 $servisTitle = $servis->title;
                 $servisImage =  render_background_image_markup_by_attachment_id($servis->image, '', '', 'thumb');
                 $servisRroute = route('service.list.details', $servis->slug);
@@ -302,7 +315,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 if (++$i == 4) break;
             }
 
-            $routeCat = route('service.list.category',$ca->slug);
+            $routeCat = route('service.list.category', $ca->slug);
 
             $category_markup .= <<<CATEGORY
                 <section class="services-area"  data-padding-top="100" data-padding-bottom="{$padding_bottom}" style="background-color:{$section_bg}">
