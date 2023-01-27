@@ -97,22 +97,22 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
 
         return $output;
     }
-    
 
-    public function frontend_render() : string
+
+    public function frontend_render(): string
     {
-        
+
         $settings = $this->get_settings();
-        $title =$settings['title'];
-        $explore_text =$settings['explore_all'];
-        $explore_link =$settings['explore_link'];
-        if($explore_link==''){
+        $title = $settings['title'];
+        $explore_text = $settings['explore_all'];
+        $explore_link = $settings['explore_link'];
+        if ($explore_link == '') {
             $explore_link = route('all.category.subcategory');
         }
- 
-        $order_by =$settings['order_by'];
-        $IDorDate =$settings['order'];
-        $items =$settings['items'];
+
+        $order_by = $settings['order_by'];
+        $IDorDate = $settings['order'];
+        $items = $settings['items'];
 
         $padding_top = $settings['padding_top'];
         $padding_bottom = $settings['padding_bottom'];
@@ -123,40 +123,39 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
         $static_text = static_text();
 
         $all_category = Category::with('services')
-        ->where('status',1)
-        ->whereHas('services')
-        ->take($items)
-        ->OrderBy($order_by,$IDorDate)
-        ->get();
+            ->where('status', 1)
+            ->whereHas('services')
+            ->take($items)
+            ->OrderBy($order_by, $IDorDate)
+            ->get();
         $route = route('service.list.category');
 
         $category_markup = '';
-        foreach ($all_category as $cat){
-           
+        foreach ($all_category as $cat) {
+
             $name = $cat->name;
             $slug = $cat->slug;
-            $category_image = render_background_image_markup_by_attachment_id($cat->image,'','grid');
+            $category_image = render_background_image_markup_by_attachment_id($cat->image, '', 'grid');
             $service_count = $cat->services->count();
 
- $category_markup.= <<<CATEGORY
+            $category_markup .= <<<CATEGORY
     <div class="col-xl-2 col-lg-3 col-sm-6 margin-top-30 category-child">
-        <div class="single-category shadow-lg style-02 wow fadeInUp" data-wow-delay=".2s">
+        <a href="{$route}/{$slug}" class="single-category shadow-lg style-02 wow fadeInUp" data-wow-delay=".2s">
             <div class="icon category-bg-thumb-format"  {$category_image}>
                
             </div>
             <div class="category-contents mb-1">
-                <h4 class="category-title"> <a href="{$route}/{$slug}"> {$name} </a> </h4>
+                <h4 class="category-title"> {$name} </h4>
                <!-- <span class="category-para"> {$service_count}+ {$static_text['service']} </span> -->
             </div>
-        </div>
+        </a>
     </div>
 
 CATEGORY;
-        
-}
+        }
 
 
-return <<<HTML
+        return <<<HTML
 <!-- Category area starts -->
 <section class="category-area" data-padding-top="{$padding_top}" data-padding-bottom="{$padding_bottom}" style="background-color:{$section_bg}">
         <div class="container container-two">
@@ -176,8 +175,7 @@ return <<<HTML
     <!-- Category area end -->
     
 HTML;
-
-}
+    }
 
     public function addon_title()
     {
