@@ -338,14 +338,17 @@ function setEnvValue(array $values)
 
     $envFile = app()->environmentFilePath();
     $str = file_get_contents($envFile);
-
+    
     if (count($values) > 0) {
         foreach ($values as $envKey => $envValue) {
-
+            
             $str .= "\n"; // In case the searched variable is in the last line without \n
             $keyPosition = strpos($str, "{$envKey}=");
             $endOfLinePosition = strpos($str, "\n", $keyPosition);
             $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
+            // if($envKey == 'XENDIT_KEY'){
+            //     dd('called', $str);
+            // }
 
             // If key does not exist, add it
             if (!$keyPosition || !$endOfLinePosition || !$oldLine) {

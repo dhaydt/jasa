@@ -20,30 +20,30 @@ class GeneralSettingsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->middleware('permission:general-settings-site-identity',['only'=>['site_identity','update_site_identity']]);
-        $this->middleware('permission:general-settings-reading-settings',['only'=>['reading','update_reading']]);
-        $this->middleware('permission:general-settings-global-navbar-settings',['only'=>['global_variant_navbar','update_global_variant_navbar']]);
-        $this->middleware('permission:general-settings-global-footer-settings',['only'=>['global_variant_footer','update_global_variant_footer']]);
-        $this->middleware('permission:general-settings-basic-settings',['only'=>['basic_settings','update_basic_settings']]);
-        $this->middleware('permission:general-settings-color-settings',['only'=>['color_settings','update_color_settings']]);
-        $this->middleware('permission:general-settings-typography-settings',['only'=>['typography_settings','get_single_font_variant','update_typography_settings']]);
-        $this->middleware('permission:general-settings-seo-settings',['only'=>['seo_settings','update_seo_settings']]);
-        $this->middleware('permission:general-settings-third-party-scripts',['only'=>['update_scripts_settings','scripts_settings']]);
-        $this->middleware('permission:general-settings-email-template',['only'=>['email_template_settings','update_email_template_settings']]);
-        $this->middleware('permission:general-settings-email-settings',['only'=>['email_settings','update_email_settings']]);
-        $this->middleware('permission:general-settings-smtp-settings',['only'=>['smtp_settings','update_smtp_settings','test_smtp_settings']]);
-        $this->middleware('permission:general-settings-page-settings',['only'=>['page_settings','update_page_settings']]);
-        $this->middleware('permission:general-settings-payment-gateway-settings',['only'=>['payment_settings','update_payment_settings']]);
-        $this->middleware('permission:general-settings-custom-css',['only'=>['custom_css_settings','update_custom_css_settings']]);
-        $this->middleware('permission:general-settings-custom-js',['only'=>['custom_js_settings','update_custom_js_settings']]);
-        $this->middleware('permission:general-settings-licence-settings',['only'=>['license_settings','update_license_settings']]);
-        $this->middleware('permission:general-settings-cache-settings',['only'=>['cache_settings','update_cache_settings']]);
+        $this->middleware('permission:general-settings-site-identity', ['only' => ['site_identity', 'update_site_identity']]);
+        $this->middleware('permission:general-settings-reading-settings', ['only' => ['reading', 'update_reading']]);
+        $this->middleware('permission:general-settings-global-navbar-settings', ['only' => ['global_variant_navbar', 'update_global_variant_navbar']]);
+        $this->middleware('permission:general-settings-global-footer-settings', ['only' => ['global_variant_footer', 'update_global_variant_footer']]);
+        $this->middleware('permission:general-settings-basic-settings', ['only' => ['basic_settings', 'update_basic_settings']]);
+        $this->middleware('permission:general-settings-color-settings', ['only' => ['color_settings', 'update_color_settings']]);
+        $this->middleware('permission:general-settings-typography-settings', ['only' => ['typography_settings', 'get_single_font_variant', 'update_typography_settings']]);
+        $this->middleware('permission:general-settings-seo-settings', ['only' => ['seo_settings', 'update_seo_settings']]);
+        $this->middleware('permission:general-settings-third-party-scripts', ['only' => ['update_scripts_settings', 'scripts_settings']]);
+        $this->middleware('permission:general-settings-email-template', ['only' => ['email_template_settings', 'update_email_template_settings']]);
+        $this->middleware('permission:general-settings-email-settings', ['only' => ['email_settings', 'update_email_settings']]);
+        $this->middleware('permission:general-settings-smtp-settings', ['only' => ['smtp_settings', 'update_smtp_settings', 'test_smtp_settings']]);
+        $this->middleware('permission:general-settings-page-settings', ['only' => ['page_settings', 'update_page_settings']]);
+        $this->middleware('permission:general-settings-payment-gateway-settings', ['only' => ['payment_settings', 'update_payment_settings']]);
+        $this->middleware('permission:general-settings-custom-css', ['only' => ['custom_css_settings', 'update_custom_css_settings']]);
+        $this->middleware('permission:general-settings-custom-js', ['only' => ['custom_js_settings', 'update_custom_js_settings']]);
+        $this->middleware('permission:general-settings-licence-settings', ['only' => ['license_settings', 'update_license_settings']]);
+        $this->middleware('permission:general-settings-cache-settings', ['only' => ['cache_settings', 'update_cache_settings']]);
     }
 
     public function reading()
     {
-        $all_home_pages = Page::where(['status'=> 'publish'])->get();
-        return view('backend.general-settings.reading',compact('all_home_pages'));
+        $all_home_pages = Page::where(['status' => 'publish'])->get();
+        return view('backend.general-settings.reading', compact('all_home_pages'));
     }
     public function update_reading(Request $request)
     {
@@ -60,7 +60,7 @@ class GeneralSettingsController extends Controller
             'price_plan_page',
         ];
         foreach ($fields as $field) {
-                update_static_option($field, $request->$field);
+            update_static_option($field, $request->$field);
         }
         return redirect()->back()->with(FlashMsg::settings_update());
     }
@@ -151,19 +151,19 @@ class GeneralSettingsController extends Controller
             'site_tag_line' => 'nullable|string',
             'site_footer_copyright' => 'nullable|string',
         ]);
-    
-            $this->validate($request, [
-                'site_title' => 'nullable|string',
-                'site_tag_line' => 'nullable|string',
-                'site_footer_copyright' => 'nullable|string',
-            ]);
-            $_title = 'site_title';
-            $_tag_line = 'site_tag_line';
-            $_footer_copyright = 'site_footer_copyright';
-            update_static_option($_title, $request->$_title);
-            update_static_option($_tag_line, $request->$_tag_line);
-            update_static_option($_footer_copyright, $request->$_footer_copyright);
-    
+
+        $this->validate($request, [
+            'site_title' => 'nullable|string',
+            'site_tag_line' => 'nullable|string',
+            'site_footer_copyright' => 'nullable|string',
+        ]);
+        $_title = 'site_title';
+        $_tag_line = 'site_tag_line';
+        $_footer_copyright = 'site_footer_copyright';
+        update_static_option($_title, $request->$_title);
+        update_static_option($_tag_line, $request->$_tag_line);
+        update_static_option($_footer_copyright, $request->$_footer_copyright);
+
 
         $all_fields = [
             'language_select_option',
@@ -197,12 +197,12 @@ class GeneralSettingsController extends Controller
         ]);
 
         $all_fields = [
-          'site_main_color_one',
-          'site_main_color_two',
-          'site_main_color_three',
-          'heading_color',
-          'light_color',
-          'extra_light_color',
+            'site_main_color_one',
+            'site_main_color_two',
+            'site_main_color_three',
+            'heading_color',
+            'light_color',
+            'extra_light_color',
         ];
 
         foreach ($all_fields as $field) {
@@ -250,7 +250,7 @@ class GeneralSettingsController extends Controller
     }
     public function scripts_settings()
     {
-        return view( 'backend.general-settings.thid-party');
+        return view('backend.general-settings.thid-party');
     }
 
     public function update_scripts_settings(Request $request)
@@ -289,8 +289,8 @@ class GeneralSettingsController extends Controller
             'enable_google_adsense',
             'instagram_access_token',
         ];
-        foreach ($fields as $field){
-            update_static_option($field,$request->$field);
+        foreach ($fields as $field) {
+            update_static_option($field, $request->$field);
         }
 
         setEnvValue([
@@ -399,8 +399,8 @@ class GeneralSettingsController extends Controller
         $decoded_fonts = json_decode($all_google_fonts, true);
         return response()->json($decoded_fonts[$request->font_family]);
     }
-    
-    
+
+
     public function update_typography_settings(Request $request)
     {
 
@@ -438,7 +438,7 @@ class GeneralSettingsController extends Controller
             'body_font_family_five',
         ];
 
-        foreach($fonts as $font){
+        foreach ($fonts as $font) {
             update_static_option($font, $request->$font);
         }
 
@@ -447,26 +447,27 @@ class GeneralSettingsController extends Controller
             'body_font_variant_four',
             'body_font_variant_five',
         ];
-        foreach ($fonts_variants as $vari){
+        foreach ($fonts_variants as $vari) {
             $body_font_variant = !empty($request->$vari) ?  $request->$vari : ['400'];
             update_static_option($vari, serialize($body_font_variant));
         }
 
-        CustomFontImport::where('status', '!=', 0)->update(['status'=>0]);
+        CustomFontImport::where('status', '!=', 0)->update(['status' => 0]);
 
         return redirect()->back()->with(['msg' => __('Typography Settings Updated..'), 'type' => 'success']);
     }
-    
-    
-    
+
+
+
     public function smtp_settings()
     {
         return view('backend.general-settings.smtp-settings');
     }
 
 
-   public function update_smtp_settings(Request $request){
-        $this->validate($request,[
+    public function update_smtp_settings(Request $request)
+    {
+        $this->validate($request, [
             'site_smtp_mail_host' => 'required|string',
             'site_smtp_mail_port' => 'required|string',
             'site_smtp_mail_username' => 'required|string',
@@ -474,28 +475,29 @@ class GeneralSettingsController extends Controller
             'site_smtp_mail_encryption' => 'required|string'
         ]);
 
-        update_static_option('site_smtp_mail_mailer',$request->site_smtp_mail_mailer);
-        update_static_option('site_smtp_mail_host',$request->site_smtp_mail_host);
-        update_static_option('site_smtp_mail_port',$request->site_smtp_mail_port);
-        update_static_option('site_smtp_mail_username',$request->site_smtp_mail_username);
-        update_static_option('site_smtp_mail_password',$request->site_smtp_mail_password);
-        update_static_option('site_smtp_mail_encryption',$request->site_smtp_mail_encryption);
+        update_static_option('site_smtp_mail_mailer', $request->site_smtp_mail_mailer);
+        update_static_option('site_smtp_mail_host', $request->site_smtp_mail_host);
+        update_static_option('site_smtp_mail_port', $request->site_smtp_mail_port);
+        update_static_option('site_smtp_mail_username', $request->site_smtp_mail_username);
+        update_static_option('site_smtp_mail_password', $request->site_smtp_mail_password);
+        update_static_option('site_smtp_mail_encryption', $request->site_smtp_mail_encryption);
 
         setEnvValue([
             'MAIL_DRIVER' => $request->site_smtp_mail_mailer,
             'MAIL_HOST' => $request->site_smtp_mail_host,
             'MAIL_PORT' => $request->site_smtp_mail_port,
             'MAIL_USERNAME' => $request->site_smtp_mail_username,
-            'MAIL_PASSWORD' => '"'.$request->site_smtp_mail_password.'"',
+            'MAIL_PASSWORD' => '"' . $request->site_smtp_mail_password . '"',
             'MAIL_ENCRYPTION' => $request->site_smtp_mail_encryption
         ]);
 
-        return redirect()->back()->with(['msg' => __('SMTP Settings Updated...'),'type' => 'success']);
+        return redirect()->back()->with(['msg' => __('SMTP Settings Updated...'), 'type' => 'success']);
     }
 
 
-    public function test_smtp_settings(Request $request){
-        $this->validate($request,[
+    public function test_smtp_settings(Request $request)
+    {
+        $this->validate($request, [
             'subject' => 'required|string|max:191',
             'email' => 'required|email|max:191',
             'message' => 'required|string',
@@ -509,14 +511,14 @@ class GeneralSettingsController extends Controller
                 'subject' => $request->subject,
                 'message' => $request->message
             ]));
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return  redirect()->back()->with([
                 'type' => 'danger',
                 'msg' => $e->getMessage()
             ]);
         }
 
-        if (Mail::failures()){
+        if (Mail::failures()) {
             $res_data = [
                 'msg' => __('Mail Send Failed'),
                 'type' => 'danger'
@@ -535,19 +537,19 @@ class GeneralSettingsController extends Controller
     {
         $all_languages = Language::all();
         $this->validate($request, [
-            'gallery_page_slug'=> 'nullable|string|max:191',
-            'blog_page_slug'=> 'nullable|string|max:191',
-            'contact_page_slug'=> 'nullable|string|max:191',
+            'gallery_page_slug' => 'nullable|string|max:191',
+            'blog_page_slug' => 'nullable|string|max:191',
+            'contact_page_slug' => 'nullable|string|max:191',
         ]);
-        $pages_list = ['gallery','blog','contact'];
+        $pages_list = ['gallery', 'blog', 'contact'];
 
         foreach ($pages_list as $slug_field) {
-            $field = $slug_field.'_page_slug';
+            $field = $slug_field . '_page_slug';
             update_static_option($field, Str::slug($request->$field));
         }
         foreach ($all_languages as $lang) {
 
-            $this->validate($request,[
+            $this->validate($request, [
                 'gallery_page_' . $lang->slug . '_name' => 'nullable|string',
                 'gallery_page_' . $lang->slug . '_meta_tags' => 'nullable|string',
                 'gallery_page_' . $lang->slug . '_meta_description' => 'nullable|string',
@@ -560,9 +562,9 @@ class GeneralSettingsController extends Controller
             ]);
 
             foreach ($pages_list as $field) {
-                $field_name = $field.'_page_'. $lang->slug.'_name';
-                $field_meta_tags = $field.'_page_'. $lang->slug.'_meta_tags';
-                $field_meta_meta_description = $field.'_page_'. $lang->slug.'_meta_description';
+                $field_name = $field . '_page_' . $lang->slug . '_name';
+                $field_meta_tags = $field . '_page_' . $lang->slug . '_meta_tags';
+                $field_meta_meta_description = $field . '_page_' . $lang->slug . '_meta_description';
                 update_static_option($field_name, $request->$field_name);
                 update_static_option($field_meta_tags, $request->$field_meta_tags);
                 update_static_option($field_meta_meta_description, $request->$field_meta_meta_description);
@@ -601,6 +603,14 @@ class GeneralSettingsController extends Controller
             'razorpay_api_key' => 'nullable|string|max:191',
             'razorpay_api_secret' => 'nullable|string|max:191',
             'razorpay_gateway' => 'nullable|string|max:191',
+
+            // Xendit
+            'xendit_preview_logo' => 'nullable|string|max:191',
+            'xendit_key' => 'nullable|string|max:191',
+            'xendit_secret' => 'nullable|string|max:191',
+            'xendit_gateway' => 'nullable|string|max:191',
+            'xendit_test_mode' => 'nullable|string|max:191',
+
             // stripe
             'stripe_preview_logo' => 'nullable|string|max:191',
             'stripe_publishable_key' => 'nullable|string|max:191',
@@ -730,16 +740,18 @@ class GeneralSettingsController extends Controller
         ];
 
         $saveAllPaymentGatewaySettings = (new ModuleMetaData())->saveAllPaymentGatewaySettings();
-        foreach ($saveAllPaymentGatewaySettings as $pay_settings){
-            foreach ($pay_settings as $pset){
-                if (empty($pset)){continue;}
+        foreach ($saveAllPaymentGatewaySettings as $pay_settings) {
+            foreach ($pay_settings as $pset) {
+                if (empty($pset)) {
+                    continue;
+                }
                 update_static_option($pset, $request->$pset);
             }
         }
         $this->validate($request, $field_rules);
 
         $global_currency = get_static_option('site_global_currency');
-        
+
 
         $field_rules['site_' . strtolower($global_currency) . '_to_idr_exchange_rate'] = 0;
         $field_rules['site_' . strtolower($global_currency) . '_to_inr_exchange_rate'] = 0;
@@ -752,9 +764,9 @@ class GeneralSettingsController extends Controller
             update_static_option($item, $request->$item);
         }
         //todo update modules payment gateway settings data
-
-        update_static_option('enable_disable_decimal_point',$request->enable_disable_decimal_point);
-         update_static_option('enable_disable_decimal_point',$request->enable_disable_decimal_point);
+// dd($request);
+        update_static_option('enable_disable_decimal_point', $request->enable_disable_decimal_point);
+        update_static_option('enable_disable_decimal_point', $request->enable_disable_decimal_point);
 
         //Paypal
         $env_val['PAYPAL_MODE'] = !empty($request->paypal_test_mode) ? 'sandbox' : 'live';
@@ -769,6 +781,12 @@ class GeneralSettingsController extends Controller
         $env_val['PAYPAL_NOTIFY_URL'] = $request->paypal_notify_url ?: 'http://gateway.test/paypal/ipn';
         $env_val['PAYPAL_LOCALE'] = $request->paypal_locale ?: 'en_GB';
         $env_val['PAYPAL_VALIDATE_SSL'] = $request->paypal_validate_ssl ?: 'false';
+
+        // Xendit
+        $env_val['XENDIT_MODE'] = !empty($request->xendit_test_mode) ? 'test' : 'live';
+        $env_val['XENDIT_KEY'] = $request->xendit_key ?: 'AUP7AuZMwJbkee-2OmsSZrU-ID1XUJYE-YB-2JOrxeKV-q9ZJZYmsr-UoKuJn4kwyCv5ak26lrZyb-gb';
+        $env_val['XENDIT_SECRET'] = $request->xendit_secret ?: 'AUP7AuZMwJbkee-2OmsSZrU-ID1XUJYE-YB-2JOrxeKV-q9ZJZYmsr-UoKuJn4kwyCv5ak26lrZyb-gb';
+
         // Paystack
         $env_val['PAYSTACK_PUBLIC_KEY'] = $request->paystack_public_key ?: 'pk_test_081a8fcd9423dede2de7b4c3143375b5e5415290';
         $env_val['PAYSTACK_SECRET_KEY'] = $request->paystack_secret_key ?: 'sk_test_c874d38f8d08760efc517fc83d8cd574b906374f';
@@ -879,12 +897,12 @@ class GeneralSettingsController extends Controller
     {
         return view('backend.general-settings.database-upgrade');
     }
-    
+
     public function database_upgrade_post(Request $request)
     {
         setEnvValue(['APP_ENV' => 'local']);
-        Artisan::call('migrate', ['--force' => true ]);
-        Artisan::call('db:seed', ['--force' => true ]);
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
         Artisan::call('cache:clear');
         setEnvValue(['APP_ENV' => 'production']);
         return back()->with(FlashMsg::item_new('Database Upgraded Successfully'));
@@ -928,21 +946,21 @@ class GeneralSettingsController extends Controller
             "site_gdpr_cookie_manage_button_label",
             "site_gdpr_cookie_manage_title",
         ];
-        
-        foreach ($fields as $field){ 
+
+        foreach ($fields as $field) {
             update_static_option($field, $request->$field);
         }
-        
-         $all_fields = [
+
+        $all_fields = [
             'site_gdpr_cookie_manage_item_title',
             'site_gdpr_cookie_manage_item_description',
         ];
-        
-        foreach ($all_fields as $field){
+
+        foreach ($all_fields as $field) {
             $value = $request->$field ?? [];
-            update_static_option($field,serialize($value));
+            update_static_option($field, serialize($value));
         }
-            
+
 
         update_static_option('site_gdpr_cookie_delay', $request->site_gdpr_cookie_delay);
         update_static_option('site_gdpr_cookie_enabled', $request->site_gdpr_cookie_enabled);
@@ -957,7 +975,7 @@ class GeneralSettingsController extends Controller
         return view('backend.general-settings.license-settings');
     }
 
-     public function update_license_settings(Request $request)
+    public function update_license_settings(Request $request)
     {
         $this->validate($request, [
             'item_purchase_key' => 'required|string|max:191'
@@ -968,8 +986,8 @@ class GeneralSettingsController extends Controller
             'item_unique_key' => $request->item_script_type === 'bundle' ? '0D1FVAFkIrapFP8BxirOSRFTCDVWtyeV' : 'vwYO8y6j9WeciiEIcEBCUeRMTSP8gEaA',
         ]);
         $result = $response->json();
-        
-        if($response->ok() && !is_null($result)){
+
+        if ($response->ok() && !is_null($result)) {
             update_static_option('item_purchase_key', $request->item_purchase_key);
             update_static_option('item_license_status', $result['license_status']);
             update_static_option('item_license_msg', $result['msg']);
@@ -985,10 +1003,10 @@ class GeneralSettingsController extends Controller
                 "author" => env('XGENIOUS_API_AUTHOR'),
                 "message" => $result['msg']
             ];
-            file_put_contents(base_path().'/license.json', json_encode($license_info));
+            file_put_contents(base_path() . '/license.json', json_encode($license_info));
             return redirect()->back()->with(['msg' => $result['msg'], 'type' => $type]);
         }
-        
+
         return redirect()->back()->with(['msg' => __('something went wrong please contact support'), 'type' => 'danger']);
     }
 
@@ -1030,7 +1048,7 @@ class GeneralSettingsController extends Controller
     //pusher Settings
     public function pusher_settings(Request $request)
     {
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
 
             $data = $this->validate($request, [
                 'pusher_app_id' => 'required',
@@ -1047,8 +1065,8 @@ class GeneralSettingsController extends Controller
             ]);
 
 
-            foreach ($data as $key => $val){
-                update_static_option($key,$request->$key);
+            foreach ($data as $key => $val) {
+                update_static_option($key, $request->$key);
             }
 
             $pusher_app_id = $request->pusher_app_id;
@@ -1057,10 +1075,10 @@ class GeneralSettingsController extends Controller
             $pusher_app_cluster = $request->pusher_app_cluster;
 
             setEnvValue([
-                'PUSHER_APP_ID'=> trim($pusher_app_id),
-                'PUSHER_APP_KEY'=> trim($pusher_app_key),
-                'PUSHER_APP_SECRET'=> trim($pusher_app_secret),
-                'PUSHER_APP_CLUSTER'=> trim($pusher_app_cluster),
+                'PUSHER_APP_ID' => trim($pusher_app_id),
+                'PUSHER_APP_KEY' => trim($pusher_app_key),
+                'PUSHER_APP_SECRET' => trim($pusher_app_secret),
+                'PUSHER_APP_CLUSTER' => trim($pusher_app_cluster),
                 'MIX_PUSHER_APP_KEY' => '"${PUSHER_APP_KEY}"',
                 'MIX_PUSHER_APP_CLUSTER' => '"${PUSHER_APP_CLUSTER}"',
                 'BROADCAST_DRIVER' => 'pusher',
@@ -1073,6 +1091,4 @@ class GeneralSettingsController extends Controller
         }
         return view('backend.general-settings.pusher-settings');
     }
-
-
 }
