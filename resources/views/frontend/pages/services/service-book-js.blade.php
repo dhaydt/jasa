@@ -11,6 +11,7 @@
 
             $(document).ready(function() {
                 let site_default_currency_symbol = '{{ site_currency_symbol() }}';
+                extra_service_calculate();
 
                 $('#choose_service_city').on('change',function(){
                     let city_id = $(this).val();
@@ -43,6 +44,7 @@
 
                         additional_total_price += (service_count * unit_price);
                     }
+                    // console.log('extra service', additional_total_price)
                     $('.extra-service-fee').text(site_default_currency_symbol+additional_total_price);
                 }
 
@@ -50,6 +52,7 @@
                     let package_fee = parseInt($('input[name="package_fee_input_hiddend_field_for_js_calculation"]').val());
                     let extra_service_fee = parseInt($('.extra-service-fee').text().replace(',','').replace(site_default_currency_symbol,''));
                     let service_subtotal = package_fee+extra_service_fee;
+                    // console.log('service-book-js', extra_service_fee);
                     $('.service-subtotal').text(site_default_currency_symbol+service_subtotal);
                     $('input[name="service_subtotal_input_hidden_field_for_js_calculation"]').val(service_subtotal);
                 }

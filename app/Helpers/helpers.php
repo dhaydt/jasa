@@ -382,6 +382,7 @@ function site_currency_symbol($text = false)
 }
 function amount_with_currency_symbol($amount, $text = false)
 {
+    // dd($amount);
     $decimal_yes_or_no = get_static_option('enable_disable_decimal_point');
 
     if($decimal_yes_or_no == 'yes'){
