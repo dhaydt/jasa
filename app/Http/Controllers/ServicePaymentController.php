@@ -250,7 +250,8 @@ class ServicePaymentController extends Controller
         $midtrans->setClientKey($midtrans_client_key);
         $midtrans->setServerKey($midtrans_server_key);
         $midtrans->setEnv($midtrans_env); //true mean sandbox mode , false means live mode
-
+        // dd('called', $midtrans->ipn_response());
+        
         $payment_data = $midtrans->ipn_response();
         if (isset($payment_data['status']) && $payment_data['status'] === 'complete'){
             $this->update_database($payment_data['order_id'], $payment_data['transaction_id']);

@@ -116,7 +116,7 @@ class MidtransPay extends PaymentGatewayBase
     public function ipn_response($args = []){
 
         $midtrans_last_order_id = session()->get('midtrans_last_order_id');
-        session()->forget('midtrans_last_order_id');
+        // session()->forget('midtrans_last_order_id');
         if (empty($midtrans_last_order_id)){
             abort(405,'midtrans order missing');
         }
@@ -127,10 +127,11 @@ class MidtransPay extends PaymentGatewayBase
             'order_id' => $midtrans_last_order_id,
             'ipn_url' => $args['ipn_url'] ?? ''
         ]);
-
+        
         $status = \Midtrans\Transaction::status($midtrans_last_order_id);
         $status_message = Str::contains($status->status_message,['Success']);
-        if (in_array($status->transaction_status,  ['settlement','capture']) && $status->fraud_status === 'accept' && $status_message ){
+        // dd(in_array($status->transaction_status,  ['settlement','capture', 'pending']));
+        if (in_array($status->transaction_status,  ['settlement','capture', 'pending']) && $status->fraud_status === 'accept' && $status_message ){
             return $this->verified_data(['transaction_id' => $status->transaction_id,'order_id' => substr($midtrans_last_order_id,5,-5)]);
         }
 
