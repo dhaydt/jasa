@@ -207,10 +207,12 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         $ids = [];
         $merged = [];
         foreach ($serv as $s) {
-            $id_city = $s->serviceCity->id;
-            $name = $s->serviceCity->service_city;
-            array_push($ids, $id_city);
-            array_push($cities, $name);
+            if($s->serviceCity){
+                $id_city = $s->serviceCity->id;
+                $name = $s->serviceCity->service_city;
+                array_push($ids, $id_city);
+                array_push($cities, $name);
+            }
         }
 
         foreach(array_unique($cities) as $key => $cit){
