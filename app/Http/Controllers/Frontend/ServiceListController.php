@@ -120,37 +120,41 @@ class ServiceListController extends Controller
 
     public function serviceBook($slug)
     {
-        $service_details_for_book = Service::where(['slug' => $slug, 'status' => 1, 'is_service_on' => 1])->firstOrFail();
-        $days_count = Day::select('total_day')->where('seller_id',$service_details_for_book->seller_id)->first();
-        $days_count = optional($days_count)->total_day;
-
-        $service_city_id = $service_details_for_book->service_city_id;
-        $service_country_id = ServiceCity::select('country_id')->where('id',$service_city_id)->first();
-
-        $country = null;
-        if(!is_null($service_country_id)){
-            $country = Country::select('id','country')->where('id',$service_country_id->country_id)->where('status', 1)->first();
+        if(auth()->user()){
+            $service_details_for_book = Service::where(['slug' => $slug, 'status' => 1, 'is_service_on' => 1])->firstOrFail();
+            $days_count = Day::select('total_day')->where('seller_id',$service_details_for_book->seller_id)->first();
+            $days_count = optional($days_count)->total_day;
+    
+            $service_city_id = $service_details_for_book->service_city_id;
+            $service_country_id = ServiceCity::select('country_id')->where('id',$service_city_id)->first();
+    
+            $country = null;
+            if(!is_null($service_country_id)){
+                $country = Country::select('id','country')->where('id',$service_country_id->country_id)->where('status', 1)->first();
+            }
+    
+            $city = ServiceCity::select('id','service_city')->where('id',$service_city_id)->where('status', 1)->first();
+            $areas = ServiceArea::select('id','service_area')->where('service_city_id',$service_city_id)->where('status', 1)->get();
+    
+            $service_includes = ServiceInclude::where('service_id', $service_details_for_book->id)->get();
+            $service_additionals = ServiceAdditional::where('service_id', $service_details_for_book->id)->get();
+            $service_benifits = Servicebenifit::where('service_id', $service_details_for_book->id)->get();
+            $service_faqs = OnlineServiceFaq::select('title','description')->where('service_id', $service_details_for_book->id)->get();
+    
+            return view('frontend.pages.services.service-book', compact(
+                'country',
+                'city',
+                'areas',
+                'service_details_for_book',
+                'service_includes',
+                'service_additionals',
+                'service_benifits',
+                'service_faqs',
+                'days_count'
+            ));
+        }else{
+            return redirect()->route('user.login');
         }
-
-        $city = ServiceCity::select('id','service_city')->where('id',$service_city_id)->where('status', 1)->first();
-        $areas = ServiceArea::select('id','service_area')->where('service_city_id',$service_city_id)->where('status', 1)->get();
-
-        $service_includes = ServiceInclude::where('service_id', $service_details_for_book->id)->get();
-        $service_additionals = ServiceAdditional::where('service_id', $service_details_for_book->id)->get();
-        $service_benifits = Servicebenifit::where('service_id', $service_details_for_book->id)->get();
-        $service_faqs = OnlineServiceFaq::select('title','description')->where('service_id', $service_details_for_book->id)->get();
-
-        return view('frontend.pages.services.service-book', compact(
-            'country',
-            'city',
-            'areas',
-            'service_details_for_book',
-            'service_includes',
-            'service_additionals',
-            'service_benifits',
-            'service_faqs',
-            'days_count'
-        ));
     }
 
     //get area by city
@@ -300,9 +304,9 @@ class ServiceListController extends Controller
                 'email' => 'required|max:191',
                 'phone' => 'required|max:191',
                 'address' => 'required|max:191',
-                'choose_service_city' => 'required',
-                'choose_service_area' => 'required',
-                'choose_service_country' => 'required',
+                // 'choose_service_city' => 'required',
+                // 'choose_service_area' => 'required',
+                // 'choose_service_country' => 'required',
                 'date' => 'required|max:191',
                 'order_note' => 'nullable|max:191',
                 'schedule' => 'required|max:191',

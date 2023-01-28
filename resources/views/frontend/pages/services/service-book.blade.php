@@ -429,7 +429,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             <span class="summery-title">
                                                 @if($service_details_for_book->is_service_online != 1)
                                                 {{ get_static_option('service_appoinment_package_title') ??
-                                                __('Appointment Package Service') }}
+                                                __('Layanan Paket Janji Temu') }}
                                                 @else
                                                 <ul class='onlilne-special-list '>
                                                     <li><i class="las la-clock"></i> {{ __('Delivery Days').':
@@ -476,7 +476,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                         </div>
                                         <div class="single-summery">
                                             <span class="summery-title">{{ get_static_option('service_extra_title') ??
-                                                __('Extra Service') }}</span>
+                                                __('Layanan tambahan') }}</span>
                                             <div class="summery-list-all">
                                                 <ul class="summery-list extra-service-list">
 
