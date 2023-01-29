@@ -35,6 +35,7 @@ use App\ServiceCoupon;
 use App\AdminCommission;
 use Modules\AzulPaymentGateway\Http\Helpers\AzulPaymentHelper;
 use Modules\Wallet\Entities\Wallet;
+use Xendit\Xendit;
 use Xgenious\Paymentgateway\Facades\XgPaymentGateway;
 use Str;
 
@@ -142,17 +143,20 @@ class ServiceListController extends Controller
             $service_benifits = Servicebenifit::where('service_id', $service_details_for_book->id)->get();
             $service_faqs = OnlineServiceFaq::select('title', 'description')->where('service_id', $service_details_for_book->id)->get();
 
-            return view('frontend.pages.services.service-book', compact(
-                'country',
-                'city',
-                'areas',
-                'service_details_for_book',
-                'service_includes',
-                'service_additionals',
-                'service_benifits',
-                'service_faqs',
-                'days_count'
-            ));
+            return view(
+                'frontend.pages.services.service-book',
+                compact(
+                    'country',
+                    'city',
+                    'areas',
+                    'service_details_for_book',
+                    'service_includes',
+                    'service_additionals',
+                    'service_benifits',
+                    'service_faqs',
+                    'days_count'
+                )
+            );
         } else {
             return redirect()->route('user.login');
         }
@@ -517,8 +521,8 @@ class ServiceListController extends Controller
 
         $tax = Service::select('tax')->where('id', $request->service_id)->first();
         $service_details_for_book = Service::select('id', 'service_city_id')->where('id', $request->service_id)->first();
-        $service_country =  optional(optional($service_details_for_book->serviceCity)->countryy)->id;
-        $country_tax =  Tax::select('id', 'tax')->where('country_id', $service_country)->first();
+        $service_country = optional(optional($service_details_for_book->serviceCity)->countryy)->id;
+        $country_tax = Tax::select('id', 'tax')->where('country_id', $service_country)->first();
         $sub_total = $package_fee + $extra_service;
         if (!is_null($country_tax)) {
             $tax_amount = ($sub_total * $country_tax->tax) / 100;
@@ -561,7 +565,7 @@ class ServiceListController extends Controller
             if (subscriptionModuleExistsAndEnable('Subscription')) {
                 $commission_amount = 0;
                 \Modules\Subscription\Entities\SellerSubscription::where('id', $request->seller_id)->update([
-                    'connect' => DB::raw(sprintf("connect - %s", (int)strip_tags(get_static_option('set_number_of_connect')))),
+                    'connect' => DB::raw(sprintf("connect - %s", (int) strip_tags(get_static_option('set_number_of_connect')))),
                 ]);
             }
         } else {
@@ -595,7 +599,7 @@ class ServiceListController extends Controller
         // variable for all payment gateway
         $global_currency = get_static_option('site_global_currency');
 
-        $usd_conversion_rate =  get_static_option('site_' . strtolower($global_currency) . '_to_usd_exchange_rate');
+        $usd_conversion_rate = get_static_option('site_' . strtolower($global_currency) . '_to_usd_exchange_rate');
         $inr_exchange_rate = getenv('INR_EXCHANGE_RATE');
         $ngn_exchange_rate = getenv('NGN_EXCHANGE_RATE');
         $zar_exchange_rate = getenv('ZAR_EXCHANGE_RATE');
@@ -647,7 +651,7 @@ class ServiceListController extends Controller
                             'balance' => $wallet_balance->balance - $order_details->total,
                         ]);
                     } else {
-                        $shortage_balance =  $order_details->total - $wallet_balance->balance;
+                        $shortage_balance = $order_details->total - $wallet_balance->balance;
                         toastr_warning('Your wallet has ' . float_amount_with_currency_symbol($shortage_balance) . ' shortage to order this service. Please Credit your wallet first and try again.');
                         return back();
                     }
@@ -732,16 +736,26 @@ class ServiceListController extends Controller
                     $paypal->setExchangeRate($usd_conversion_rate); // if INR not set as currency
 
                     $redirect_url = $paypal->charge_customer([
-                        'amount' => $total, // amount you want to charge from customer
-                        'title' => $title, // payment title
-                        'description' => $description, // payment description
-                        'ipn_url' => route('frontend.paypal.ipn'), //you will get payment response in this route
-                        'order_id' => $last_order_id, // your order number
-                        'track' => \Str::random(36), // a random number to keep track of your payment
-                        'cancel_url' => route(self::CANCEL_ROUTE, $last_order_id), //payment gateway will redirect here if the payment is failed
-                        'success_url' => route(self::SUCCESS_ROUTE, $last_order_id), // payment gateway will redirect here after success
-                        'email' => $user_email, // user email
-                        'name' => $user_name, // user name
+                        'amount' => $total,
+                        // amount you want to charge from customer
+                        'title' => $title,
+                        // payment title
+                        'description' => $description,
+                        // payment description
+                        'ipn_url' => route('frontend.paypal.ipn'),
+                        //you will get payment response in this route
+                        'order_id' => $last_order_id,
+                        // your order number
+                        'track' => \Str::random(36),
+                        // a random number to keep track of your payment
+                        'cancel_url' => route(self::CANCEL_ROUTE, $last_order_id),
+                        //payment gateway will redirect here if the payment is failed
+                        'success_url' => route(self::SUCCESS_ROUTE, $last_order_id),
+                        // payment gateway will redirect here after success
+                        'email' => $user_email,
+                        // user email
+                        'name' => $user_name,
+                        // user name
                         'payment_type' => 'order', // which kind of payment your are receving from customer
                     ]);
                     session()->put('order_id', $last_order_id);
@@ -749,6 +763,58 @@ class ServiceListController extends Controller
                 } catch (\Exception $e) {
                     return back()->with(['msg' => $e->getMessage(), 'type' => 'danger']);
                 }
+            } elseif ($request->selected_payment_gateway === 'xendit') {
+                $order = $last_order_id;
+                $value = $total;
+                $tran = rand(1000, 9999).'-'.Str::random(5).'-'.time();
+                $order = Order::find($last_order_id);
+                $type = '';
+                $xendit_key = getenv('XENDIT_SECRET');
+
+                session()->put('order_id', $last_order_id);
+
+                Xendit::setApiKey($xendit_key);
+
+                $user = [
+                    'given_names' => $user_name ? $user_name : 'invalid name',
+                    'email' => $user_email,
+                    'mobile_number' => $request->phone,
+                    'address' => 'no data',
+                ];
+
+                // dd($user);
+                $redirect_url = route('frontend.order.payment.success', $last_order_id);
+
+                $params = [
+                    'external_id' => 'jasakita' . $request->phone . $last_order_id,
+                    'amount' => round($value, 0),
+                    'payer_email' => $user_email,
+                    'description' => env('APP_NAME') ? env('APP_NAME') : 'Ezren',
+                    // 'payment_methods' => [$type],
+                    'fixed_va' => true,
+                    'should_send_email' => true,
+                    'customer' => $user,
+                    'success_redirect_url' => $redirect_url,
+                ];
+
+                // dd($params);
+
+                $checkout_session = \Xendit\Invoice::create($params);
+                // $order_ids = [];
+                // foreach (CartManager::get_cart_group_ids() as $group_id) {
+                //     $data = [
+                //         'payment_method' => 'xendit_payment',
+                //         'order_status' => 'pending',
+                //         'payment_status' => 'unpaid',
+                //         'transaction_ref' => session('transaction_ref'),
+                //         'order_group_id' => $tran,
+                //         'cart_group_id' => $group_id,
+                //     ];
+                //     $order_id = OrderManager::generate_order($data);
+                //     array_push($order_ids, $order_id);
+                // }
+
+                return redirect()->away($checkout_session['invoice_url']);
             } elseif ($request->selected_payment_gateway === 'paytm') {
                 try {
                     $paytm_merchant_id = getenv('PAYTM_MERCHANT_ID');
@@ -928,7 +994,7 @@ class ServiceListController extends Controller
                         'track' => \Str::random(36),
                         'cancel_url' => route(self::CANCEL_ROUTE, $last_order_id),
                         'success_url' => route(self::SUCCESS_ROUTE, $last_order_id),
-                        'email' =>  $user_email,
+                        'email' => $user_email,
                         'name' => $user_name,
                         'payment_type' => 'order',
                     ]);
@@ -968,7 +1034,7 @@ class ServiceListController extends Controller
                         'cancel_url' => route(self::CANCEL_ROUTE, $last_order_id),
                         'success_url' => route(self::SUCCESS_ROUTE, $random_order_id_1 . $last_order_id . $random_order_id_2),
                         'email' => $user_email,
-                        'name' =>  $user_name,
+                        'name' => $user_name,
                         'payment_type' => 'order',
                     ]);
                     session()->put('order_id', $last_order_id);
@@ -1000,7 +1066,7 @@ class ServiceListController extends Controller
                         'cancel_url' => route(self::CANCEL_ROUTE, $last_order_id),
                         'success_url' => route(self::SUCCESS_ROUTE, $last_order_id),
                         'email' => $user_email,
-                        'name' =>  $user_name,
+                        'name' => $user_name,
                         'payment_type' => 'order',
                     ]);
                     session()->put('order_id', $last_order_id);
@@ -1044,7 +1110,7 @@ class ServiceListController extends Controller
                 try {
                     $mercadopago_client_id = getenv('MERCADO_PAGO_CLIENT_ID');
                     $mercadopago_client_secret = getenv('MERCADO_PAGO_CLIENT_SECRET');
-                    $mercadopago_env =  getenv('MERCADO_PAGO_TEST_MOD') === 'true';
+                    $mercadopago_env = getenv('MERCADO_PAGO_TEST_MOD') === 'true';
 
                     $marcadopago = XgPaymentGateway::marcadopago();
                     $marcadopago->setClientId($mercadopago_client_id);
@@ -1074,19 +1140,19 @@ class ServiceListController extends Controller
             } elseif ($request->selected_payment_gateway === 'midtrans') {
 
                 try {
-                    $midtrans_env =  getenv('MIDTRANS_ENVAIRONTMENT') === 'true';
+                    $midtrans_env = getenv('MIDTRANS_ENVAIRONTMENT') === 'true';
                     $midtrans_server_key = getenv('MIDTRANS_SERVER_KEY');
                     $midtrans_client_key = getenv('MIDTRANS_CLIENT_KEY');
-                    
+
                     $midtrans = XgPaymentGateway::midtrans();
                     $midtrans->setClientKey($midtrans_client_key);
                     $midtrans->setServerKey($midtrans_server_key);
                     $midtrans->setCurrency($global_currency);
                     $midtrans->setEnv($midtrans_env); //true mean sandbox mode , false means live mode
                     $midtrans->setExchangeRate($idr_exchange_rate); // if IDR not set as currency
-                    
+
                     // dd(route('frontend.order.payment.success', $last_order_id));
-                    
+
                     $redirect_url = $midtrans->charge_customer([
                         'amount' => $total,
                         'title' => $title,
@@ -1100,7 +1166,7 @@ class ServiceListController extends Controller
                         'name' => $user_name,
                         'payment_type' => 'order',
                     ]);
-                    
+
                     // dd($redirect_url);
                     session()->put('order_id', $last_order_id);
                     return $redirect_url;
@@ -1110,7 +1176,7 @@ class ServiceListController extends Controller
             } elseif ($request->selected_payment_gateway === 'squareup') {
 
                 try {
-                    $squareup_env =  !empty(get_static_option('squareup_test_mode'));
+                    $squareup_env = !empty(get_static_option('squareup_test_mode'));
                     $squareup_location_id = get_static_option('squareup_location_id');
                     $squareup_access_token = get_static_option('squareup_access_token');
                     $squareup_application_id = get_static_option('squareup_application_id');
@@ -1144,7 +1210,7 @@ class ServiceListController extends Controller
                 }
             } elseif ($request->selected_payment_gateway === 'cinetpay') {
                 try {
-                    $cinetpay_env =  !empty(get_static_option('cinetpay_test_mode'));
+                    $cinetpay_env = !empty(get_static_option('cinetpay_test_mode'));
                     $cinetpay_site_id = get_static_option('cinetpay_site_id');
                     $cinetpay_app_key = get_static_option('cinetpay_app_key');
 
@@ -1177,7 +1243,7 @@ class ServiceListController extends Controller
             } elseif ($request->selected_payment_gateway === 'paytabs') {
                 try {
 
-                    $paytabs_env =  !empty(get_static_option('paytabs_test_mode'));
+                    $paytabs_env = !empty(get_static_option('paytabs_test_mode'));
                     $paytabs_region = get_static_option('paytabs_region');
                     $paytabs_profile_id = get_static_option('paytabs_profile_id');
                     $paytabs_server_key = get_static_option('paytabs_server_key');
@@ -1211,10 +1277,10 @@ class ServiceListController extends Controller
             } elseif ($request->selected_payment_gateway === 'billplz') {
                 try {
 
-                    $billplz_env =  !empty(get_static_option('billplz_test_mode'));
-                    $billplz_key =  get_static_option('billplz_key');
-                    $billplz_xsignature =  get_static_option('billplz_xsignature');
-                    $billplz_collection_name =  get_static_option('billplz_collection_name');
+                    $billplz_env = !empty(get_static_option('billplz_test_mode'));
+                    $billplz_key = get_static_option('billplz_key');
+                    $billplz_xsignature = get_static_option('billplz_xsignature');
+                    $billplz_collection_name = get_static_option('billplz_collection_name');
 
                     $billplz = XgPaymentGateway::billplz();
                     $billplz->setKey($billplz_key);
@@ -1250,8 +1316,8 @@ class ServiceListController extends Controller
                 try {
 
 
-                    $zitopay_env =  !empty(get_static_option('zitopay_test_mode'));
-                    $zitopay_username =  get_static_option('zitopay_username');
+                    $zitopay_env = !empty(get_static_option('zitopay_test_mode'));
+                    $zitopay_username = get_static_option('zitopay_username');
 
                     $zitopay = XgPaymentGateway::zitopay();
                     $zitopay->setUsername($zitopay_username);
@@ -1283,7 +1349,7 @@ class ServiceListController extends Controller
                 }
             } else {
                 //todo check qixer meta data for new payment gateway
-                $module_meta =  new ModuleMetaData();
+                $module_meta = new ModuleMetaData();
                 $list = $module_meta->getAllPaymentGatewayList();
                 if (in_array($request->selected_payment_gateway, $list)) {
                     //todo call the module payment gateway customerCharge function
@@ -1291,7 +1357,7 @@ class ServiceListController extends Controller
                     $random_order_id_2 = Str::random(30);
                     $new_order_id = $random_order_id_1 . $last_order_id . $random_order_id_2;
 
-                    $customerChargeMethod =  $module_meta->getChargeCustomerMethodNameByPaymentGatewayName($request->selected_payment_gateway);
+                    $customerChargeMethod = $module_meta->getChargeCustomerMethodNameByPaymentGatewayName($request->selected_payment_gateway);
                     try {
                         $returned_val = $customerChargeMethod([
                             'amount' => $total,
@@ -1656,11 +1722,14 @@ class ServiceListController extends Controller
                 ->paginate(9);
         }
 
-        return view('frontend.pages.services.category-services', compact(
-            'all_services',
-            'category',
-            'subcategory_under_category'
-        ));
+        return view(
+            'frontend.pages.services.category-services',
+            compact(
+                'all_services',
+                'category',
+                'subcategory_under_category'
+            )
+        );
     }
 
     //sub category wise services
@@ -1707,10 +1776,13 @@ class ServiceListController extends Controller
                 ->paginate(12);
         }
 
-        return view('frontend.pages.services.subcategory-services', compact(
-            'all_services',
-            'subcategory',
-        ));
+        return view(
+            'frontend.pages.services.subcategory-services',
+            compact(
+                'all_services',
+                'subcategory',
+            )
+        );
     }
 
     //all featured service

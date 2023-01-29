@@ -8,7 +8,7 @@ use Modules\Wallet\Entities\Wallet;
 class PaymentGatewayRenderHelper
 {
     public static function listOfPaymentGateways(){
-        $payment_gateway_list = ['paypal','manual_payment','mollie','paytm','stripe','razorpay','flutterwave','paystack','marcadopago','instamojo','cashfree','payfast','midtrans','squareup','cinetpay','paytabs','billplz','zitopay'];
+        $payment_gateway_list = ['paypal','manual_payment','mollie','paytm','stripe','razorpay','flutterwave','paystack','marcadopago','instamojo','cashfree','payfast','midtrans','squareup','cinetpay','paytabs','billplz','zitopay', 'xendit'];
         //todo append payment gateway name from modules
         $modules_payment_gateway = (new ModuleMetaData())->getAllPaymentGatewayList();
         return !empty($modules_payment_gateway) ? array_merge($payment_gateway_list,$modules_payment_gateway) : $payment_gateway_list;

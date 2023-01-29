@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-fileinfo": "*",
         "barryvdh/laravel-dompdf": "^v1.0.2",
         "brian2694/laravel-toastr": "^5.56",
         "fideloper/proxy": "^4.0",
@@ -25,9 +26,9 @@
         "paypal/rest-api-sdk-php": "*",
         "pusher/pusher-php-server": "^7.0.6",
         "spatie/laravel-permission": "^5.1",
+        "xendit/xendit-php": "^2.19",
         "xgenious/paymentgateway": "^2.0",
-        "yajra/laravel-datatables-oracle": "~9.0",
-        "ext-fileinfo": "*"
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
