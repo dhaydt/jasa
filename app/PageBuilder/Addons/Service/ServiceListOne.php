@@ -377,10 +377,12 @@ $cities = [];
 $checkers= [];
 
 foreach($serv as $s){
-    $cit = ["id" => $s->serviceCity->id, "name" => $s->serviceCity->service_city];
-    if(in_array($cit['name'], $checkers)){}else{
-        array_push($cities, $cit);
-        array_push($checkers, $cit['name']);
+    if(isset($s->serviceCity)){
+        $cit = ["id" => $s->serviceCity->id, "name" => $s->serviceCity->service_city];
+        if(in_array($cit['name'], $checkers)){}else{
+            array_push($cities, $cit);
+            array_push($checkers, $cit['name']);
+        }
     }
 }
 

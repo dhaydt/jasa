@@ -11,7 +11,7 @@
                 <x-msg.error/>
                 <x-session-msg/>
                <div class="alert alert-info alert-dismissible fade show mt-5 mb-1" role="alert">
-                    {{__('Please check email inbox/spam for verification code')}}
+                    {{__('Mohon cek Whatsapp anda untuk kode Verifikasi!')}}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -20,13 +20,13 @@
                     @csrf
                     <div class="single-signup margin-top-30">
                         <label class="signup-label"> {{__('Enter code*')}} </label>
-                        <input class="form--control" type="text" name="email_verify_token" placeholder="{{__('Enter code')}}">
+                        <input class="form--control" type="text" name="email_verify_token" placeholder="{{__('Masukan kode OTP')}}">
                     </div>
-                    <button type="submit">{{ __('Verify Account') }}</button>
+                    <button type="submit">{{ __('Verifikasi Akun') }}</button>
                 </form>
                 
                  <div class="resend-verify-code-wrap">
-                    <a class="text-center" href="{{ route('resend.verify.code') }}">{{ __('Resend Code') }}</a>
+                    <a class="text-center" href="{{ route('resend.verify.code') }}">{{ __('Kirim kode lagi') }}</a>
                 </div>
             </div>
             <br>

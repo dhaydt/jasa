@@ -23,6 +23,39 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
     return $output;
 }
 
+function zenziva_sms($receiver, $otp)
+{
+    // dd($receiver);
+    // $config = self::get_settings('twilio_sms');
+    $response = 'error';
+    $userkey = getenv('ZENZIVA_userkey');
+    $passkey = getenv('ZENZIVA_passkey');
+    $hp = (int) $receiver;
+    $telepon = '+62' . (int) $hp;
+    // dd($telepon);
+    $message = getenv('ZENZIVA_TEMPLATE') . $otp;
+    // $message = ['grosa' => str_split($otp)];
+    $url = getenv('ZENZIVA_url');
+    $curlHandle = curl_init();
+    curl_setopt($curlHandle, CURLOPT_URL, $url);
+    curl_setopt($curlHandle, CURLOPT_HEADER, 0);
+    curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
+    curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($curlHandle, CURLOPT_TIMEOUT, 30);
+    curl_setopt($curlHandle, CURLOPT_POST, 1);
+    curl_setopt($curlHandle, CURLOPT_POSTFIELDS, [
+        'userkey' => $userkey,
+        'passkey' => $passkey,
+        'to' => $telepon,
+        'message' => $message,
+    ]);
+    $results = json_decode(curl_exec($curlHandle), true);
+    curl_close($curlHandle);
+
+    return $response;
+}
+
 function canonical_url()
 {
     if (\Illuminate\Support\Str::startsWith($current = url()->current(), 'https://www')) {
@@ -38,7 +71,6 @@ function active_menu($url)
 }
 function active_menu_frontend($url)
 {
-
     return $url == request()->path() ? 'current-menu-item' : '';
 }
 function check_image_extension($file)

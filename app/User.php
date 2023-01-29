@@ -44,6 +44,7 @@ class User extends Authenticatable
         'pi_url',
         'dr-url',
         'country_code',
+        'phone_verify_token'
     ];
 
     protected $hidden = [

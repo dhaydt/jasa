@@ -41,7 +41,7 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
 
     //user login register forget password
     Route::match(['get', 'post'], '/register', 'Auth\RegisterController@userRegister')->name('user.register');
-    Route::match(['get', 'post'], '/email-verify', 'Auth\RegisterController@emailVerify')->name('email.verify')->middleware('auth:web');
+    Route::match(['get', 'post'], '/email-verify', 'Auth\RegisterController@phoneVerify')->name('email.verify')->middleware('auth:web');
     Route::get('/resend-verify-code-again', 'Auth\RegisterController@resendCode')->name('resend.verify.code')->middleware('auth:web');
     
     Route::post('/get-city-by-country', 'FrontendController@getCity')->name('user.country.city');

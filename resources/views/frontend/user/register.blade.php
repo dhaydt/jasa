@@ -103,7 +103,7 @@ $reg_type = request()->get('type') ?? 'buyer';
                                                 </div>
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Phone Number*') }} </label>
-                                                    <input class="form--control" type="tel" name="phone" id="phone" value="{{old('phone')}}"
+                                                    <input class="form--control" type="number" name="phone" id="phone" value="{{old('phone')}}"
                                                         placeholder="{{__('Type Number')}}">
                                                 </div>
                                             </div>
