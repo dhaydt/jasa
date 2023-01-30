@@ -133,13 +133,13 @@ $reg_type = request()->get('type') ?? 'buyer';
                                     <div class="information-all margin-top-55">
                                         <h3 class="register-title"> {{ __('Service Area') }} </h3>
                                         <div class="info-service">
-                                            <div class="single-info-service margin-top-30 country-wrapper">
+                                            <div class="single-info-service margin-top-30 country-wrapper d-none">
                                                 <div class="single-content">
                                                     <label class="forms-label"> {{ __('Service Country*') }} </label>
                                                     <select name="country" id="country">
                                                         <option value="">{{ __('Select Country') }}</option>
                                                         @foreach ($countries as $country)
-                                                            <option value="{{ $country->id }}">{{ $country->country }}
+                                                            <option value="{{ $country->id }}" {{ $country->country == 'Indonesia' ? 'selected' : '' }}>{{ $country->country }}
                                                             </option>
                                                         @endforeach
                                                     </select>
