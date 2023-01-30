@@ -204,7 +204,7 @@ $reg_type = request()->get('type') ?? 'buyer';
     $(document).ready(function(){
         getCity();
     });
-    function getCountry(){
+    function getCity(){
         let country_id = $("#country").val();
                 $.ajax({
                     method: 'post',
