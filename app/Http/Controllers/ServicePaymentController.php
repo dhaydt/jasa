@@ -22,8 +22,32 @@ class ServicePaymentController extends Controller
         return redirect()->route('frontend.order.payment.cancel.static');
     }
 
+    public function midtrans_ipn()
+    {
+        $midtrans_env =  getenv('MIDTRANS_ENVAIRONTMENT') === 'true';
+        $midtrans_server_key = getenv('MIDTRANS_SERVER_KEY');
+        $midtrans_client_key = getenv('MIDTRANS_CLIENT_KEY');
+        $midtrans = XgPaymentGateway::midtrans();
+        $midtrans->setClientKey($midtrans_client_key);
+        $midtrans->setServerKey($midtrans_server_key);
+        $midtrans->setEnv($midtrans_env); //true mean sandbox mode , false means live mode
+        // dd('called', $midtrans->ipn_response());
+        
+        $payment_data = $midtrans->ipn_response();
+        if (isset($payment_data['status']) && $payment_data['status'] === 'complete'){
+            $this->update_database($payment_data['order_id'], $payment_data['transaction_id']);
+            $this->send_order_mail($payment_data['order_id']);
+            $order_id = $payment_data['order_id'];
+            $random_order_id_1 = Str::random(30);
+            $random_order_id_2 = Str::random(30);
+            $new_order_id = $random_order_id_1.$order_id.$random_order_id_2;
+            return redirect()->route('frontend.order.payment.success',$new_order_id);
+        }
+        return $this->cancel_page();
+    }
     public function paypal_ipn(Request $request)
     {
+    
         $paypal_mode = getenv('PAYPAL_MODE');
         $client_id = $paypal_mode === 'sandbox' ? getenv('PAYPAL_SANDBOX_CLIENT_ID') : getenv('PAYPAL_LIVE_CLIENT_ID');
         $client_secret = $paypal_mode === 'sandbox' ? getenv('PAYPAL_SANDBOX_CLIENT_SECRET') : getenv('PAYPAL_LIVE_CLIENT_SECRET');
@@ -239,30 +263,6 @@ class ServicePaymentController extends Controller
             ->update([
                 'balance' => $get_balance_from_wallet->balance + $deposit_details->amount,
             ]);
-    }
-  
-    public function midtrans_ipn()
-    {
-        $midtrans_env =  getenv('MIDTRANS_ENVAIRONTMENT') === 'true';
-        $midtrans_server_key = getenv('MIDTRANS_SERVER_KEY');
-        $midtrans_client_key = getenv('MIDTRANS_CLIENT_KEY');
-        $midtrans = XgPaymentGateway::midtrans();
-        $midtrans->setClientKey($midtrans_client_key);
-        $midtrans->setServerKey($midtrans_server_key);
-        $midtrans->setEnv($midtrans_env); //true mean sandbox mode , false means live mode
-        // dd('called', $midtrans->ipn_response());
-        
-        $payment_data = $midtrans->ipn_response();
-        if (isset($payment_data['status']) && $payment_data['status'] === 'complete'){
-            $this->update_database($payment_data['order_id'], $payment_data['transaction_id']);
-            $this->send_order_mail($payment_data['order_id']);
-            $order_id = $payment_data['order_id'];
-            $random_order_id_1 = Str::random(30);
-            $random_order_id_2 = Str::random(30);
-            $new_order_id = $random_order_id_1.$order_id.$random_order_id_2;
-            return redirect()->route('frontend.order.payment.success',$new_order_id);
-        }
-        return $this->cancel_page();
     }
 
     public function payfast_ipn()
@@ -528,7 +528,7 @@ class ServicePaymentController extends Controller
         $pusher_auth = get_static_option('pusher_app_push_notification_auth_token'); //"A4EEE003A0AEB2B95F78FAD12EA11D8E1C281448DD8D9B33B47F6E5EC47CEDEA";
         $pusher_auth_url = get_static_option('pusher_app_push_notification_auth_url'); //'https://fcaf9caf-509c-4611-a225-2e508593d6af.pushnotifications.pusher.com/publish_api/v1/instances/fcaf9caf-509c-4611-a225-2e508593d6af/publishes';
         
-           $orderInfo = Order::find( $order_id);
+        $orderInfo = Order::find( $order_id);
         if(!is_null($orderInfo) && !is_null($pusher_auth) && !is_null($pusher_auth_url)){
             $response = Http::withToken($pusher_auth)->acceptJson()->post(
                 $pusher_auth_url

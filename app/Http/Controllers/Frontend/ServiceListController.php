@@ -59,6 +59,12 @@ class ServiceListController extends Controller
         $order_details = Order::find(substr($id, 30, -30));
         return view('frontend.payment.payment-success')->with(['order_details' => $order_details]);
     }
+    public function order_payment_xendit_success($id, $tran)
+    {
+        $order_details = Order::find($id);
+        update_database($id, $tran);
+        return view('frontend.payment.payment-success')->with(['order_details' => $order_details]);
+    }
 
 
     public function serviceDetails($slug)
@@ -783,13 +789,13 @@ class ServiceListController extends Controller
                 ];
 
                 // dd($user);
-                $redirect_url = route('frontend.order.payment.success', $last_order_id);
+                $redirect_url = route('frontend.order.payment.xendit.success', [$last_order_id,$tran]);
 
                 $params = [
                     'external_id' => 'jasakita' . $request->phone . $last_order_id,
                     'amount' => round($value, 0),
                     'payer_email' => $user_email,
-                    'description' => env('APP_NAME') ? env('APP_NAME') : 'Ezren',
+                    'description' => env('APP_NAME') ? env('APP_NAME') : 'JasaKita',
                     // 'payment_methods' => [$type],
                     'fixed_va' => true,
                     'should_send_email' => true,
@@ -800,19 +806,6 @@ class ServiceListController extends Controller
                 // dd($params);
 
                 $checkout_session = \Xendit\Invoice::create($params);
-                // $order_ids = [];
-                // foreach (CartManager::get_cart_group_ids() as $group_id) {
-                //     $data = [
-                //         'payment_method' => 'xendit_payment',
-                //         'order_status' => 'pending',
-                //         'payment_status' => 'unpaid',
-                //         'transaction_ref' => session('transaction_ref'),
-                //         'order_group_id' => $tran,
-                //         'cart_group_id' => $group_id,
-                //     ];
-                //     $order_id = OrderManager::generate_order($data);
-                //     array_push($order_ids, $order_id);
-                // }
 
                 return redirect()->away($checkout_session['invoice_url']);
             } elseif ($request->selected_payment_gateway === 'paytm') {

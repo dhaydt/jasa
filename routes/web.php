@@ -109,6 +109,7 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
 
     //payment status route
     Route::get('/order-success/{id}','Frontend\ServiceListController@order_payment_success')->name('frontend.order.payment.success');
+    Route::get('/xendit-success/{id}/{tran}','Frontend\ServiceListController@order_payment_xendit_success')->name('frontend.order.payment.xendit.success');
     Route::get('/order-cancel/{id}','FrontendController@order_payment_cancel')->name('frontend.order.payment.cancel');
     Route::get('/order-cancel-static','Frontend\ServiceListController@order_payment_cancel_static')->name('frontend.order.payment.cancel.static');
 

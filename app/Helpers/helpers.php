@@ -8,6 +8,7 @@ use App\MediaUpload;
 use App\Menu;
 use App\Page;
 use App\Blog;
+use App\Order;
 
 use Illuminate\Support\Str;
 use Xgenious\Paymentgateway\Facades\XgPaymentGateway;
@@ -21,6 +22,33 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
         $output = ' <meta property="twitter:description" content="' . $image_details['img_url'] . '">';
     }
     return $output;
+}
+
+function update_database($order_id, $transaction_id)
+{
+    Order::where('id', $order_id)->update([
+        'payment_status' => 'complete',
+        'status' => 1,
+        'transaction_id' => $transaction_id,
+    ]);
+    
+    $pusher_auth = get_static_option('pusher_app_push_notification_auth_token'); //"A4EEE003A0AEB2B95F78FAD12EA11D8E1C281448DD8D9B33B47F6E5EC47CEDEA";
+    $pusher_auth_url = get_static_option('pusher_app_push_notification_auth_url'); //'https://fcaf9caf-509c-4611-a225-2e508593d6af.pushnotifications.pusher.com/publish_api/v1/instances/fcaf9caf-509c-4611-a225-2e508593d6af/publishes';
+    
+    $orderInfo = Order::find( $order_id);
+    if(!is_null($orderInfo) && !is_null($pusher_auth) && !is_null($pusher_auth_url)){
+        $response = Http::withToken($pusher_auth)->acceptJson()->post(
+            $pusher_auth_url
+        ,[
+            "interests" => ["debug-seller".$orderInfo->seller_id, 'message'],
+            "fcm" =>[
+                "notification" => [
+                    "title" => "You have received a new order id #".$orderInfo->id,
+                    "body" => ""
+                ]
+            ]
+        ]);
+    }
 }
 
 function zenziva_sms($receiver, $otp)
