@@ -137,11 +137,7 @@ $reg_type = request()->get('type') ?? 'buyer';
                                                 <div class="single-content">
                                                     <label class="forms-label"> {{ __('Service Country*') }} </label>
                                                     <select name="country" id="country">
-                                                        <option value="">{{ __('Select Country') }}</option>
-                                                        @foreach ($countries as $country)
-                                                            <option value="{{ $country->id }}" {{ $country->country == 'Indonesia' ? 'selected' : '' }}>{{ $country->country }}
-                                                            </option>
-                                                        @endforeach
+                                                        <option value="{{ $countries[0]->id }}" selected>{{ $countries[0]->country }}</option>
                                                     </select>
                                                 </div>
                                             </div>
