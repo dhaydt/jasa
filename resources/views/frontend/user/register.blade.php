@@ -201,6 +201,38 @@ $reg_type = request()->get('type') ?? 'buyer';
 @endsection
 @section('scripts')
     <script type="text/javascript">
+    $(document).ready(function(){
+        getCity();
+    });
+    function getCountry(){
+        let country_id = $("#country").val();
+                $.ajax({
+                    method: 'post',
+                    url: "{{ route('user.country.city') }}",
+                    data: {
+                        country_id: country_id,
+                        _token: "{{csrf_token()}}"
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            var alloptions = "<option value=''>{{__('Select City')}}</option>";
+                            var allList = "<li class='option' data-value=''>{{__('Select City')}}</li>";
+                            var allCity = res.cities;
+                            $.each(allCity, function(index, value) {
+                                alloptions += "<option value='" + value.id +
+                                    "'>" + value.service_city + "</option>";
+                                allList += "<li class='option' data-value='" + value.id +
+                                    "'>" + value.service_city + "</li>";
+                            });
+                            $("#service_city").html(alloptions);
+                            $("#service_city").parent().find(".current").html("{{__('Select City')}}");
+                            $("#service_city").parent().find(".list").html(allList);
+                            $(".service_area_wrapper").find(".current").html("{{__('Select Area')}}");
+                            $(".service_area_wrapper .list").html("");
+                        }
+                    }
+                })
+    }
         (function() {
             "use strict";
             $(document).ready(function() {
