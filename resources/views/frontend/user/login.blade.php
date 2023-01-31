@@ -18,8 +18,9 @@
                 <form class="signup-forms" action="{{ route('user.login')}}" method="post">
                     @csrf
                     <div class="single-signup margin-top-30">
-                        <label class="signup-label"> {{__('Username or Email *')}} </label>
-                        <input class="form--control" type="text" name="username" id="username" placeholder="{{__('Username Or Email')}}">
+                        <label class="signup-label"> {{__('Username atau Email atau Nomor Handphone*')}} </label>
+                        <input class="form--control" type="text" name="username" id="username" placeholder="{{__('Username atau Email atau nomor Handphone')}}">
+                        <small class="text-danger">jika menggunakan nomor handphone, minimal angka adalah 10</small>
                     </div>
                     <div class="single-signup margin-top-30">
                         <label class="signup-label"> {{ __('Password*') }} </label>
@@ -28,10 +29,10 @@
                     <div class="signup-checkbox">
                         <div class="checkbox-inlines">
                             <input class="check-input" name="remember" id="remember" type="checkbox" id="check8">
-                            <label class="checkbox-label" for="remember"> {{ __('Remember me')}}</label>
+                            <label class="checkbox-label" for="remember"> {{ __('Ingatkan saya')}}</label>
                         </div>
                         <div class="forgot-btn">
-                            <a href="{{ route('user.forget.password') }}" class="forgot-pass"> {{ __('Forgot Password') }}</a>
+                            <a href="{{ route('user.forget.password') }}" class="forgot-pass"> {{ __('Lupa Password') }}</a>
                         </div>
                     </div>
                     <button id="signin_form" type="submit">{{ __('Login Now') }}</button>

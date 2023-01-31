@@ -108,11 +108,14 @@ class LoginController extends Controller
      */
     public function userLogin(Request $request)
     {
-
-
-
         if($request->isMethod('post')){
-            $email_or_username = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+            $count = strlen(preg_replace("/[^\d]/", '', $request->username));
+            // dd($count);
+            if ($count >= 10 && $count <= 15) {
+                $email_or_username = 'phone';
+            } else {
+                $email_or_username = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+            }
             $request->validate([
                 'username' => 'required|string',
                 'password' => 'required|min:6'
