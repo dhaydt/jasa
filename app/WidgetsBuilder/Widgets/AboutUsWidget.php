@@ -42,7 +42,7 @@ class AboutUsWidget extends WidgetBase
         $settings = $this->get_settings();
         $description = purify_html($settings['description']);
         $route = route('homepage');
-        $logo = render_image_markup_by_attachment_id($settings['image']);
+        $logo = render_image_markup_by_attachment_id(get_static_option('site_logo'));
    
    return <<<HTML
    <div class="col-lg-3 col-md-6 col-sm-6">

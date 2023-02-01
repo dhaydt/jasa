@@ -1420,6 +1420,7 @@ class SellerController extends Controller
         if($payment_status->status !=2){
             if($payment_status->payment_status =='complete'){
                 $order_details = Order::select(['id','seller_id','buyer_id','service_id'])->where('id',$request->order_id)->first();
+                // dd($order_details);
                 if($request->status==2){
                     Order::where('id',$request->order_id)->update(['order_complete_request'=>1]);
                     toastr_success(__('Your request submitted. Buyer will complete your request after review'));
