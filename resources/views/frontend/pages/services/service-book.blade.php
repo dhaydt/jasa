@@ -858,7 +858,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                 @endif
                                                 <div class="single-checkbox">
                                                     <div class="checkbox-inlines">
-                                                        <label class="checkbox-label" for="check2">
+                                                        <label class="checkbox-label d-none" for="check2">
                                                             {!!
                                                             \App\Helpers\PaymentGatewayRenderHelper::renderPaymentGatewayForForm($service_details_for_book->is_service_online
                                                             != 1) !!}
