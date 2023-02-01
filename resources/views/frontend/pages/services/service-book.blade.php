@@ -292,7 +292,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                     </div>
                                     <div class="overview-single padding-top-40">
                                         <h4 class="title">{{ get_static_option('service_main_attribute_title') ??
-                                            __('Apa yang termasuk?') }}</h4>
+                                            __('Jasa terdiri dari :') }}</h4>
                                         <div class="include-contents margin-top-30">
                                             @foreach ($service_includes as $include)
                                             <div class="single-include include_service_id_{{ $include->id }}">
@@ -334,7 +334,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                     </div>
                                     <div class="overview-single padding-top-60 extra-services">
                                         <h4 class="title">{{ get_static_option('service_additional_attribute_title') ??
-                                            __('Tingkatkan pesanan Anda dengan tambahan') }}
+                                            __('Jasa Tambahan :') }}
                                         </h4>
                                         <div class="row">
                                             @foreach ($service_additionals as $additional)
@@ -378,8 +378,8 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                         </div>
                                     </div>
                                     <div class="overview-single padding-top-60">
-                                        <h4 class="title">{{ get_static_option('service_benifits_title') ?? __('Manfaat
-                                            Paket:') }}</h4>
+                                        <h4 class="title">{{ get_static_option('service_benifits_title') ?? __('Deskripsi Jasa
+                                            :') }}</h4>
                                         <ul class="overview-benefits margin-top-30">
                                             @foreach ($service_benifits as $benifit)
                                             <li class="list">{{ $benifit->benifits }}</li>
@@ -422,14 +422,14 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                             </div>
                             <div class="col-lg-4 margin-top-30">
                                 <div class="service-overview-summery">
-                                    <h4 class="title"> {{ get_static_option('service_booking_title') ?? __('Ringkasan
-                                        pemesanan') }} </h4>
+                                    <h4 class="title"> {{ get_static_option('service_booking_title') ?? __('Detail Pesanan
+                                        ') }} </h4>
                                     <div class="overview-summery-contents">
                                         <div class="single-summery">
                                             <span class="summery-title">
                                                 @if($service_details_for_book->is_service_online != 1)
                                                 {{ get_static_option('service_appoinment_package_title') ??
-                                                __('Layanan Paket Janji Temu') }}
+                                                __('Paket Jasa :') }}
                                                 @else
                                                 <ul class='onlilne-special-list '>
                                                     <li><i class="las la-clock"></i> {{ __('Delivery Days').':
@@ -559,7 +559,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                 <div class="col-lg-4">
                                     <div class="single-date-overview margin-top-30">
                                         <h4 class="date-time-title"> {{
-                                            get_static_option('service_available_date_title') ?? __('Available Date') }}
+                                            get_static_option('service_available_date_title') ?? __('Pilih Tanggal') }}
                                         </h4>
                                         <div class="calendar-area margin-top-30">
                                             <input type="date" name="service_available_dates"
@@ -574,8 +574,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                 <div class="col-lg-8">
                                     <div class="single-date-overview margin-top-30">
                                         <h4 class="date-time-title"> {{
-                                            get_static_option('service_available_schudule_title') ?? __('Available
-                                            Schedule') }} </h4>
+                                            get_static_option('service_available_schudule_title') ?? __('Pilih Jam') }} </h4>
                                         <ul class="date-time-list margin-top-20 show-schedule">
 
                                         </ul>
@@ -675,7 +674,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                     @if($service_details_for_book->is_service_online != 1)
                                     <div class="single-confirm-overview">
                                         <div class="single-confirm margin-top-30">
-                                            <h3 class="titles">{{ __('Your Location') }}</h3>
+                                            <h3 class="titles">{{ __('Lokasi Anda') }}</h3>
                                             @if(Auth::guard('web')->check())
                                             <span class="location details get_city_name">{{
                                                 optional(Auth::guard('web')->user()->city)->service_city }}</span>
@@ -746,13 +745,12 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                             </div>
                             <div class="col-lg-4 margin-top-60">
                                 <div class="service-overview-summery">
-                                    <h4 class="title">{{ get_static_option('service_booking_title') ?? __('Booking
-                                        Summery') }}</h4>
+                                    <h4 class="title">{{ get_static_option('service_booking_title') ?? __('Detail 
+                                        Pesanan') }}</h4>
                                     <div class="overview-summery-contents">
                                         <div class="single-summery">
                                             @if($service_details_for_book->is_service_online != 1)
-                                            {{ get_static_option('service_appoinment_package_title') ?? __('Appointment
-                                            Package Service') }}
+                                            {{ get_static_option('service_appoinment_package_title') ?? __('Paket Jasa') }}
                                             @else
                                             <ul class='onlilne-special-list '>
                                                 <li><i class="las la-clock"></i> {{ __('Delivery Days').':
@@ -872,7 +870,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                 <input class="check-input" type="checkbox" id="check3">
                                                 <label class="checkbox-label" for="check3">{{ __('I agree with') }}
                                                     <a href="{{ get_static_option('terms_and_conditions_link') ?? '#'  }}"
-                                                        target="_blank">{{ __('terms and conditions *') }}</a></label>
+                                                        target="_blank">{{ __('Syarat & Ketentuan *') }}</a></label>
                                             </div>
                                         </div>
                                         {{-- form inputs --}}
@@ -895,8 +893,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             @if($service_details_for_book->is_service_online == 1)
                                             @if(Auth::guard('web')->check())
                                             <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
-                                                get_static_option('service_order_confirm_title') ?? __('Pay & Confirm
-                                                Your Order') }} </button>
+                                                get_static_option('service_order_confirm_title') ?? __('Bayar & Booking') }} </button>
                                             @else
                                             <a class="cmn-btn btn-appoinment btn-bg-1"
                                                 href="{{route('user.login')}}?return={{request()->path()}}">{{ __('Sign

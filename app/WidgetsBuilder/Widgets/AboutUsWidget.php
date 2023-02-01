@@ -40,7 +40,8 @@ class AboutUsWidget extends WidgetBase
     public function frontend_render()
     {
         $settings = $this->get_settings();
-        $description = purify_html($settings['description']);
+        // $description = purify_html($settings['description']);
+        $description = 'Jasakita.id  adalah aplikasi bisnis home service yang melayani berbagai macam jasa home service, seperti jasa elektronik, pembersihan, laundry, body care dan catering';
         $route = route('homepage');
         $logo = render_image_markup_by_attachment_id(get_static_option('site_logo'));
    
