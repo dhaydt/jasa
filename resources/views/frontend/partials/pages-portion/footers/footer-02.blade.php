@@ -1,3 +1,9 @@
+<style>
+    .footer-logo img {
+        height: 90px;
+    }
+
+</style>
 <footer class="footer-area gradient-footer color-two">
     <div class="footer-top padding-top-100 padding-bottom-70">
         <div class="container container-two">
