@@ -40,7 +40,7 @@ $reg_type = request()->get('type') ?? 'buyer';
                                                 <i class="las la-briefcase"></i>
                                             </div>
                                             <div class="contents">
-                                                {{-- <h4 class="title" id="seller"> {{ get_static_option('register_seller_title') ?? __('Seller') }}</h4> --}}
+                                                {{-- <h4 class="title" id="seller"> {{ get_static_option('register_seller_title') ?? __('Vendor') }}</h4> --}}
                                                 <h4 class="title" id="seller"> Vendor</h4>
                                             </div>
                                         </div>
@@ -53,7 +53,6 @@ $reg_type = request()->get('type') ?? 'buyer';
                                                 <i class="las la-user-alt"></i>
                                             </div>
                                             <div class="contents">
-                                                {{-- <h4 class="title" id="buyer"> {{ get_static_option('register_buyer_title') ?? __('Buyer') }}</h4> --}}
                                                 <h4 class="title" id="buyer"> Konsumen</h4>
                                             </div>
                                         </div>

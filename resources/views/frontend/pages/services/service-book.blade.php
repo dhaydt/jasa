@@ -696,12 +696,12 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             <span class="location details get_country_name"></span>
                                             @endif
                                         </div>
-                                        {{-- <div class="single-confirm margin-top-30">
+                                        <div class="single-confirm margin-top-30">
                                             <h3 class="titles">{{ __('Order Location') }}</h3>
                                             <span class="details country_name_text"></span>
                                             <span class="details city_name_text"></span>
                                             <span class="details area_name_text"></span>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                     <div class="single-confirm margin-top-30">
                                         <h3 class="titles">{{ __('Date & Time') }}</h3>
@@ -842,8 +842,8 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                     <li class="result-list">
                                                         <input type="text" name="coupon_code"
                                                             class="form-control coupon_code"
-                                                            placeholder="{{__('Enter Coupon Code')}}">
-                                                        <button class="apply-coupon">{{ __('Apply') }}</button>
+                                                            placeholder="{{__('Masukan Kode Kupon')}}">
+                                                        <button class="apply-coupon">{{ __('Terapkan') }}</button>
                                                     </li>
                                                 </ul>
                                             </div>
