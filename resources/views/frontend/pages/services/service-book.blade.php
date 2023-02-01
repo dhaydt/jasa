@@ -868,7 +868,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             </div>
                                             <div class="checkbox-inlines bottom-checkbox terms-and-conditions">
                                                 <input class="check-input" type="checkbox" id="check3">
-                                                <label class="checkbox-label" for="check3">{{ __('I agree with') }}
+                                                <label class="checkbox-label" for="check3">{{ __('Saya setuju dengan') }}
                                                     <a href="{{ get_static_option('terms_and_conditions_link') ?? '#'  }}"
                                                         target="_blank">{{ __('Syarat & Ketentuan *') }}</a></label>
                                             </div>
@@ -892,8 +892,9 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                         <div class="btn-wrapper">
                                             @if($service_details_for_book->is_service_online == 1)
                                             @if(Auth::guard('web')->check())
-                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
-                                                get_static_option('service_order_confirm_title') ?? __('Bayar & Booking') }} </button>
+                                            {{-- <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
+                                                get_static_option('service_order_confirm_title') ?? __('Bayar & Booking') }} </button> --}}
+                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Bayar & Booking</button>
                                             @else
                                             <a class="cmn-btn btn-appoinment btn-bg-1"
                                                 href="{{route('user.login')}}?return={{request()->path()}}">{{ __('Sign
@@ -902,9 +903,10 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                 services')}}</small>
                                             @endif
                                             @else
-                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
+                                            {{-- <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
                                                 get_static_option('service_order_confirm_title') ?? __('Pay & Confirm
-                                                Your Order') }} </button>
+                                                Your Order') }} </button> --}}
+                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Bayar & Booking </button>
                                             @endif
                                         </div>
                                     </div>
