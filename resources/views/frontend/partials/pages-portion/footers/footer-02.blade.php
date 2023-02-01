@@ -1,6 +1,6 @@
 <style>
     .footer-logo img {
-        height: 90px;
+        height: 50px;
     }
 
 </style>
