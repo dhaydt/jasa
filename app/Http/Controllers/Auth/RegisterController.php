@@ -113,6 +113,7 @@ class RegisterController extends Controller
             ]);
 
             $email_verify_tokn = rand(1231,7879);
+            $token = $email_verify_tokn;
             $user_type = get_static_option('buyer_register_on_off') === 'off' ? 0 : $request->get_user_type;
             $user = User::create([
                 'name' => $request->name,
@@ -123,10 +124,10 @@ class RegisterController extends Controller
                 'service_city' => $request->service_city,
                 'service_area' => $request->service_area,
                 'country_id' => $request->country,
+                'phone_verify_token' => $token,
                 'user_type' => $user_type,
                 'terms_conditions' => 1,
-                'email_verify_token' => $email_verify_tokn,
-                'phone_verify_token' => $email_verify_tokn,
+                'email_verify_token' => $token,
             ]);
 
             if ($user) {
@@ -136,7 +137,7 @@ class RegisterController extends Controller
                     $user_type = 'buyer';
                 }
 
-                zenziva_sms($request->phone, $email_verify_tokn);
+                zenziva_sms($request->phone, $token);
 
                 // try {
                 //     $message = get_static_option('user_email_verify_message');
