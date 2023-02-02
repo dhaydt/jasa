@@ -33,8 +33,9 @@
                                 @csrf
                                 <div class="allow_multiple_schedule">
                                     @php
-                                        $allow_or_not = App\Schedule::select('allow_multiple_schedule')->first();
+                                        $allow_or_not = App\Schedule::select('allow_multiple_schedule')->first() ?? ["allow_multiple_schedule" => "yes"];
                                     @endphp
+                                    {{-- {{ dd($allow_or_not) }} --}}
                                     <label class="total_day_label"> {{ __('Allow Multiple Order to Same Schedule ') }} </label>
                                     <select name="allow_multiple_schedule">
                                         <option value="{{ __('yes') }}" @if($allow_or_not->allow_multiple_schedule=='yes') selected @endif> {{ __('Yes') }}</option>
