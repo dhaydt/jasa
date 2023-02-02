@@ -101,6 +101,16 @@
                                             <label for="title" class="info-title"> {{__('Service Title*')}} </label>
                                             <input class="form--control" name="title" id="title" value="{{$service->title}}" type="text" placeholder="{{__('Add title')}}">
                                         </div>
+                                        {{-- {{ dd(json_decode($service->brands)) }} --}}
+                                        <div class="single-info-input margin-top-30">
+                                            <label for="title" class="info-title"> {{__('Brands')}} </label>
+                                            <select  name="brands[]" id="brands" class="brands" multiple>
+                                                <option value="">{{__('Select Brands')}}</option>
+                                                @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}" {{ in_array($brand->id, json_decode($service->brands)) ? 'selected' : '' }}>{{ $brand->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="single-info-input margin-top-30 mt-5">
                                             <label for="video" class="info-title"> {{__('Service Video Url')}} </label>
                                             <input class="form--control" name="video" id="video" value="{{$service->video}}" type="text" placeholder="{{__('youtube embed code')}}">

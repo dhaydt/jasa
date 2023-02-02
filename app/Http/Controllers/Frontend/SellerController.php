@@ -44,6 +44,7 @@ use App\Events\SupportMessage;
 use App\Helpers\FlashMsg;
 use App\PayoutRequest;
 use App\AmountSettings;
+use App\Brand;
 use App\SellerVerify;
 use Carbon\Carbon;
 use Auth;
@@ -387,7 +388,7 @@ class SellerController extends Controller
             $request->validate([
                 'category' => 'required',
                 'title' => 'required|max:191|unique:services',
-                'description' => 'required|min:150',
+                'description' => 'required|min:10',
                 'slug' => 'required',
             ]);
 
@@ -400,6 +401,7 @@ class SellerController extends Controller
             $service->child_category_id = $request->child_category;
             $service->title = $request->title;
             $service->slug = $request->slug;
+            $service->brands= json_encode($request->brands);
             $service->description = $request->description;
             $service->image = $request->image;
             $service->image_gallery = $request->image_gallery;
@@ -444,7 +446,8 @@ class SellerController extends Controller
 
         $categories = Category::where('status', 1)->get();
         $sub_categories = Subcategory::all();
-        return view('frontend.user.seller.services.add-service', compact('categories', 'sub_categories'));
+        $brands = Brand::all();
+        return view('frontend.user.seller.services.add-service', compact('categories', 'sub_categories', 'brands'));
     }
 
     public function getSubcategory(Request $request)
@@ -745,7 +748,7 @@ class SellerController extends Controller
             $request->validate([
                 'category' => 'required',
                 'title' => 'required|max:191|unique:services,id,'.$id,
-                'description' => 'required|min:150',
+                'description' => 'required|min:10',
             ]);
 
             $seller_country = User::select('id','country_id')->where('country_id',Auth::guard('web')->user()->country_id)->first();
@@ -753,6 +756,8 @@ class SellerController extends Controller
 
             $old_image = Service::select('image','image_gallery')->where('id',$id)->first();
             $old_slug = Service::select('slug')->where('id',$id)->first();
+
+            // dd($request->brands);
 
             Service::where('id', $id)->update([
                 'category_id' => $request->category,
@@ -766,6 +771,7 @@ class SellerController extends Controller
                 'video' => $request->video,
                 'tax' => $country_tax->tax ?? 0,
                 'status' => 0,
+                'brands' => json_encode($request->brands),
                 'is_service_all_cities' => $request->is_service_all_cities,
             ]);
 
@@ -807,9 +813,10 @@ class SellerController extends Controller
         $categories = Category::where('status', 1)->get();
         $sub_categories = Subcategory::all();
         $child_categories = ChildCategory::all();
+        $brands= Brand::all();
         $service = Service::with('subcategory', 'childcategory')->find($id);
         if($service != ''){
-            return view('frontend.user.seller.services.edit-service', compact('categories', 'sub_categories', 'service', 'child_categories'));
+            return view('frontend.user.seller.services.edit-service', compact('categories', 'sub_categories', 'service', 'child_categories', 'brands'));
         }else{
             abort(404);
         }
@@ -1307,10 +1314,13 @@ class SellerController extends Controller
     //orders
     public function pendingOrders()
     {
+        $id = Auth::guard('web')->user()->id;
         $pending_orders = Order::with('service')
-            ->where('seller_id', Auth::guard('web')->user()->id)
-            ->where('status',0)
-            ->orWhere('status',1)
+            ->where('seller_id', $id)
+            ->where(function($q){
+                $q->where('status', 0)
+                ->orWhere('status', 1);
+            })
             ->paginate(10);
         return view('frontend.user.seller.order.pending-orders', compact('pending_orders'));
     }

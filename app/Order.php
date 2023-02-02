@@ -18,6 +18,7 @@ class Order extends Model
         'buyer_id',
         'name',
         'email',
+        'brands',
         'phone',
         'post_code',
         'address',

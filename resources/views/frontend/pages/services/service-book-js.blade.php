@@ -421,6 +421,7 @@
                     let post_code = $('#post_code').val();
                     let address =   $('#address').val();
                     let order_note = $('#order_note').val();
+                    let brand = $('select[name="brands"]').val();
 
                     //set value in confirmation fieldset
                     $('.booking-details .get_name').text(name);
@@ -429,6 +430,7 @@
                     $('.booking-details .get_post_code').text(post_code);
                     $('.booking-details .get_address').text(address);
                     $('.booking-details .get_order_note').text(order_note);
+                    $('.booking-details .get_brand').text(brand);
                     if(name=='' || email=='' || phone=='' || post_code=='' || address==''){
                         Command: toastr["warning"]("{{__('Please fill all fields.!')}}", "Aviso")
                         toastr.options = {

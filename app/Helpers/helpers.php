@@ -8,8 +8,11 @@ use App\MediaUpload;
 use App\Menu;
 use App\Page;
 use App\Blog;
+use App\Brand;
+use App\Helpers\FlashMsg;
+use App\Mail\OrderMail;
 use App\Order;
-
+use App\User;
 use Illuminate\Support\Str;
 use Xgenious\Paymentgateway\Facades\XgPaymentGateway;
 
@@ -22,6 +25,37 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
         $output = ' <meta property="twitter:description" content="' . $image_details['img_url'] . '">';
     }
     return $output;
+}
+
+function send_order_mail($order_id)
+    {
+        if(empty($order_id)){
+            return redirect()->route('homepage');    
+        }
+        
+        $order_details = Order::find($order_id);
+        $seller_email = User::select('email')->where('id',$order_details->seller_id)->first();
+        //Send order email to buyer
+        try {
+            $message_for_buyer = get_static_option('new_order_buyer_message') ?? __('You have successfully placed an order #');
+            $message_for_seller_admin = get_static_option('new_order_admin_seller_message') ?? __('You have a new order #');
+            Mail::to($order_details->email)->send(new OrderMail(strip_tags($message_for_buyer).$order_details->id,$order_details));
+            Mail::to($seller_email)->send(new OrderMail(strip_tags($message_for_seller_admin).$order_details->id,$order_details));
+            Mail::to(get_static_option('site_global_email'))->send(new OrderMail(strip_tags($message_for_seller_admin).$order_details->id,$order_details));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(FlashMsg::error($e->getMessage()));
+        }
+
+    }
+
+function getBrands($id){
+    $brand = Brand::find($id);
+    if($brand){
+        $data = $brand->title;
+    }else{
+        $data = 'Brand tidak ditemukan';
+    }
+    return $data;
 }
 
 function update_database($order_id, $transaction_id)

@@ -290,49 +290,68 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             </div>
                                         </div>
                                     </div>
+                                    @if (count(json_decode($service_details_for_book->brands)) > 0)
                                     <div class="overview-single padding-top-40">
-                                        <h4 class="title">{{ get_static_option('service_main_attribute_title') ??
-                                            __('Jasa terdiri dari :') }}</h4>
+                                        <h4 class="title">Pilih Merk</h4>
                                         <div class="include-contents margin-top-30">
-                                            @foreach ($service_includes as $include)
-                                            <div class="single-include include_service_id_{{ $include->id }}">
-                                                <ul class="include-list">
-                                                    <li class="lists">
-                                                        <div class="list-single">
-                                                            <span class="rooms">{{ $include->include_service_title
-                                                                }}</span>
-                                                        </div>
-
-                                                        @if($service_details_for_book->is_service_online !=1)
-                                                        <div class="list-single">
-                                                            <span class="values"
-                                                                id="include_service_unit_price_{{ $include->id }}">
-                                                                {{
-                                                                amount_with_currency_symbol($include->include_service_price)
-                                                                }}
-                                                            </span>
-                                                            <span class="value-input">
-                                                                <input type="number" min="1"
-                                                                    class="inc_dec_include_service"
-                                                                    data-id="{{ $include->id }}"
-                                                                    data-price="{{ $include->include_service_price }}"
-                                                                    value="{{ $include->include_service_quantity }}">
-                                                            </span>
-                                                        </div>
-                                                        @endif
-                                                    </li>
-                                                    @if($service_details_for_book->is_service_online !=1)
-                                                    <li class="lists remove-service-list" data-id="{{ $include->id }}">
-                                                        <a class="remove" href="javascript:void(0)">{{ __('Remove') }}
-                                                        </a>
-                                                    </li>
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                            @endforeach
+                                            <select name="brands" class="form-select" id="brands">
+                                                <option value="">-- Pilih Merk --</option>
+                                                @foreach (json_decode($service_details_for_book->brands) as $b)
+                                                    <option value="{{ getBrands($b) }}">{{ getBrands($b) }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="overview-single padding-top-60 extra-services">
+                                    @endif
+                                    <div class="overview-single padding-top-40">
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <span class="title text-dark">Jumlah</span>
+                                            {{-- <h4 class="title">{{ get_static_option('service_main_attribute_title') ??
+                                                __('Jasa terdiri dari :') }}</h4> --}}
+                                            <div class="include-contents d-flex justify-content-between align-items-center">
+                                                @foreach ($service_includes as $include)
+                                                <div class="single-include include_service_id_{{ $include->id }}">
+                                                    <ul class="include-list">
+                                                        <li class="lists">
+                                                            {{-- <div class="list-single">
+                                                                <span class="rooms">{{ $include->include_service_title
+                                                                    }}</span>
+                                                            </div> --}}
+    
+                                                            @if($service_details_for_book->is_service_online !=1)
+                                                            <div class="list-single">
+                                                                {{-- <span class="values"
+                                                                    id="include_service_unit_price_{{ $include->id }}">
+                                                                    {{
+                                                                    amount_with_currency_symbol($include->include_service_price)
+                                                                    }}
+                                                                </span> --}}
+                                                                <span class="value-input text-dark">
+                                                                    <input type="number" min="1"
+                                                                        class="inc_dec_include_service text-dark"
+                                                                        style="font-size: 18px; border:none;"
+                                                                        data-id="{{ $include->id }}"
+                                                                        data-price="{{ $include->include_service_price }}"
+                                                                        value="{{ $include->include_service_quantity }}">
+                                                                </span>
+                                                            </div>
+                                                            @endif
+                                                        </li>
+                                                        @if($service_details_for_book->is_service_online !=1)
+                                                        {{-- <li class="lists remove-service-list" data-id="{{ $include->id }}">
+                                                            <a class="remove" href="javascript:void(0)">{{ __('Remove') }}
+                                                            </a>
+                                                        </li> --}}
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                            <span class="value-count service-subtotal text-dark" style="font-size: 18px;"></span>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="overview-single padding-top-60 extra-services">
                                         <h4 class="title">{{ get_static_option('service_additional_attribute_title') ??
                                             __('Jasa Tambahan :') }}
                                         </h4>
@@ -376,8 +395,8 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             </div>
                                             @endforeach
                                         </div>
-                                    </div>
-                                    <div class="overview-single padding-top-60">
+                                    </div> --}}
+                                    {{-- <div class="overview-single padding-top-60">
                                         <h4 class="title">{{ get_static_option('service_benifits_title') ?? __('Deskripsi Jasa
                                             :') }}</h4>
                                         <ul class="overview-benefits margin-top-30">
@@ -385,6 +404,14 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             <li class="list">{{ $benifit->benifits }}</li>
                                             @endforeach
                                         </ul>
+                                    </div> --}}
+                                    <div class="overview-single padding-top-60">
+                                        <h4 class="title">Keluhan Kerusakan</h4>
+                                        <div class="single-info-input overview-benefits margin-top-30">
+                                            <textarea class="form-control textarea--form" name="order_note" id="order_note"
+                                                placeholder="{{ __('Keluhan Anda') }}"></textarea>
+                                            <span>{{__('Max: 190 Character')}}</span>
+                                        </div>
                                     </div>
 
                                     @if($service_details_for_book->is_service_online == 1)
@@ -589,6 +616,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                     </fieldset>
                     @endif
                     <!-- Information -->
+                    {{-- {{ dd($service_details_for_book) }} --}}
                     <fieldset class="padding-top-20 padding-bottom-100 confirm-information">
                         <div class="Info-overview padding-top-30">
                             <h3 class="date-time-title">{{ get_static_option('service_booking_information_title') ??
@@ -629,14 +657,14 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                     value="{{ Auth::user()->address }}" @else value="" @endif>
                                 </div>
                             </div>
-                            <div class="single-info-overview margin-top-30">
+                            {{-- <div class="single-info-overview margin-top-30">
                                 <div class="single-info-input">
                                     <label class="info-title">{{ __('Order Note*') }} </label>
                                     <textarea class="form--control textarea--form" name="order_note" id="order_note"
                                         placeholder="{{ __('Type Order Note') }}"></textarea>
                                     <span>{{__('Max: 190 Character')}}</span>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <input type="button" name="next" class="next action-button" value="{{__('Berikutnya')}}" />
                         <input type="button" name="previous" class="previous action-button-previous"
@@ -735,7 +763,11 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                     <span class="list-strong get_address"></span>
                                                 </li>
                                                 <li class="lists">
-                                                    <span class="list-span">{{ __('Order Note:') }}</span>
+                                                    <span class="list-span">{{ __('Merk:') }}</span>
+                                                    <span class="list-strong get_brand"></span>
+                                                </li>
+                                                <li class="lists">
+                                                    <span class="list-span">{{ __('Keluhan:') }}</span>
                                                     <span class="list-strong get_order_note"></span>
                                                 </li>
                                             </ul>

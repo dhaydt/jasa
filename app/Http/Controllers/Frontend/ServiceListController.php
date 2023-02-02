@@ -63,7 +63,13 @@ class ServiceListController extends Controller
     {
         $order_details = Order::find($id);
         update_database($id, $tran);
-        return view('frontend.payment.payment-success')->with(['order_details' => $order_details]);
+        send_order_mail($id);
+        $order_id = $id;
+        $random_order_id_1 = Str::random(30);
+        $random_order_id_2 = Str::random(30);
+        $new_order_id = $random_order_id_1.$order_id.$random_order_id_2;
+        return redirect()->route('frontend.order.payment.success',$new_order_id);
+        // return view('frontend.payment.payment-success')->with(['order_details' => $order_details]);
     }
 
 
@@ -362,6 +368,7 @@ class ServiceListController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'brands' => $request->brands,
                 'post_code' => $request->post_code ?? 0000,
                 'address' => $request->address,
                 'city' => $request->choose_service_city,
