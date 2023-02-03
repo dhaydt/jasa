@@ -304,29 +304,29 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                     </div>
                                     @endif
                                     <div class="overview-single padding-top-40">
-                                        <div class="d-flex justify-content-between align-items-center">
+                                        {{-- <div class="d-flex justify-content-between align-items-center"> --}}
 
                                             <span class="title text-dark">Jumlah</span>
                                             {{-- <h4 class="title">{{ get_static_option('service_main_attribute_title') ??
                                                 __('Jasa terdiri dari :') }}</h4> --}}
-                                            <div class="include-contents d-flex justify-content-between align-items-center">
+                                            <div class="include-contents margin-top-30">
                                                 @foreach ($service_includes as $include)
                                                 <div class="single-include include_service_id_{{ $include->id }}">
                                                     <ul class="include-list">
                                                         <li class="lists">
-                                                            {{-- <div class="list-single">
+                                                            <div class="list-single">
                                                                 <span class="rooms">{{ $include->include_service_title
                                                                     }}</span>
-                                                            </div> --}}
+                                                            </div>
     
                                                             @if($service_details_for_book->is_service_online !=1)
                                                             <div class="list-single">
-                                                                {{-- <span class="values"
+                                                                <span class="values"
                                                                     id="include_service_unit_price_{{ $include->id }}">
                                                                     {{
                                                                     amount_with_currency_symbol($include->include_service_price)
                                                                     }}
-                                                                </span> --}}
+                                                                </span>
                                                                 <span class="value-input text-dark">
                                                                     <input type="number" min="1"
                                                                         class="inc_dec_include_service text-dark"
@@ -339,19 +339,19 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                             @endif
                                                         </li>
                                                         @if($service_details_for_book->is_service_online !=1)
-                                                        {{-- <li class="lists remove-service-list" data-id="{{ $include->id }}">
+                                                        <li class="lists remove-service-list" data-id="{{ $include->id }}">
                                                             <a class="remove" href="javascript:void(0)">{{ __('Remove') }}
                                                             </a>
-                                                        </li> --}}
+                                                        </li>
                                                         @endif
                                                     </ul>
                                                 </div>
                                                 @endforeach
                                             </div>
-                                            <span class="value-count service-subtotal text-dark" style="font-size: 18px;"></span>
-                                        </div>
+                                            {{-- <span class="value-count service-subtotal text-dark" style="font-size: 18px;"></span> --}}
+                                        {{-- </div> --}}
                                     </div>
-                                    {{-- <div class="overview-single padding-top-60 extra-services">
+                                    <div class="overview-single padding-top-60 extra-services">
                                         <h4 class="title">{{ get_static_option('service_additional_attribute_title') ??
                                             __('Jasa Tambahan :') }}
                                         </h4>
@@ -395,7 +395,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             </div>
                                             @endforeach
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     {{-- <div class="overview-single padding-top-60">
                                         <h4 class="title">{{ get_static_option('service_benifits_title') ?? __('Deskripsi Jasa
                                             :') }}</h4>
