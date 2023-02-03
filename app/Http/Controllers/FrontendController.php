@@ -43,6 +43,16 @@ class FrontendController extends Controller
 
     }
 
+    public function setCity($city_id){
+        if($city_id == '0'){
+            session()->forget('city_id');
+        }else{
+            session()->put('city_id', $city_id);
+        }
+
+        return redirect()->back();
+    }
+
     public function home_page_change($id)
     {
         if (!in_array($id, ['01', '02', '03', '04','05'])) {

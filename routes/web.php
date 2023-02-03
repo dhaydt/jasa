@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PageBuilderController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -28,6 +29,8 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
     Route::get('/home-search', 'FrontendController@home_search')->name('frontend.home.search');
     Route::get('/home-search-two', 'FrontendController@home_search_two')->name('frontend.home.search.two');
     Route::get('/home-search/single-page', 'FrontendController@home_search_single_page')->name('frontend.home.search.single');
+
+    Route::get('/set-city/{city_id}', [FrontendController::class, 'setCity'])->name('set_city');
 
     //blog routes
     $blog_page_slug = getSlugFromReadingSetting('blog_page') ?? 'blog';

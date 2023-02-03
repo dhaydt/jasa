@@ -223,14 +223,30 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
             array_push($merged, $data);
         }
 
+        $cit = session()->get('city_id');
+        
         foreach ($merged as $city) {
             $cityN = $city['name'];
+            if($cit == $city['id']){
+                $active = 'active';
+            }else{
+                $active = '';
+                $all = 'active';
+            }
             $city_markup .= <<<CITY
-            <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a>
+            <!-- <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a> -->
+            <a href="set-city/{$city['id']}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a>
             CITY;
         }
 
         $cat = Category::with('services')->where('status', 1)->get();
+        // if($cit == null){
+        //     $cat = Category::with('services')->where('status', 1)->get();
+        // }else{
+        //     $cat = Category::with('services')->whereHas('services', function($q)use($cit){
+        //         $q->where('service_city_id', $cit);
+        //     })->get();
+        // }
 
         $category_markup = '';
 
@@ -273,8 +289,19 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                     // </div>';
                 }
 
+
+                if($cit == null){
+                    $show = '';
+                }else{
+                    if($cit == $servis['service_city_id']){
+                        $show = '';
+                    }else{
+                        $show = 'd-none';
+                    }
+                }
+
                 $servis_markup .= <<<SERVIS
-                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 wow fadeInUp" data-wow-delay=".2s">
+                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 {$show} wow fadeInUp" data-wow-delay=".2s">
                     <div class="single-service service-two style-03 section-bg-2">
                         <a href="{$servisRroute}" class="service-thumb service-bg-thumb-format" {$servisImage}>
                         {$servisFeatured}
@@ -339,6 +366,12 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
             CATEGORY;
         }
 
+        if($cit == null){
+            $all = 'active';
+        }else{
+            $all= '';
+        }
+
 
         return <<<HTML
     <!-- Popular Service area starts -->
@@ -353,7 +386,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 </div>
             </div>
             <div class="row margin-top-20 pl-2">
-                    {$service_markup}
+                {$service_markup}
             </div>
         </div>
     </section>
@@ -369,6 +402,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 </div>
             </div>
             <div class="row margin-top-20 pl-2">
+                <a href="set-city/0" class="badge badge-custom mx-2 mb-3 {$all}">Semua Kota</a>
                     {$city_markup}
             </div>
         </div>
