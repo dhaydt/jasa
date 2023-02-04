@@ -137,7 +137,9 @@ class RegisterController extends Controller
                     $user_type = 'buyer';
                 }
 
-                zenziva_sms($request->phone, $token);
+                $message = getenv('ZENZIVA_TEMPLATE') . $token;
+
+                zenziva_sms($request->phone, $message);
 
                 // try {
                 //     $message = get_static_option('user_email_verify_message');
@@ -261,7 +263,9 @@ class RegisterController extends Controller
             if (!is_null($user_details)) {
                 $user_details->email_verified = 1;
                 $user_details->save();
+                $message = env('ZENZIVA_NOTIF');
                 if ($user_details->user_type == 0) {
+                    zenziva_sms($user_details->phone, $message);
                     return redirect()->route('seller.dashboard');
                 } else {
                     return redirect()->route('buyer.dashboard');
@@ -323,7 +327,8 @@ class RegisterController extends Controller
             //     'subject' => get_static_option('user_email_verify_subject'),
             //     'message' => $message
             // ]));
-            zenziva_sms($user_details->phone, $verify_token);
+            $message = getenv('ZENZIVA_TEMPLATE') . $verify_token;
+            zenziva_sms($user_details->phone, $message);
 
 
 

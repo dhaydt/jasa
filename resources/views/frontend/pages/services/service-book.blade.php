@@ -381,7 +381,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                                             </span>
                                                         </div>
                                                         <span class="price-value">
-                                                            {{
+                                                            + {{
                                                             amount_with_currency_symbol($additional->additional_service_price)
                                                             }}
                                                         </span>

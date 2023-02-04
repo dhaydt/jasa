@@ -85,7 +85,7 @@ function update_database($order_id, $transaction_id)
     }
 }
 
-function zenziva_sms($receiver, $otp)
+function zenziva_sms($receiver, $message)
 {
     // dd($receiver);
     // $config = self::get_settings('twilio_sms');
@@ -95,7 +95,6 @@ function zenziva_sms($receiver, $otp)
     $hp = (int) $receiver;
     $telepon = '+62' . (int) $hp;
     // dd($telepon);
-    $message = getenv('ZENZIVA_TEMPLATE') . $otp;
     // $message = ['grosa' => str_split($otp)];
     $url = getenv('ZENZIVA_url');
     $curlHandle = curl_init();
