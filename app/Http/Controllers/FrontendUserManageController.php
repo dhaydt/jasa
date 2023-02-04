@@ -163,12 +163,6 @@ class FrontendUserManageController extends Controller
             'user_status' => $user_status->user_status== 0 ? 1 : 0
         ]);
 
-        $user= User::find($id);
-        if($user->user_status == 1){
-            $message = env('ZENZIVA_ADMIN_NOTIF');
-            zenziva_sms($user->phone, $message);
-        }
-
         $user_status_2 = User::select('user_status')->find($id);
         if($user_status_2->user_status == 0){
             Service::where('seller_id',$id)
@@ -197,15 +191,21 @@ class FrontendUserManageController extends Controller
             'status' => $seller_status->status === 0 ? 1 : 0
         ]);
 
+        // dd($verify_seller);
+
        if($verify_seller){
-           $seller = User::select('id','email','name')->where('id',$id)->first();
+           $seller = User::select('id','email','name', 'phone')->where('id',$id)->first();
            try {
-               $message = get_static_option('admin_seller_verification_message') ?? '';
-               $message = str_replace(["@name"],[$seller->name],$message);
-               Mail::to($seller ->email)->send(new BasicMail([
-                   'subject' => get_static_option('admin_seller_verification_subject') ?? __('Seller Verification Success'),
-                   'message' => $message
-               ]));
+                $message = get_static_option('admin_seller_verification_message') ?? '';
+                $message = str_replace(["@name"],[$seller->name],$message);
+                if($verify_seller == 1){
+                    $message = env('ZENZIVA_ADMIN_NOTIF');
+                    zenziva_sms($seller->phone, $message);
+                }
+                Mail::to($seller ->email)->send(new BasicMail([
+                    'subject' => get_static_option('admin_seller_verification_subject') ?? __('Seller Verification Success'),
+                    'message' => $message
+                ]));
            } catch (\Exception $e) {
                return redirect()->back()->with(FlashMsg::item_new($e->getMessage()));
            }
