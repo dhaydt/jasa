@@ -240,13 +240,17 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         }
 
         $cat = Category::with('services')->where('status', 1)->get();
-        // if($cit == null){
-        //     $cat = Category::with('services')->where('status', 1)->get();
-        // }else{
-        //     $cat = Category::with('services')->whereHas('services', function($q)use($cit){
-        //         $q->where('service_city_id', $cit);
-        //     })->get();
-        // }
+        if($cit == null){
+            $cat = Category::with('services')->where('status', 1)->get();
+        }else{
+            // $cat = Category::with('services')->whereHas('services', function($q)use($cit){
+            //     $q->where('service_city_id', $cit);
+            // })->get();
+            $cat = Category::with('services')->where('status', 1)->get();
+            $cat->map(function ($data) use($cit){
+                $data['services'] = Service::where(['status' => 1, 'category_id' => $data['id'], 'service_city_id' => $cit])->inRandomOrder()->take(12)->get();
+            });
+        }
 
         $category_markup = '';
 
@@ -290,15 +294,16 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 }
 
 
-                if($cit == null){
-                    $show = '';
-                }else{
-                    if($cit == $servis['service_city_id']){
-                        $show = '';
-                    }else{
-                        $show = 'd-none';
-                    }
-                }
+                $show = '';
+                // if($cit == null){
+                //     $show = '';
+                // }else{
+                //     if($cit == $servis['service_city_id']){
+                //         $show = '';
+                //     }else{
+                //         $show = 'd-none';
+                //     }
+                // }
 
                 $servis_markup .= <<<SERVIS
                 <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 {$show} wow fadeInUp" data-wow-delay=".2s">
