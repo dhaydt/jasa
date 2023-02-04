@@ -129,8 +129,8 @@
             padding: 12px 30px;
         }
         .badge-custom.active{
-            border: 2px solid var(--main-color-one);
-            color: var(--main-color-one);
+            border: 2px solid var(--success);
+            color: var(--success);
         }
     </style>
 </head>

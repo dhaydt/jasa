@@ -80,19 +80,41 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
 <script src="{{asset('assets/common/js/toastr.min.js')}}"></script>
 {!! Toastr::message() !!}
 <script>
-    fetch('https://ipapi.co/json/').then(function(response) {
-            return response.json();
-    }).then(function(data) {
-        console.log('location',data);
+    $(document).ready(function(){
+        fetch('https://ipapi.co/json/').then(function(response) {
+                return response.json();
+        }).then(function(data) {
+            console.log('location',data);
+            
+    
+            $('#city-name').text(data.city);
+    
+            var city_old = '{{ Session::get('city_name') }}';
+            var loaded = '{{ Session::get('loaded') }}';
+            console.log('city',city_old);
 
-        $('#city-name').text(data.city);
-        // if(data.region !== "West Java"){
-        //     $('#auto-loc').append('Diluar jangkauan').attr('style', 'font-size: 16px; width: 120px;')
-        // }else{
-        //     $('#auto-loc').append(data.city)
-        // }
-        $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
-    });
+            var city = data.city.toLowerCase();
+    
+            $.ajax({ 
+                url: "{{ route('set-city') }}",
+                data: {'city' : city},
+                type: 'get',
+                success: function(response){
+                    var city_new = '{{ Session::get('city_name') }}'
+                    if(city_old != city_new){
+                        location.reload();
+                    }
+                    if(loaded == ''){
+                        location.reload();
+                    }
+                    if(city_old != city_new && response == 'empty'){
+                        location.reload();
+                    }
+                }
+            });
+            $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
+        });
+    })
 </script>
 
 <script>

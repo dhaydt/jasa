@@ -43,14 +43,34 @@ class FrontendController extends Controller
 
     }
 
-    public function setCity($city_id){
-        if($city_id == '0'){
-            session()->forget('city_id');
-        }else{
-            session()->put('city_id', $city_id);
-        }
+    public function setCity($city_id = null){
+            if($city_id == '0'){
+                session()->forget('city_id');
+                session()->forget('city_name');
+            }else{
+                session()->put('city_id', $city_id);
+            }
 
         return redirect()->back();
+    }
+
+    public function setCityName(Request $request){
+        $city_name = $request->city;
+        session()->put('loaded', 1);
+        if($city_name){
+            $city = ServiceCity::where('service_city', $city_name)->first();
+            if($city){
+                $city_id = $city['id'];
+                session()->put('city_id', $city_id);
+                session()->put('city_name', $city_name);
+                return 'work';
+            }else{
+                session()->forget('city_id');
+                session()->forget('city_name');
+            }
+        }
+        return 'empty';
+
     }
 
     public function home_page_change($id)
