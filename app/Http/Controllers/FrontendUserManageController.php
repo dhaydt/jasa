@@ -98,20 +98,20 @@ class FrontendUserManageController extends Controller
                     $testimonial_img = get_attachment_image_by_id($row->image,null,true);
                     $img_url = $testimonial_img['img_url'];
                     $action .= ' <a href="#"
-                                   data-toggle="modal"
-                                   data-target="#edit_user_info_modal"
-                                   class="btn btn-info btn-sm mb-3 mr-1 edit_user_info_btn"
-                                   data-id="'.$row->id.'"
-                                   data-email="'.$row->email.'"
-                                   data-username="'.$row->username.'"
-                                   data-name="'.$row->name.'"
-                                   data-phone="'.$row->phone.'"
-                                   data-country="'.$row->country_id.'"
-                                   data-city="'.$row->service_city.'"
-                                   data-area="'.$row->service_area.'"
-                                   data-address="'.$row->address.'"
-                                   data-imageid="'.$row->image.'"
-                                   data-image="'.$img_url.'"
+                                    data-toggle="modal"
+                                    data-target="#edit_user_info_modal"
+                                    class="btn btn-info btn-sm mb-3 mr-1 edit_user_info_btn"
+                                    data-id="'.$row->id.'"
+                                    data-email="'.$row->email.'"
+                                    data-username="'.$row->username.'"
+                                    data-name="'.$row->name.'"
+                                    data-phone="'.$row->phone.'"
+                                    data-country="'.$row->country_id.'"
+                                    data-city="'.$row->service_city.'"
+                                    data-area="'.$row->service_area.'"
+                                    data-address="'.$row->address.'"
+                                    data-imageid="'.$row->image.'"
+                                    data-image="'.$img_url.'"
                                 >
                                     <i class="ti-user"></i>
                                 </a>';
@@ -162,6 +162,12 @@ class FrontendUserManageController extends Controller
         User::where('id', $id)->update([
             'user_status' => $user_status->user_status== 0 ? 1 : 0
         ]);
+
+        $user= User::find($id);
+        if($user->user_status == 1){
+            $message = env('ZENZIVA_ADMIN_NOTIF');
+            zenziva_sms($user->phone, $message);
+        }
 
         $user_status_2 = User::select('user_status')->find($id);
         if($user_status_2->user_status == 0){
