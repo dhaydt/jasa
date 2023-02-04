@@ -394,6 +394,11 @@ class SellerController extends Controller
 
             $seller_country = User::select('id','country_id')->where('country_id',Auth::guard('web')->user()->country_id)->first();
             $country_tax = Tax::select('tax')->where('country_id',$seller_country->country_id)->first();
+            if($request->brands == null){
+                $brands = '[]';
+            }else{
+                $brands = json_encode($request->brands);
+            }
 
             $service = new Service();
             $service->category_id = $request->category;
@@ -401,7 +406,7 @@ class SellerController extends Controller
             $service->child_category_id = $request->child_category;
             $service->title = $request->title;
             $service->slug = $request->slug;
-            $service->brands= json_encode($request->brands);
+            $service->brands= $brands;
             $service->description = $request->description;
             $service->image = $request->image;
             $service->image_gallery = $request->image_gallery;
@@ -757,7 +762,11 @@ class SellerController extends Controller
             $old_image = Service::select('image','image_gallery')->where('id',$id)->first();
             $old_slug = Service::select('slug')->where('id',$id)->first();
 
-            // dd($request->brands);
+            if($request->brands == null){
+                $brands = '[]';
+            }else{
+                $brands = json_encode($request->brands);
+            }
 
             Service::where('id', $id)->update([
                 'category_id' => $request->category,
@@ -771,7 +780,7 @@ class SellerController extends Controller
                 'video' => $request->video,
                 'tax' => $country_tax->tax ?? 0,
                 'status' => 0,
-                'brands' => json_encode($request->brands),
+                'brands' => $brands,
                 'is_service_all_cities' => $request->is_service_all_cities,
             ]);
 
