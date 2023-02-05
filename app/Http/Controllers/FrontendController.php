@@ -60,13 +60,19 @@ class FrontendController extends Controller
         if($city_name){
             $city = ServiceCity::where('service_city', $city_name)->first();
             if($city){
-                $city_id = $city['id'];
-                session()->put('city_id', $city_id);
-                session()->put('city_name', $city_name);
-                return 'work';
+                $service = Service::where('category_id', $city['id'])->first();
+                if($service){
+                    $city_id = $city['id'];
+                    session()->put('city_id', $city_id);
+                    session()->put('city_name', $city_name);
+                    return 'work';
+                }else{
+                    session()->forget('city_id');
+                    session()->forget('city_name');
+
+                    return 'empty';
+                }
             }else{
-                session()->forget('city_id');
-                session()->forget('city_name');
             }
         }
         return 'empty';
