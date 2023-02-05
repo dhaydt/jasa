@@ -107,8 +107,8 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
                     if(loaded == ''){
                         location.reload();
                     }
-                    if(response == 'no_services' && Session::get('city_id') != null){
-                        location.reload();
+                    if(response == 'no_services' && '{{ Session::get('city_id') }}' != null){
+                        location.reload()
                     }
                     if(city_old != city_new && response == 'empty'){
                         location.reload();
