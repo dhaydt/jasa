@@ -93,6 +93,7 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
             var loaded = '{{ Session::get('loaded') }}';
             console.log('city',city_old);
 
+            // var city = 'padang';
             var city = data.city.toLowerCase();
     
             $.ajax({ 
@@ -101,16 +102,21 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
                 type: 'get',
                 success: function(response){
                     var city_new = '{{ Session::get('city_name') }}'
-                    if(city_old != city_new){
+                    console.log('resp', response);
+                    if(city_old != city_new && response !== 'no_services'){
+                        console.log('if1');
                         location.reload();
                     }
                     if(loaded == ''){
+                        console.log('if2');
                         location.reload();
                     }
                     if(response == 'no_services' && '{{ Session::get('city_id') }}' != null){
+                        console.log('if3');
                         location.reload()
                     }
-                    if(city_old != city_new && response == 'empty'){
+                    if(response == 'empty' && loaded == ''){
+                        console.log('if4');
                         location.reload();
                     }
                 }
@@ -172,10 +178,10 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     /*-----------------
-     Select2
+        Select2
     ------------------*/
     $('select').select2({
-         language: "{{current(explode('_',\App\Helpers\LanguageHelper::user_lang_slug()))}}"
+            language: "{{current(explode('_',\App\Helpers\LanguageHelper::user_lang_slug()))}}"
     });
 </script>
 

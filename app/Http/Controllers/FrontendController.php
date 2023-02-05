@@ -75,6 +75,8 @@ class FrontendController extends Controller
             }else{
             }
         }
+        session()->forget('city_id');
+        session()->forget('city_name');
         return 'empty';
 
     }
