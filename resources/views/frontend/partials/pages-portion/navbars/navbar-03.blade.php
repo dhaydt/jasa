@@ -92,7 +92,7 @@ $page_post = isset($page_post) && is_null($page_details) ? $page_post : $page_de
         </div>
     </div>
 </nav>
-@if (\Request::route()->getName() == 'homepage')
+@if (\Request::route()->getName() == 'homepage' || \Request::route()->getName() == 'set_city' || \Request::route()->getName() == 'set-city' || \Request::route()->getName() == 'set-city-auto')
 <div class="bottom-bar">
     <div class="container container-two">
         <div class="banner-bottom-content custom-search" style="margin-top: 100px;">

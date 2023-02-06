@@ -233,7 +233,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 $active = '';
                 $all = 'active';
             }
-            $setCity = route('set-city', $city['id']);
+            $setCity = route('set_city', $city['id']);
             $city_markup .= <<<CITY
             <!-- <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a> -->
             <a href="{$setCity}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a>
@@ -294,20 +294,8 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                     // </div>';
                 }
 
-
-                $show = '';
-                // if($cit == null){
-                //     $show = '';
-                // }else{
-                //     if($cit == $servis['service_city_id']){
-                //         $show = '';
-                //     }else{
-                //         $show = 'd-none';
-                //     }
-                // }
-
                 $servis_markup .= <<<SERVIS
-                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 {$show} wow fadeInUp" data-wow-delay=".2s">
+                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 wow fadeInUp" data-wow-delay=".2s">
                     <div class="single-service service-two style-03 section-bg-2">
                         <a href="{$servisRroute}" class="service-thumb service-bg-thumb-format" {$servisImage}>
                         {$servisFeatured}
@@ -379,7 +367,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         }
 
         $routeAll = route('set-city-auto');
-        $default= route('set-city', 0);
+        $default= route('set_city', [0]);
 
 
         return <<<HTML

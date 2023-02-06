@@ -30,9 +30,9 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
     Route::get('/home-search-two', 'FrontendController@home_search_two')->name('frontend.home.search.two');
     Route::get('/home-search/single-page', 'FrontendController@home_search_single_page')->name('frontend.home.search.single');
 
-    Route::get('/set-city/{city_id}', [FrontendController::class, 'setCity'])->name('set_city');
+    Route::get('/{city_id}', [FrontendController::class, 'setCity'])->name('set_city');
     Route::get('/set-city-name', [FrontendController::class, 'setCityName'])->name('set-city');
-    Route::get('/set-city-auto', [FrontendController::class, 'setCityAuto'])->name('set-city-auto');
+    Route::get('/set-city-auto', [FrontendController::class, 'deteksiLokasi'])->name('set-city-auto');
 
     //blog routes
     $blog_page_slug = getSlugFromReadingSetting('blog_page') ?? 'blog';
