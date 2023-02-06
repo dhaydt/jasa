@@ -113,6 +113,10 @@ class FrontendController extends Controller
                 'active' => 'home'
             ]);
         }
+        return view('frontend.frontend-home')->with([
+            'page_details' => $page_details,
+            'active' => 'home'
+        ]);
     }
 
     public function setCity($city_id = null){
