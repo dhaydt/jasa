@@ -36,8 +36,10 @@ class FrontendController extends Controller
         // session()->forget('city_name');
 
         $ip = $_SERVER['REMOTE_ADDR'];
-        $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        // $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        $details = json_decode(file_get_contents("https://ipapi.co/{$ip}/json/"));
         $details->city = 'jakarta';
+        dd($details);
         if (isset($details->city)) {
             $city_name = $details->city;
             $city = ServiceCity::where('service_city', $city_name)->first();
