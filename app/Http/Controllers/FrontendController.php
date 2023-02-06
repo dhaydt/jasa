@@ -37,7 +37,7 @@ class FrontendController extends Controller
 
         $ip = $_SERVER['REMOTE_ADDR'];
         $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        // $details->city = 'jakarta';
+        $details->city = 'jakarta';
         if (isset($details->city)) {
             $city_name = $details->city;
             $city = ServiceCity::where('service_city', $city_name)->first();

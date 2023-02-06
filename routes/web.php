@@ -45,14 +45,14 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
     });
 
     //user login register forget password
-    Route::match(['get', 'post'], '/register', 'Auth\RegisterController@userRegister')->name('user.register');
+    Route::match(['get', 'post'], '/register/user', 'Auth\RegisterController@userRegister')->name('user.register');
     Route::match(['get', 'post'], '/email-verify', 'Auth\RegisterController@phoneVerify')->name('email.verify')->middleware('auth:web');
     Route::get('/resend-verify-code-again', 'Auth\RegisterController@resendCode')->name('resend.verify.code')->middleware('auth:web');
     
     Route::post('/get-city-by-country', 'FrontendController@getCity')->name('user.country.city');
     Route::post('/get-area-by-city', 'FrontendController@getAarea')->name('user.city.area');
     
-    Route::match(['get', 'post'], '/login', 'Auth\LoginController@userLogin')->name('user.login');
+    Route::match(['get', 'post'], '/login/auth', 'Auth\LoginController@userLogin')->name('user.login');
     Route::post( '/login-for-online', 'Auth\LoginController@userLoginOnline')->name('user.login.online');
     Route::match(['get', 'post'], 'user/forget-password', 'Auth\LoginController@userForgetPassword')->name('user.forget.password');
 
