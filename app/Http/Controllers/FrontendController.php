@@ -37,7 +37,7 @@ class FrontendController extends Controller
 
         $ip = $_SERVER['REMOTE_ADDR'];
         $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        $details->city = 'jakarta';
+        // $details->city = 'jakarta';
         if(isset($details->city)){
             $city_name = $details->city;
             $city = ServiceCity::where('service_city', $city_name)->first();
@@ -80,7 +80,7 @@ class FrontendController extends Controller
 
         $ip = $_SERVER['REMOTE_ADDR'];
         $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        $details->city = 'bandung';
+        // $details->city = 'bandung';
         if(isset($details->city)){
             $city_name = $details->city;
             $city = ServiceCity::where('service_city', $city_name)->first();
@@ -118,7 +118,7 @@ class FrontendController extends Controller
     public function setCity($city_id = null){
         $home_page_id = get_static_option('home_page');
         $page_details = Page::find($home_page_id);
-        
+
             if($city_id == '0'){
                 session()->forget('city_id');
                 session()->forget('city_name');
