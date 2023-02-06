@@ -22,8 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\BasicMail;
-
-
+use Brian2694\Toastr\Facades\Toastr;
 
 class FrontendController extends Controller
 
@@ -32,11 +31,37 @@ class FrontendController extends Controller
     {
         $home_page_id = get_static_option('home_page');
         $page_details = Page::find($home_page_id);
+
+        session()->forget('city_id');
+        session()->forget('city_name');
+
         $ip = $_SERVER['REMOTE_ADDR'];
         $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        dd($details); // ->
+        $details->city = 'jakarta';
+        if(isset($details->city)){
+            $city_name = $details->city;
+            $city = ServiceCity::where('service_city', $city_name)->first();
+            if($city){
+                $service = Service::where('category_id', $city['id'])->first();
+                if($service){
+                    $city_id = $city['id'];
+                    session()->put('city_id', $city_id);
+                    session()->put('city_name', $city_name);
+                }else{
+                    session()->forget('city_id');
+                    session()->forget('city_name');
+
+                    toastr_warning('Tidak ada layanan dikota anda.
+                    Semua kota ditampilkan!');
+                    return view('frontend.frontend-home')->with([
+                        'page_details' => $page_details,
+                        'active' => 'home'
+                    ]);
+                }
+            }
+        }
         if (empty($page_details)){
-            // show any notice or
+            Toastr::warning('No Service To Show');
         }
 
         return view('frontend.frontend-home')->with([
@@ -46,7 +71,54 @@ class FrontendController extends Controller
 
     }
 
+    public function setCityAuto(){
+        $home_page_id = get_static_option('home_page');
+        $page_details = Page::find($home_page_id);
+
+        session()->forget('city_id');
+        session()->forget('city_name');
+
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        $details->city = 'bandung';
+        if(isset($details->city)){
+            $city_name = $details->city;
+            $city = ServiceCity::where('service_city', $city_name)->first();
+            if($city){
+                $service = Service::where('category_id', $city['id'])->first();
+                if($service){
+                    $city_id = $city['id'];
+                    session()->put('city_id', $city_id);
+                    session()->put('city_name', $city_name);
+                    return view('frontend.frontend-home')->with([
+                        'page_details' => $page_details,
+                        'active' => 'home'
+                    ]);
+                }else{
+                    session()->forget('city_id');
+                    session()->forget('city_name');
+
+                    toastr_warning('Tidak ada layanan dikota anda.
+                    Semua kota ditampilkan!');
+
+                    return view('frontend.frontend-home')->with([
+                        'page_details' => $page_details,
+                        'active' => 'home'
+                    ]);
+                }
+            }
+        }else{
+            return view('frontend.frontend-home')->with([
+                'page_details' => $page_details,
+                'active' => 'home'
+            ]);
+        }
+    }
+
     public function setCity($city_id = null){
+        $home_page_id = get_static_option('home_page');
+        $page_details = Page::find($home_page_id);
+        
             if($city_id == '0'){
                 session()->forget('city_id');
                 session()->forget('city_name');
@@ -54,7 +126,10 @@ class FrontendController extends Controller
                 session()->put('city_id', $city_id);
             }
 
-        return redirect()->back();
+            return view('frontend.frontend-home')->with([
+                'page_details' => $page_details,
+                'active' => 'home'
+            ]);
     }
 
     public function setCityName(Request $request){

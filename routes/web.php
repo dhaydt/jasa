@@ -32,6 +32,7 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
 
     Route::get('/set-city/{city_id}', [FrontendController::class, 'setCity'])->name('set_city');
     Route::get('/set-city-name', [FrontendController::class, 'setCityName'])->name('set-city');
+    Route::get('/set-city-auto', [FrontendController::class, 'setCityAuto'])->name('set-city-auto');
 
     //blog routes
     $blog_page_slug = getSlugFromReadingSetting('blog_page') ?? 'blog';
