@@ -32,6 +32,9 @@ class FrontendController extends Controller
     {
         $home_page_id = get_static_option('home_page');
         $page_details = Page::find($home_page_id);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        dd($details); // ->
         if (empty($page_details)){
             // show any notice or
         }

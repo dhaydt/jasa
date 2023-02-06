@@ -96,31 +96,6 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
             // var city = 'padang';
             var city = data.city.toLowerCase();
     
-            $.ajax({ 
-                url: "{{ route('set-city') }}",
-                data: {'city' : city},
-                type: 'get',
-                success: function(response){
-                    var city_new = '{{ Session::get('city_name') }}'
-                    console.log('resp', response);
-                    if(city_old != city_new && response !== 'no_services'){
-                        console.log('if1');
-                        location.reload();
-                    }
-                    if(loaded == ''){
-                        console.log('if2');
-                        location.reload();
-                    }
-                    if(response == 'no_services' && '{{ Session::get('city_id') }}' != null){
-                        console.log('if3');
-                        location.reload()
-                    }
-                    if(response == 'empty' && loaded == ''){
-                        console.log('if4');
-                        location.reload();
-                    }
-                }
-            });
             $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
         });
     })
