@@ -233,9 +233,10 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 $active = '';
                 $all = 'active';
             }
+            $setCity = route('set-city', $city['id']);
             $city_markup .= <<<CITY
             <!-- <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a> -->
-            <a href="set-city/{$city['id']}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a>
+            <a href="{$setCity}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a>
             CITY;
         }
 
@@ -378,6 +379,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         }
 
         $routeAll = route('set-city-auto');
+        $default= route('set-city', 0);
 
 
         return <<<HTML
@@ -409,7 +411,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 </div>
             </div>
             <div class="row margin-top-20 pl-2">
-                <a href="set-city/0" class="badge badge-custom mx-2 mb-3 {$all}">Semua Kota</a>
+                <a href="{$default}" class="badge badge-custom mx-2 mb-3 {$all}">Semua Kota</a>
                 {$city_markup}
                 <a href="{$routeAll}" class="badge badge-custom mx-2 mb-3">Deteksi Kota</a>
             </div>
