@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\BasicMail;
 use Brian2694\Toastr\Facades\Toastr;
+use Session;
 
 class FrontendController extends Controller
 
@@ -35,13 +36,13 @@ class FrontendController extends Controller
         // session()->forget('city_id');
         // session()->forget('city_name');
 
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        if (isset($details->city)) {
-            $city_name = $details->city;
+        $city = Session::get('city');
+        // dd($city);
+        if (isset($city)) {
+            $city_name = $city;
             $city = ServiceCity::where('service_city', $city_name)->first();
             if ($city) {
-                $service = Service::where('category_id', $city['id'])->first();
+                $service = Service::where('service_city_id', $city['id'])->first();
                 if ($service) {
                     $city_id = $city['id'];
                     session()->put('city_id', $city_id);
@@ -113,6 +114,25 @@ class FrontendController extends Controller
             'page_details' => $page_details,
             'active' => 'home'
         ]);
+    }
+
+    public function aturKota(Request $request){
+        Session::put('city', $request->city);
+        $city_name = $request->city;
+            $city = ServiceCity::where('service_city', $city_name)->first();
+            // return $city;
+            if ($city) {
+                $service = Service::where('service_city_id', $city['id'])->first();
+                if ($service) {
+                    $city_id = $city['id'];
+                    session()->put('city_id', $city_id);
+                    session()->put('city_name', $city_name);
+                } else {
+                    session()->forget('city_id');
+                    session()->forget('city_name');
+                }
+            }
+        return 'success' ;
     }
 
     public function setCity($city_id = null)

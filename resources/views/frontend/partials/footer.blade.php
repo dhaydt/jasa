@@ -81,23 +81,38 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
 {!! Toastr::message() !!}
 <script>
     $(document).ready(function(){
-        fetch('https://ipapi.co/json/').then(function(response) {
-                return response.json();
-        }).then(function(data) {
-            console.log('location',data);
-            
-    
-            $('#city-name').text(data.city);
-    
-            var city_old = '{{ Session::get('city_name') }}';
-            var loaded = '{{ Session::get('loaded') }}';
-            console.log('city',city_old);
-
-            // var city = 'padang';
-            var city = data.city.toLowerCase();
-    
-            $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
-        });
+        var city = '{{ session()->get('city') }}';
+        console.log('city', city);
+        {{ session()->forget('city') }}
+        if(!city){
+            $('.locPreloader').removeClass('d-none');
+            fetch('https://ipapi.co/json/').then(function(response) {
+                    return response.json();
+            }).then(function(data) {
+                console.log('location',data);
+                
+                $.ajax({
+                    type:'POST',
+                    url:'{{ route('atur_kota') }}',
+                    data:{
+                        '_token' : '{{ session()->get('_token') }}',
+                        'city' : data.city
+                    },
+                    success:function(data) {
+                        console.log('resp',data)
+                        if(data == 'success'){
+                            location.reload()
+                        }
+                    }
+                });
+        
+                //$('#city-name').text(data.city);
+                        
+                $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
+                var city = data.city.toLowerCase();
+                
+            });
+        }
     })
 </script>
 

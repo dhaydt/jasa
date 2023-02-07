@@ -86,7 +86,7 @@ $page_post = isset($page_post) && is_null($page_details) ? $page_post : $page_de
                 <x-frontend.user-menu />
                 <div class="user-location accounts text-light ml-4" id="location-div" data-toggle="tooltip" title="">
                     <i class="las la-map-marker" style="font-size: 18px;"></i>
-                    <span class="city-name" id="city-name">Indonesia</span>
+                    <span class="city-name" id="city-name">{{ session()->get('city') }}</span>
                 </div>
             </div>
         </div>
@@ -111,4 +111,5 @@ $page_post = isset($page_post) && is_null($page_details) ? $page_post : $page_de
         </div>
     </div>
 </div>
+@include('frontend.partials.locationPreloader')
 @endif
