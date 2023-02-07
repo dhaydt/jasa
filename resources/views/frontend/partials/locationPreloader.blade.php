@@ -18,7 +18,7 @@
 <div class="locPreloader d-none">
   <div class="container h-100">
     <div class="row w-100 h-100 align-items-center justify-content-center flex-column">
-      <img src="{{ asset('assets/frontend/img/loading.gif') }}" height="150px" alt="">
+      {{-- <img src="{{ asset('assets/frontend/img/loading.gif') }}" height="150px" alt=""> --}}
       <span class="badge custom-badge">
         Mengambil lokasi . . .
       </span>
