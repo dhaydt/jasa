@@ -233,10 +233,11 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 $active = '';
                 $all = 'active';
             }
+            // $setCity = route('set_city', $city['id']);
             $setCity = route('set_city', $city['id']);
             $city_markup .= <<<CITY
-            <!-- <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a> -->
-            <a href="{$setCity}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a>
+            <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a>
+            <!-- <a href="{$setCity}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a> -->
             CITY;
         }
 
