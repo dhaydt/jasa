@@ -1801,8 +1801,8 @@ class ServiceListController extends Controller
     //all popular service
     public function allPopularService()
     {
-        $all_popular_service = Service::select('id', 'title', 'image', 'description', 'price', 'slug', 'seller_id', 'view', 'featured')
-            ->with('reviews')
+        $all_popular_service = Service::select('id', 'title', 'image', 'description', 'price', 'slug', 'seller_id', 'view', 'featured', 'service_city_id')
+            ->with('reviews', 'serviceCity')
             ->where(['status' => 1, 'is_service_on' => 1])
             ->when(subscriptionModuleExistsAndEnable('Subscription'), function ($q) {
                 $q->whereHas('seller_subscription');

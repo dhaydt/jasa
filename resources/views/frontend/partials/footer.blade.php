@@ -90,21 +90,23 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
                     return response.json();
             }).then(function(data) {
                 console.log('location',data);
-                
-                $.ajax({
-                    type:'POST',
-                    url:'{{ route('atur_kota') }}',
-                    data:{
-                        '_token' : '{{ session()->get('_token') }}',
-                        'city' : data.city
-                    },
-                    success:function(data) {
-                        console.log('resp',data)
-                        if(data == 'success'){
-                            location.reload()
+                var route = "{{ \Request::route()->getName() }}"
+                if(route == 'homepage'){
+                    $.ajax({
+                        type:'POST',
+                        url:'{{ route('atur_kota') }}',
+                        data:{
+                            '_token' : '{{ session()->get('_token') }}',
+                            'city' : data.city
+                        },
+                        success:function(data) {
+                            console.log('resp',data)
+                            if(data == 'success'){
+                                location.reload()
+                            }
                         }
-                    }
-                });
+                    });
+                }
         
                 //$('#city-name').text(data.city);
                         
