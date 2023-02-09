@@ -31,6 +31,7 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
     Route::get('/home-search/single-page', 'FrontendController@home_search_single_page')->name('frontend.home.search.single');
 
     Route::get('atur/{city_id}', [FrontendController::class, 'setCity'])->name('set_city');
+    Route::get('set_default', [FrontendController::class, 'set_default'])->name('set_default');
     Route::get('/set-city-name', [FrontendController::class, 'setCityName'])->name('set-city');
     Route::get('/set-city-auto', [FrontendController::class, 'deteksiLokasi'])->name('set-city-auto');
     Route::POST('/atur-kota', [FrontendController::class, 'aturKota'])->name('atur_kota');

@@ -116,23 +116,24 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function aturKota(Request $request){
+    public function aturKota(Request $request)
+    {
         Session::put('city', $request->city);
         $city_name = $request->city;
-            $city = ServiceCity::where('service_city', $city_name)->first();
-            // return $city;
-            if ($city) {
-                $service = Service::where('service_city_id', $city['id'])->first();
-                if ($service) {
-                    $city_id = $city['id'];
-                    session()->put('city_id', $city_id);
-                    session()->put('city_name', $city_name);
-                } else {
-                    session()->forget('city_id');
-                    session()->forget('city_name');
-                }
+        $city = ServiceCity::where('service_city', $city_name)->first();
+        // return $city;
+        if ($city) {
+            $service = Service::where('service_city_id', $city['id'])->first();
+            if ($service) {
+                $city_id = $city['id'];
+                session()->put('city_id', $city_id);
+                session()->put('city_name', $city_name);
+            } else {
+                session()->forget('city_id');
+                session()->forget('city_name');
             }
-        return 'success' ;
+        }
+        return 'success';
     }
 
     public function setCity($city_id = null)
@@ -188,6 +189,18 @@ class FrontendController extends Controller
         } else {
             session()->put('city_id', $city_id);
         }
+        return view('frontend.frontend-home')->with([
+            'page_details' => $page_details,
+            'active' => 'home'
+        ]);
+    }
+    public function set_default()
+    {
+        $home_page_id = get_static_option('home_page');
+        $page_details = Page::find($home_page_id);
+
+        session()->forget('city_id');
+        session()->forget('city_name');
         return view('frontend.frontend-home')->with([
             'page_details' => $page_details,
             'active' => 'home'

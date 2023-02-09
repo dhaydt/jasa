@@ -56,12 +56,26 @@
                     <div class="category-service-search-form margin-top-50">
                         <form method="get" action="{{ $current_page_url }}" id="search_service_list_form">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-4">
+                            <div class="col-lg-3 col-sm-3">
                                <div class="form-group">
                                    <input type="text" class="search-input form-control" id="search_by_query" placeholder="{{__('write minimum 3 character to search')}}" name="q" value="{{request()->get('q')}}">
                                </div>
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single-category-service">
+                                    <div class="single-select">
+                                        <select id="search_by_city" name="rating">
+                                            <option value="">{{ __('Select City') }}</option>
+                                            <option value="1" @if(!empty(request()->get('rating')) && request()->get('rating') == 1 ) selected @endif>{{ __('One Star') }}</option>
+                                            <option value="2" @if(!empty(request()->get('rating')) && request()->get('rating') == 2 ) selected @endif>{{ __('Two Star') }}</option>
+                                            <option value="3" @if(!empty(request()->get('rating')) && request()->get('rating') == 3 ) selected @endif>{{ __('Three Star') }}</option>
+                                            <option value="4" @if(!empty(request()->get('rating')) && request()->get('rating') == 4 ) selected @endif>{{ __('Four Star') }}</option>
+                                            <option value="5" @if(!empty(request()->get('rating')) && request()->get('rating') == 5 ) selected @endif>{{ __('Five Star') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-6">
                                 <div class="single-category-service">
                                     <div class="single-select">
                                         <select id="search_by_rating" name="rating">
@@ -75,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-lg-3 col-sm-6">
                                 <div class="single-category-service flex-category-service">
                                     <div class="single-select">
                                         <select id="search_by_sorting" name="sortby">

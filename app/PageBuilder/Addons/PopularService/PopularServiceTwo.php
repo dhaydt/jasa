@@ -368,7 +368,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         }
 
         $routeAll = route('set-city-auto');
-        $default= route('set_city', [0]);
+        $default= route('set_default');
 
 
         return <<<HTML
