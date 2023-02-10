@@ -19,7 +19,7 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
 @endif
 
 <!-- back to top area start -->
-<div class="back-to-top {{$page_post->back_to_top ?? ''}}">
+<div class="back-to-top {{$page_post->back_to_top ?? ''}} d-none d-md-block">
     <span class="back-top"><i class="las la-angle-up"></i></span>
 </div>
 <!-- back to top area end -->

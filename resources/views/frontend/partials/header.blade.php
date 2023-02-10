@@ -60,6 +60,8 @@
     <link rel="stylesheet" href="{{asset('assets/frontend/css/jquery.ihavecookies.css')}}">
     <link rel="stylesheet" href="{{asset('assets/frontend/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/common/css/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 
     @if( get_user_lang_direction() === 'rtl')
