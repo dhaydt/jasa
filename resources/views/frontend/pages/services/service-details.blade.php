@@ -168,7 +168,7 @@
                                                                     }
                                                                 @endphp
                                                                 <div class="faq-title">
-                                                                    @if ($faq->title != null)
+                                                                    @if ($faq->title != null || $faq->title == "")
                                                                     {{ $faq->title }}
                                                                     @else
                                                                         'Kosong'
@@ -176,7 +176,7 @@
                                                                 </div>
                                                                 <div class="faq-panel">
                                                                     <p class="faq-para">
-                                                                        @if ($faq->description != null)
+                                                                        @if ($faq->description != null || $faq->description == "")
                                                                         {{ $faq->description }}</p>
                                                                         @else
                                                                             'Kosong'
