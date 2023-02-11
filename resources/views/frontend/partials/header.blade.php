@@ -186,6 +186,18 @@
             .common-title{
                 font-size: 16px;
             }
+
+            .all-services{
+                padding: 0 10px 0 0 !important;
+            }
+
+            #all_search_result{
+                padding: 0 5px;
+            }
+
+            .search-service{
+                padding: 0 10px 0 0 !important;
+            }
         }
     </style>
 </head>

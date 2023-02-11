@@ -15,12 +15,70 @@
 @section('content')
 
     <!-- Category Service area starts -->
-    <section class="category-services-area padding-top-70 padding-bottom-100">
+    <section class="category-services-area padding-top-10 padding-bottom-100">
         <div class="container">
-            <div class="row">
+            <div class="row row-service">
+                <div class="col-lg-12">
+                    @php $current_page_url = URL::current(); @endphp
+                    @php $cities = \App\ServiceCity::with('service')->get(); @endphp
+                    {{-- {{ dd($city) }} --}}
+                    <div class="category-service-search-form margin-top-50">
+                        <form method="get" action="{{ $current_page_url }}" id="search_service_list_form">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 col-sm-3">
+                               <div class="form-group">
+                                   <input type="text" class="search-input form-control" id="search_by_query" placeholder="{{__('write minimum 3 character to search')}}" name="q" value="{{request()->get('q')}}">
+                               </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single-category-service">
+                                    <div class="single-select">
+                                        <select id="search_by_city" name="city">
+                                            <option value="">{{ __('Select City') }}</option>
+                                            @foreach ($cities as $city)
+                                            @if (count($city['service']) != 0)
+                                                <option value="{{ $city['id'] }}" @if(!empty(request()->get('city')) && request()->get('city') == $city['id'] ) selected @endif>{{ $city['service_city'] }}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-6">
+                                <div class="single-category-service">
+                                    <div class="single-select">
+                                        <select id="search_by_rating" name="rating">
+                                            <option value="">{{ __('Select Rating Star') }}</option>
+                                            <option value="1" @if(!empty(request()->get('rating')) && request()->get('rating') == 1 ) selected @endif>{{ __('One Star') }}</option>
+                                            <option value="2" @if(!empty(request()->get('rating')) && request()->get('rating') == 2 ) selected @endif>{{ __('Two Star') }}</option>
+                                            <option value="3" @if(!empty(request()->get('rating')) && request()->get('rating') == 3 ) selected @endif>{{ __('Three Star') }}</option>
+                                            <option value="4" @if(!empty(request()->get('rating')) && request()->get('rating') == 4 ) selected @endif>{{ __('Four Star') }}</option>
+                                            <option value="5" @if(!empty(request()->get('rating')) && request()->get('rating') == 5 ) selected @endif>{{ __('Five Star') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="single-category-service flex-category-service">
+                                    <div class="single-select">
+                                        <select id="search_by_sorting" name="sortby">
+                                            <option value="">{{ __('Sort By') }}</option>
+                                            <option value="latest_service" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'latest_service') selected @endif>{{ __('Latest Service') }}</option>
+                                            <option value="lowest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'lowest_price') selected @endif>{{ __('Lowest Price') }}</option>
+                                            <option value="highest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'highest_price') selected @endif>{{ __('Highest Price') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </form>
+                    </div>
+                </div>
+            <div class="row px-2">
                 @if(!empty($all_popular_service))
                     @foreach($all_popular_service as $service)
-                        <div class="col-lg-4 col-md-6 margin-top-30 all-services">
+                        <div class="col-lg-4 col-md-6 col-6 margin-top-30 all-services">
                             <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
                                 <a href="{{ route('service.list.book',$service->slug) }}" class="service-thumb service-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($service->image) !!}>
 

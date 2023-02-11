@@ -106,9 +106,10 @@ $footer_variant = !is_null(get_footer_style()) ? get_footer_style() : '02';
                             }
                         }
                     });
+                }else{
+                    $('#city-name').text(data.city);
                 }
         
-                //$('#city-name').text(data.city);
                         
                 $('#location-div').attr('data-original-title', data.country_name + ', ' + data.region);
                 var city = data.city.toLowerCase();

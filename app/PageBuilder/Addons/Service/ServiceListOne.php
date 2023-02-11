@@ -270,7 +270,7 @@ foreach ($all_services as $service)
     }
   $starting = __('Harga mulai');
         $service_markup.= <<<SERVICES
-        <div class="{$columns} col-md-6 margin-top-30">
+        <div class="{$columns} col-6 col-md-6 margin-top-30 search-service">
         <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
     
                 <a href="{$route}" class="service-thumb service-bg-thumb-format" {$image}>

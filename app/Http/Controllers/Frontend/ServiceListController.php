@@ -1709,7 +1709,6 @@ class ServiceListController extends Controller
             return $item;
         });
 
-        // dd(request());
 
         $all_services = collect([]);
 
@@ -1833,6 +1832,55 @@ class ServiceListController extends Controller
     //all popular service
     public function allPopularService()
     {
+        $all_services = collect([]);
+
+        $service_quyery = Service::query();
+        
+        if(!empty(request()->get('city'))){
+            $service_quyery->where('service_city_id', request()->get('city'));
+        }
+
+        if (!empty(request()->get('q'))) {
+            $service_quyery->Where('title', 'LIKE', '%' . trim(strip_tags(request()->get('q'))) . '%')
+                ->orWhere('description', 'LIKE', '%' . trim(strip_tags(request()->get('q'))) . '%');
+        }
+        if (!empty(request()->get('rating'))) {
+            $rating = (int) request()->get('rating');
+            $service_quyery->whereHas('reviews', function ($q) use ($rating) {
+                $q->groupBy('reviews.id')
+                    ->havingRaw('AVG(reviews.rating) >= ?', [$rating])
+                    ->havingRaw('AVG(reviews.rating) < ?', [$rating + 1]);
+            });
+        }
+
+        if (!empty(request()->get('sortby'))) {
+
+            if (request()->get('sortby') == 'latest_service') {
+                $service_quyery->orderBy('id', 'Desc');
+            }
+            if (request()->get('sortby') == 'lowest_price') {
+                $service_quyery->orderBy('price', 'Asc');
+            }
+            if (request()->get('sortby') == 'highest_price') {
+                $service_quyery->orderBy('price', 'Desc');
+            }
+        }
+
+        $all_popular_service = $service_quyery->select('id', 'title', 'image', 'description', 'price', 'slug', 'seller_id', 'view', 'featured', 'service_city_id')
+            ->with('reviews', 'serviceCity')
+            ->where(['status' => 1, 'is_service_on' => 1])
+            ->when(subscriptionModuleExistsAndEnable('Subscription'), function ($q) {
+                $q->whereHas('seller_subscription');
+            })
+            ->orderBy('view', 'DESC')
+            ->paginate(9);
+            
+            
+        return view('frontend.pages.services.popular-service', compact('all_popular_service'));
+    }
+    
+    public function popelarSearchBySorting()
+    {
         $all_popular_service = Service::select('id', 'title', 'image', 'description', 'price', 'slug', 'seller_id', 'view', 'featured', 'service_city_id')
             ->with('reviews', 'serviceCity')
             ->where(['status' => 1, 'is_service_on' => 1])
@@ -1841,6 +1889,7 @@ class ServiceListController extends Controller
             })
             ->orderBy('view', 'DESC')
             ->paginate(9);
+            
         return view('frontend.pages.services.popular-service', compact('all_popular_service'));
     }
 
