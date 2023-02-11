@@ -220,6 +220,10 @@
             .row-suggest{
                 padding: 0 10px;
             }
+
+            .banner-inner-contents .inner-menu{
+                margin-top: 30px !important;
+            }
         }
     </style>
 </head>
