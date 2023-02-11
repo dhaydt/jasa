@@ -198,6 +198,28 @@
             .search-service{
                 padding: 0 10px 0 0 !important;
             }
+
+            h2.banner-inner-title{
+                font-size: 20px !important;
+                line-height: 30px !important;
+            }
+            .service-details-area{
+                padding-top: 0 !important;
+            }
+            .banner-inner-area.section-bg-2{
+                padding-bottom: 12px !important;
+            }
+            .service-details-background-image{
+                height: 210px;
+                width: 100%;
+                background-size: cover;
+            }
+            .suggest-services{
+                padding: 0 10px 0 0;
+            }
+            .row-suggest{
+                padding: 0 10px;
+            }
         }
     </style>
 </head>

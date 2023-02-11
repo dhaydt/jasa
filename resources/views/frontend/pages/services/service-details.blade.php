@@ -338,7 +338,53 @@
                                 @endif
 
                             </div>
-
+                        </div>
+                        <div class="service-details-package mt-4 d-block d-md-none">
+                            <div class="single-packages">
+                                <ul class="package-price">
+                                    <li> {{ get_static_option('service_details_package_title') ?? __('Package') }} </li>
+                                    <li> {{ amount_with_currency_symbol($service_details->price) }} </li>
+                                </ul>
+                                <div class="details-available-price margin-top-20">
+                                    <span class="summery-title">
+                                        @if($service_details->is_service_online != 1)
+                                            <h6 class="tilte-available"> {{ get_static_option('service_details_package_subtitle') ?? __('Available Service Packages') }}</h6>
+                                        @else
+                                            <ul class='onlilne-special-list'>
+                                                <li><i class="las la-clock"></i> {{ __('Delivery Days').': '.$service_details->delivery_days }}</li>
+                                                <li><i class="las la-redo-alt"></i> {{ __('Revisions').': '.$service_details->revision }}</li>
+                                            </ul>
+                                        @endif
+                                    <ul class="available-list">
+                                        @foreach($service_includes as $include)
+                                            <li> {{ $include['include_service_title'] }} </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="btn-wrapper text-center margin-top-30">
+                                    <a class="cmn-btn btn-bg-1 d-block" href="{{ route('service.list.book',$service_details->slug) }}"> {{ get_static_option('service_details_button_title') ?? __('Book Appointment') }} </a>
+                                    @if(moduleExists("LiveChat"))
+                                        @if(Auth::guard('web')->check())
+                                            @if(Auth::guard('web')->user()->user_type == 1)
+                                                <br><a class="cmn-btn btn-bg-1 chat-toggle open-button live-chat-button-class-for-style" data-id="{{ $service_details->seller_id }}" data-user="{{ optional($service_details->seller)->name }}"><i class="las la-comments"></i> {{ get_static_option('service_chat_title') ?? sprintf(__('Chat With %s'),optional($service_details->seller)->name) }} </a>
+                                            @endif
+                                        @endif
+                                    @endif
+                                </div>
+                                <div class="order-pagkages">
+                                    @if($completed_order >=1)
+                                        <span class="single-order"> <i class="las la-check"></i>
+                                        {{ $completed_order }} {{ __('Order Completed') }}
+                                    </span>
+                                    @endif
+                                    @if($seller_rating_percentage_value >=1)
+                                        <span class="single-order"> <i class="las la-star"></i>
+                                        {{ __('Seller Rating:') }}
+                                            {{ ceil($seller_rating_percentage_value) }}%
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @if($another_service->count() > 0)
@@ -347,10 +393,10 @@
                                 <h3 class="title">{{ get_static_option('service_details_another_service_title') ?? __('Another Service of this Seller') }}</h3>
                                 <a href="{{ route('seller.service.all',$service_details->seller_id) }}" class="section-btn">{{ get_static_option('service_details_explore_all_title') ?? __('Explore All') }}</a>
                             </div>
-                            <div class="row padding-top-20">
+                            <div class="row padding-top-20 row-suggest">
 
                                 @foreach($another_service as $service)
-                                    <div class="col-md-6 margin-top-30">
+                                    <div class="col-md-6 col-6 margin-top-30 suggest-services">
                                         <div class="single-service no-margin">
                                             <a href="{{ route('service.list.details',$service->slug) }}" class="service-thumb service-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($service->image) !!}>
 
@@ -408,7 +454,7 @@
                     @endif
 
                 </div>
-                <div class="col-lg-4 margin-top-30  order-1 order-lg-2">
+                <div class="col-lg-4 margin-top-30  order-2 order-lg-2 d-none d-md-block">
                     <div class="service-details-package">
                         <div class="single-packages">
                             <ul class="package-price">
@@ -441,19 +487,19 @@
                                     @endif
                                 @endif
                             </div>
-                        </div>
-                        <div class="order-pagkages">
-                            @if($completed_order >=1)
-                                <span class="single-order"> <i class="las la-check"></i>
-                                {{ $completed_order }} {{ __('Order Completed') }}
-                            </span>
-                            @endif
-                            @if($seller_rating_percentage_value >=1)
-                                <span class="single-order"> <i class="las la-star"></i>
-                                {{ __('Seller Rating:') }}
-                                    {{ ceil($seller_rating_percentage_value) }}%
-                            </span>
-                            @endif
+                            <div class="order-pagkages">
+                                @if($completed_order >=1)
+                                    <span class="single-order"> <i class="las la-check"></i>
+                                    {{ $completed_order }} {{ __('Order Completed') }}
+                                </span>
+                                @endif
+                                @if($seller_rating_percentage_value >=1)
+                                    <span class="single-order"> <i class="las la-star"></i>
+                                    {{ __('Seller Rating:') }}
+                                        {{ ceil($seller_rating_percentage_value) }}%
+                                </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
