@@ -154,7 +154,7 @@
 
 
                             <!-- FAQ Area starts -->
-                                @if($service_details->serviceFaq()->count() >= 1)
+                                @if($service_details->serviceFaq()->count() >= 2)
                                     <div class="faq-area" data-padding-top="70" data-padding-bottom="100" >
                                         <div class="container">
                                             <div class="row justify-content-center">
@@ -168,19 +168,10 @@
                                                                     }
                                                                 @endphp
                                                                 <div class="faq-title">
-                                                                    @if ($faq->title != null || $faq->title == "")
                                                                     {{ $faq->title }}
-                                                                    @else
-                                                                        'Kosong'
-                                                                    @endif
                                                                 </div>
                                                                 <div class="faq-panel">
-                                                                    <p class="faq-para">
-                                                                        @if ($faq->description != null || $faq->description == "")
-                                                                        {{ $faq->description }}</p>
-                                                                        @else
-                                                                            'Kosong'
-                                                                        @endif
+                                                                    <p class="faq-para">{{ $faq->description }}</p>
                                                                 </div>
                                                             @endforeach
                                                         </div>
