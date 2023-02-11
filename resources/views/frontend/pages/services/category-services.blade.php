@@ -49,7 +49,7 @@
            <div class="load_more_button_warp"><a href="#" id="load_more_btn" data-total="12">{{__('Load More')}}</a></div>
           </div>
           </div>
-            <div class="row">
+            <div class="row row-service">
                 <div class="col-lg-12">
                     <h2 class="section-sub-title margin-top-80">{{ sprintf(__('Available Services in %s'),$category->name)  }}</h2>
                     @php $current_page_url = URL::current(); @endphp
@@ -109,7 +109,7 @@
                 @if($all_services->count() >= 1)
                     @foreach($all_services as $service)
                         
-                        <div class="col-lg-4 col-md-6 margin-top-30 all-services">
+                        <div class="col-lg-4 col-md-6 col-6 margin-top-30 all-services service-custom">
                             <div class="single-service no-margin wow fadeInUp" data-wow-delay=".2s">
                                 <a href="{{ route('service.list.details',$service->slug) }}" class="service-thumb service-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($service->image) !!}>
 

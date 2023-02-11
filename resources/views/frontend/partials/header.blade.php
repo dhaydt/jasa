@@ -174,6 +174,18 @@
             .badge-custom{
                 font-size: 14px !important;
             }
+            .row-service{
+                padding-left:  10px;
+            }
+            .service-custom{
+                padding: 0 10px 0 0;
+            }
+            .single-service .services-contents{
+                padding: 0 10px 0 10px;
+            }
+            .common-title{
+                font-size: 16px;
+            }
         }
     </style>
 </head>
