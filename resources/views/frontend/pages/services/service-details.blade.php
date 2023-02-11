@@ -168,10 +168,19 @@
                                                                     }
                                                                 @endphp
                                                                 <div class="faq-title">
-                                                                    {{ $faq->title ? $faq->title : 'Kosong' }}
+                                                                    @if ($faq->title != null)
+                                                                    {{ $faq->title }}
+                                                                    @else
+                                                                        'Kosong'
+                                                                    @endif
                                                                 </div>
                                                                 <div class="faq-panel">
-                                                                    <p class="faq-para">{{ $faq->description ? $faq->description : 'Kosong' }}</p>
+                                                                    <p class="faq-para">
+                                                                        @if ($faq->description != null)
+                                                                        {{ $faq->description }}</p>
+                                                                        @else
+                                                                            'Kosong'
+                                                                        @endif
                                                                 </div>
                                                             @endforeach
                                                         </div>
