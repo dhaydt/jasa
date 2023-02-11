@@ -75,7 +75,7 @@
                     </form>
                     </div>
                 </div>
-            <div class="row px-2">
+            <div class="row px-2 w-100">
                 @if(!empty($all_popular_service))
                     @foreach($all_popular_service as $service)
                         <div class="col-lg-4 col-md-6 col-6 margin-top-30 all-services">
