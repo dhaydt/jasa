@@ -424,7 +424,7 @@ $current_page_url = URL::current();
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-category-service">
                         <div class="single-select">
-                            <select id="search_by_subcategory" name="city">
+                            <select id="search_by_city" name="city">
                               <option value=""> Pilih Kota</option>
                                $city_markup
                             </select>

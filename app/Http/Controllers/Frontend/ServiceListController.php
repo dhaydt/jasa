@@ -1536,6 +1536,32 @@ class ServiceListController extends Controller
             'result' => view('frontend.pages.services.partials.search-result', compact('services', 'single_service'))->render(),
         ]);
     }
+    
+    //search by rating
+    public function searchByCity(Request $request)
+    {
+        $this->validate($request, ['city' => 'numeric|min:1|max:5']);
+
+        $city = $request->city;
+        $services = Service::with('serviceCity')
+            ->where('status', 1)
+            ->where('is_service_on', 1)
+            ->when(subscriptionModuleExistsAndEnable('Subscription'), function ($q) {
+                $q->whereHas('seller_subscription');
+            })
+            ->where(['seller_id' => $request->seller_id, 'service_city_id' => $city])->get();
+
+
+        $single_service = Service::select('id', 'seller_id')
+            ->where(['seller_id' => $request->seller_id, 'status' => 1, 'is_service_on' => 1])
+            ->first();
+
+        return response()->json([
+            'status' => 'success',
+            'services' => $services,
+            'result' => view('frontend.pages.services.partials.search-result', compact('services', 'single_service'))->render(),
+        ]);
+    }
 
     //search by sub sorting
     public function searchBySorting(Request $request)
@@ -1683,10 +1709,16 @@ class ServiceListController extends Controller
             return $item;
         });
 
+        // dd(request());
+
         $all_services = collect([]);
 
         $service_quyery = Service::query();
         $service_quyery->with('reviews');
+
+        if(!empty(request()->get('city'))){
+            $service_quyery->where('service_city_id', request()->get('city'));
+        }
 
         if (!empty(request()->get('q'))) {
             $service_quyery->Where('title', 'LIKE', '%' . trim(strip_tags(request()->get('q'))) . '%')

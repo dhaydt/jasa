@@ -98,6 +98,7 @@ Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], f
         Route::get('seller-all-services/search-by-subcategory', 'Frontend\ServiceListController@searchBySubcategory')->name('service.search.subcategory');
         Route::get('seller-all-services/search-by-rating', 'Frontend\ServiceListController@searchByRating')->name('service.search.rating');
         Route::get('seller-all-services/search-by-sorting', 'Frontend\ServiceListController@searchBySorting')->name('service.search.sorting');
+        Route::get('seller-all-services/search-by-city', 'Frontend\ServiceListController@searchByCity')->name('service.search.city');
         
         //all featured service
         Route::get('featured-service/all', 'Frontend\ServiceListController@allfeaturedService')->name('service.all.featured');

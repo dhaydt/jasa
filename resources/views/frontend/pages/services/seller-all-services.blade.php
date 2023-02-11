@@ -245,6 +245,27 @@
                         }
                     });
                 })
+                
+                $(document).on('change','#search_by_city',function(e){
+                    console.log('work');
+                    e.preventDefault();
+                    let city = $(this).val();
+                    let seller_id = $('#seller_id').val();
+
+                    $.ajax({
+                        url:"{{ route('service.search.city') }}",
+                        method:"get",
+                        data:{
+                            city:city,
+                            seller_id:seller_id,
+                        },
+                        success:function(res){
+                            if (res.status == 'success') {
+                                $('#search_result').html(res.result);
+                            }
+                        }
+                    });
+                })
 
             });
         })(jQuery);

@@ -5,7 +5,7 @@
 
     $(document).ready(function(){
 
-        $(document).on('change','#search_by_category,#search_by_subcategory, #search_by_child_category, #search_by_rating,#search_by_sorting',function(e){
+        $(document).on('change','#search_by_category,#search_by_subcategory, #search_by_child_category,#search_by_city, #search_by_rating,#search_by_sorting',function(e){
             e.preventDefault();
             $('#search_service_list_form').trigger('submit');
         })

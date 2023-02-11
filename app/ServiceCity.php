@@ -15,4 +15,8 @@ class ServiceCity extends Model
     {
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
+
+    public function service(){
+        return $this->hasMany(Service::class, 'service_city_id');
+    }
 }
