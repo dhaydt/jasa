@@ -168,10 +168,10 @@
                                                                     }
                                                                 @endphp
                                                                 <div class="faq-title">
-                                                                    {{ $faq->title }}
+                                                                    {{ $faq->title ? $faq->title : 'Kosong' }}
                                                                 </div>
                                                                 <div class="faq-panel">
-                                                                    <p class="faq-para">{{ $faq->description }}</p>
+                                                                    <p class="faq-para">{{ $faq->description ? $faq->description : 'Kosong' }}</p>
                                                                 </div>
                                                             @endforeach
                                                         </div>
