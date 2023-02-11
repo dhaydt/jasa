@@ -9,21 +9,39 @@ $page_post = isset($page_post) && is_null($page_details) ? $page_post : $page_de
     .navbar.navbar-area.navbar-two.nav-absolute {
         background-color: var(--primary-custom);
     }
+    @media(max-width: 500px){
+        .bottom-bar{
+            margin-top: -30px;
+        }
+        .banner-bottom-content .banner-search-form .single-input{
+            border-radius: 10px !important;
+        }
+        .banner-bottom-content .banner-search-form .single-input button{
+            font-size: 16px !important;
+        }
+        .banner-bottom-content .banner-search-form .single-input .form--control{
+            height: 35px !important;
+        }
+    }
 
 </style>
 <nav class="navbar justify-content-center navbar-area navbar-two nav-absolute navbar-expand-lg p-0">
     <div class="container p-0 container-two nav-container px-4 mx-0" style="background: var(--primary-custom)">
         <div class="responsive-mobile-menu">
-            <div class="logo-wrapper">
+            <div class="logo-wrapper d-flex align-items-center justify-content-between">
                 <a href="{{ route('homepage') }}" class="logo">
                     {!! render_image_markup_by_attachment_id(get_static_option('site_logo')) !!}
                 </a>
+                <div class="user-location accounts text-light ml-4 d-block d-md-none" id="location-div" data-toggle="tooltip" title="">
+                    <i class="las la-map-marker" style="font-size: 18px;"></i>
+                    <span class="city-name" id="city-name">{{ session()->get('city') }}</span>
+                </div>
             </div>
 
-            <div class="onlymobile-device-account-navbar navtwo">
+            <div class="onlymobile-device-account-navbar navtwo d-none">
                 <x-frontend.user-menu />
             </div>
-            <button class="navbar-toggler black-color" type="button" data-toggle="collapse"
+            <button class="navbar-toggler black-color d-none" type="button" data-toggle="collapse"
                 data-target="#bizcoxx_main_menu_navabar_two" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

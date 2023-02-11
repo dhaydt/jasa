@@ -139,7 +139,7 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
             $service_count = $cat->services->count();
 
  $category_markup.= <<<CATEGORY
-    <div class="col-xl-2 col-lg-3 col-sm-6 margin-top-30 category-child">
+    <div class="category-child">
         <a href="{$route}/{$slug}" class="single-category style-02 wow fadeInUp" data-wow-delay=".2s">
                 <div class="icon category-bg-thumb-format"  {$category_image}>
                 </div>
@@ -167,7 +167,7 @@ return <<<HTML
                     </div>
                 </div>
             </div>
-            <div class="row margin-top-20">
+            <div class="row margin-top-20 owl-carousel owl-theme" id="category-slide">
                 {$category_markup}
             </div>
         </div>

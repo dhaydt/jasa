@@ -197,7 +197,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
             SERVICE;
 
             $service_markup .= <<<SERVICE
-            <a href="{$route}" class="badge badge-custom mx-2">{$title}</a>
+            <a href="{$route}" class="badge badge-custom mx-2 mb-3">{$title}</a>
             SERVICE;
         }
 
@@ -296,7 +296,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 }
 
                 $servis_markup .= <<<SERVIS
-                <div class="col-xl-3 col-lg-4 col-md-6 margin-top-30 pb-2 wow fadeInUp" data-wow-delay=".2s">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-6 margin-top-30 pb-2 wow fadeInUp service-card" data-wow-delay=".2s">
                     <div class="single-service service-two style-03 section-bg-2">
                         <a href="{$servisRroute}" class="service-thumb service-bg-thumb-format" {$servisImage}>
                         {$servisFeatured}

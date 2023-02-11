@@ -181,7 +181,7 @@ CATEGORY;
         <div class="row">
             <div class="col-12">
                 <div class="row rtl">
-                    <div class="col-xl-12 col-md-12" style="margin-top: 20px">
+                    <div class="col-xl-12 col-md-12 banner-slider" style="margin-top: 20px">
                         <div class="mt-2 mb-3 brand-slider">
                             <div class="owl-carousel owl-theme " id="banner-slider-custom">
                                 {$each_banner}

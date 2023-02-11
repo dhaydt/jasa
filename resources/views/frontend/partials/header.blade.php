@@ -134,6 +134,47 @@
             border: 2px solid var(--success);
             color: var(--success);
         }
+
+        @media(max-width: 500px){
+            .banner-slider{
+                margin-top: 5px !important;
+            }
+            .banner-slider .owl-dots{
+                margin-top: -20px !important;
+            }
+            .service-bg-thumb-format{
+                height: 125px !important;
+            }
+            .single-service.style-03 .services-contents{
+                padding: 1px 5px !important;
+            }
+            #category-slide{
+                padding-left: 16px !important;
+            }
+            .services-area .service-card{
+                padding: 0 10px 0 0 !important;
+                margin-top: 10px !important;
+            }
+            .section-title-two{
+                padding-bottom: 10px;
+            }
+            .section-title-two h3.title{
+                font-size: 18px;
+            }
+            .section-title-two .section-btn{
+                font-size: 14px;
+            }
+            section.category-area, section.services-area{
+                padding-top: 10px !important;
+                padding-bottom: 0 !important;
+            }
+            .category-contents h4.category-title{
+                font-size: 14px !important;
+            }
+            .badge-custom{
+                font-size: 14px !important;
+            }
+        }
     </style>
 </head>
 
