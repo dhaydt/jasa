@@ -7,7 +7,22 @@
 @section('inner-title')
 {{ __('All Category') }}
 @endsection 
-
+<style>
+    .category-child{
+        width: 130px;
+        margin-right: 20px;
+    }
+    .category-child .single-category.style-02 .icon img{
+        height: 60px;
+        width: 60px;
+    }
+    @media(max-width: 500px){
+        .category-child{
+        width: 130px;
+        margin-right: 5px;
+    }
+    }
+</style>
 @section('content')
 <section class="category-area padding-top-100 padding-bottom-100">
     <div class="container container-two">
@@ -18,19 +33,19 @@
                 </div>
             </div>
         </div>
-        <div class="row margin-top-20">
+        <div class="row margin-top-20 justify-content-center">
             @foreach($all_category as $cat)
-            <div class="col-xl-1 col-lg-1 col-sm-4 col-4 margin-top-30 category-child">
+            <a href="{{ route('service.list.category',$cat->slug) }}" class="margin-top-30 category-child">
                 <div class="single-category style-02 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
                     <div class="icon">
                         {!! render_image_markup_by_attachment_id($cat->image,'','','thumb'); !!}
                     </div>
                     <div class="category-contents">
-                        <h4 class="category-title"> <a href="{{ route('service.list.category',$cat->slug) }}"> {{ $cat->name }}</a> </h4>
+                        <h4 class="category-title"> {{ $cat->name }}</h4>
                         {{-- <span class="category-para"> {{ $cat->services->count() }}+ {{ __('Service') }} </span> --}}
                     </div>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
     </div>
