@@ -31,7 +31,7 @@
                         }
                     @endphp
                 
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-3 col-6 col-md-6">
                         <div class="single_seller_profile gray_bg">
                             <div class="thumb" {!! $seller_image !!}></div>
                             <div class="content_area_wrap">

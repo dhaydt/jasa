@@ -145,7 +145,7 @@ class SellerProfile extends \App\PageBuilder\PageBuilderBase
             $seller_since = '<li>'.$since.'<span>'.\Carbon\Carbon::parse($seller_since->created_at)->year.'</span> </li>';
 
             $profile_markup.=<<<PROFILE
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-6 seller-card">
                 <div class="single_seller_profile">
                     <div class="thumb" {$seller_image}></div>
                     <div class="content_area_wrap">
@@ -176,7 +176,7 @@ return <<<HTML
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-center">
+                <div class="row align-items-center row-proofile">
                     {$profile_markup}
                 </div>
             </div>

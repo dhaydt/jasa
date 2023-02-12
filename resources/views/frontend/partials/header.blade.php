@@ -188,7 +188,7 @@
             }
 
             .all-services{
-                padding: 0 10px 0 0 !important;
+                padding: 0 10px 10px 0 !important;
             }
 
             #all_search_result{
@@ -222,7 +222,39 @@
             }
 
             .banner-inner-contents .inner-menu{
-                margin-top: 30px !important;
+                /* margin-top: 30px !important; */
+            }
+
+            .row-proofile{
+                padding: 10px;
+                margin-top: -30px !important;
+            }
+
+            .seller-card{
+                padding: 0 10px 0 0 !important;
+            }
+
+            .single_seller_profile{
+                padding: 10px !important;
+                margin-bottom: 20px !important;
+            }
+
+            .single_seller_profile .thumb{
+                height: 60px !important;
+                width: 60px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .single_seller_profile .content_area_wrap .title{
+                font-size: 14px !important;
+            }
+
+            .single_seller_profile .order_completation{
+                font-size: 10px !important;
+            }
+
+            .btn-wrapper .cmn-btn.btn-small{
+                padding: 0 !important;
             }
         }
     </style>

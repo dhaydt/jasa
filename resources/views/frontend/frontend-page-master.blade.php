@@ -1,6 +1,6 @@
 @include('frontend.partials.header')
 @if(!request()->routeIs('about.seller.profile'))
-    <div class="banner-inner-area section-bg-2 padding-top-40 padding-bottom-40
+    <div class="banner-inner-area section-bg-2 padding-top-100 padding-bottom-10
         @if(request()->routeIs('homepage') || request()->routeIs('frontend.dynamic.page')  &&  empty($page_post->breadcrumb_status))
             d-none
         @endif"

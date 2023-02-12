@@ -17,7 +17,7 @@
     <!-- Category Service area starts -->
     <section class="category-services-area padding-top-10 padding-bottom-100">
         <div class="container">
-            <div class="row row-service">
+            <div class="row row-service justify-content-center">
                 <div class="col-lg-12">
                     @php $current_page_url = URL::current(); @endphp
                     @php $cities = \App\ServiceCity::with('service')->get(); @endphp
@@ -122,7 +122,7 @@
                                     </ul>
                                     {{-- <p class="common-para"> {{ Str::limit(strip_tags($service->description),100) }} </p> --}}
                                     <div class="btn-wrapper d-flex flex-wrap">
-                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Book Now') }} </a>
+                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> Pesan </a>
                                         {{-- <a href="{{ route('service.list.details',$service->slug) }}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {{ __('View Details') }} </a> --}}
                                     </div>
                                 </div>
