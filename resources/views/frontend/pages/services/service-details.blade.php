@@ -362,7 +362,7 @@
                                     </ul>
                                 </div>
                                 <div class="btn-wrapper text-center margin-top-30">
-                                    <a class="cmn-btn btn-bg-1 d-block" href="{{ route('service.list.book',$service_details->slug) }}"> {{ get_static_option('service_details_button_title') ?? __('Book Appointment') }} </a>
+                                    <a class="cmn-btn btn-bg-1 d-block" href="{{ route('service.list.book',$service_details->slug) }}"> Pesan Sekarang </a>
                                     @if(moduleExists("LiveChat"))
                                         @if(Auth::guard('web')->check())
                                             @if(Auth::guard('web')->user()->user_type == 1)
@@ -442,7 +442,7 @@
                                                 
                                                 {{-- <p class="common-para"> {{ Str::limit(strip_tags($service->description),100) }} </p> --}}
                                                 <div class="btn-wrapper d-flex flex-wrap">
-                                                    <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Book Now') }} </a>
+                                                    <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100">Pesan</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -478,7 +478,7 @@
                                 </ul>
                             </div>
                             <div class="btn-wrapper text-center margin-top-30">
-                                <a class="cmn-btn btn-bg-1 d-block" href="{{ route('service.list.book',$service_details->slug) }}"> {{ get_static_option('service_details_button_title') ?? __('Book Appointment') }} </a>
+                                <a class="cmn-btn btn-bg-1 d-block" href="{{ route('service.list.book',$service_details->slug) }}"> Pesan Sekarang</a>
                                 @if(moduleExists("LiveChat"))
                                     @if(Auth::guard('web')->check())
                                         @if(Auth::guard('web')->user()->user_type == 1)
