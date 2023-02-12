@@ -132,7 +132,7 @@ class ServiceListOne extends PageBuilderBase
         $category_text = $settings['category'] ??  __('Pilih Kategori Layanan');
         $subcategory_text = $settings['subcategory'] ??  __('Select Subcategory');
         $child_category_text = $settings['child_category'] ??  __('Select Child Category');
-        $book_now_text = 'Pesan sekarang';
+        $book_now_text = 'Pesan';
         $read_more_text = $settings['read_more'] ??  __('View Details');
         
         $service_quyery = Service::query();

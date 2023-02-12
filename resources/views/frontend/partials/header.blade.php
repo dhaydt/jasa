@@ -229,6 +229,10 @@
                 /* margin-top: 30px !important; */
             }
 
+            .prices{
+                font-size: 18px !important;
+            }
+
             .row-proofile{
                 padding: 10px;
                 margin-top: -30px !important;
