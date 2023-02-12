@@ -134,6 +134,9 @@
             border: 2px solid var(--success);
             color: var(--success);
         }
+        .logo-wrapper .logo img{
+                max-height: 70px;
+            }
 
         @media(max-width: 500px){
             .logo-wrapper .logo img{

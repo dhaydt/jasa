@@ -8,7 +8,7 @@
     <div class="container">
         <div class="signup-wrapper">
             <div class="signup-contents">
-                <h3 class="signup-title"> {{ get_static_option('login_form_title') ?? __('Login to your account') }}</h3>
+                <h3 class="signup-title"> Masuk</h3>
 
                 @if(Session::has('msg'))
                 <p class="alert alert-{{Session::get('type') ?? 'success'}}">{{ Session::get('msg') }}</p>

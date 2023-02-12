@@ -9,12 +9,12 @@
 $reg_type = request()->get('type') ?? 'buyer';
 @endphp
     <!-- Banner Inner area Starts -->
-    <div class="banner-inner-area section-bg-2 padding-top-70 padding-bottom-70">
+    <div class="banner-inner-area section-bg-2 padding-top-80 padding-bottom-20">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="banner-inner-contents text-center">
-                        <h2 class="banner-inner-title"> {{ get_static_option('register_page_title') ?? __('Register') }}</h2>
+                        <h2 class="banner-inner-title"> Daftar untuk bergabung bersama kami</h2>
                     </div>
                 </div>
             </div>
