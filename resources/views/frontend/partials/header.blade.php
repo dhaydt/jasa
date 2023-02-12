@@ -267,6 +267,9 @@
             .btn-wrapper .cmn-btn.btn-small{
                 padding: 0 !important;
             }
+            .row-cat-all{
+                justify-content: center;
+            }
         }
     </style>
 </head>

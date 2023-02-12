@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="row margin-top-20">
+        <div class="row margin-top-20 row-cat-all">
             @foreach($all_category as $cat)
             <a href="{{ route('service.list.category',$cat->slug) }}" class="margin-top-30 category-child">
                 <div class="single-category style-02 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
