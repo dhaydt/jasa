@@ -368,7 +368,8 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         }
 
         $routeAll = route('set-city-auto');
-        $default= route('set_default');
+        // $default= route('set_default');
+        $default= '/service-list?cat=&subcat=&child_cat=&rating=&sortby=latest_service';
 
 
         return <<<HTML
@@ -400,7 +401,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                 </div>
             </div>
             <div class="row margin-top-20 pl-2">
-                <a href="{$default}" class="badge badge-custom mx-2 mb-3 {$all}">Semua Kota</a>
+                <a href="{$default}" target="_blank" class="badge badge-custom mx-2 mb-3 {$all}">Semua Kota</a>
                 {$city_markup}
                 <!-- <a href="{$routeAll}" class="badge badge-custom mx-2 mb-3">Deteksi Kota</a> -->
             </div>
