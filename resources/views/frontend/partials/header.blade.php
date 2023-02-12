@@ -136,6 +136,10 @@
         }
 
         @media(max-width: 500px){
+            .logo-wrapper .logo img{
+                height: 38px;
+                max-height: 38px;
+            }
             .banner-slider{
                 margin-top: 5px !important;
             }

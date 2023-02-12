@@ -97,7 +97,7 @@ class JasaPopuler extends \App\PageBuilder\PageBuilderBase
         $padding_bottom = $settings['padding_bottom'];
         $section_bg = $settings['section_bg'];
         // $book_appoinment = $settings['book_appointment'] ?? 'Book Now';
-        $book_appoinment = 'Booking';
+        $book_appoinment = 'Pesan';
 
 
         //static text helpers

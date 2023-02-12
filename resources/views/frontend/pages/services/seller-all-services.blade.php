@@ -135,7 +135,7 @@
                                     {{-- <p class="common-para"> {{ Str::limit(strip_tags($service->description,100)) }} </p> --}}
 
                                     <div class="btn-wrapper d-flex flex-wrap">
-                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Booking') }} </a>
+                                        <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-small btn-bg-1 w-100"> {{ __('Pesan') }} </a>
                                         {{-- <a href="{{ route('service.list.details',$service->slug) }}" class="cmn-btn btn-small btn-outline-1 ml-auto"> {{ __('View Details') }} </a> --}}
                                     </div>
                                 </div>
