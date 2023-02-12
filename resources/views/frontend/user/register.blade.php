@@ -89,7 +89,7 @@ $reg_type = request()->get('type') ?? 'buyer';
                                             <div class="single-forms">
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Full Name*') }} </label>
-                                                    <input class="form--control" type="text" name="name" id="name" value="{{old('name')}}" placeholder="{{__('Full Name')}}">
+                                                    <input class="form--control" type="text" name="name" id="name" value="{{old('name')}}" placeholder="Nama lengkap">
                                                 </div>
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label">{{ __('User Name*') }} </label>
@@ -100,19 +100,19 @@ $reg_type = request()->get('type') ?? 'buyer';
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Email Address*') }} </label>
                                                     <input class="form--control" type="text" name="email" id="email" value="{{old('email')}}"
-                                                        placeholder="{{__('Type Email')}}">
+                                                        placeholder="Masukan email">
                                                 </div>
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Phone Number*') }} </label>
                                                     <input class="form--control" type="number" name="phone" id="phone" value="{{old('phone')}}"
-                                                        placeholder="{{__('Type Number')}}">
+                                                        placeholder="Masukan nomor">
                                                 </div>
                                             </div>
                                             <div class="single-forms">
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Password*') }} </label>
                                                     <input class="form--control" type="password" name="password"
-                                                        id="password" placeholder="{{__('Type Password')}}">
+                                                        id="password" placeholder="{{__('Masukan Password')}}">
                                                 </div>
                                                 <div class="single-content margin-top-30">
                                                     <label class="forms-label"> {{ __('Confirm Password*') }} </label>
