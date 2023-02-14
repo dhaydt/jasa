@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="contents">
                                         <h2 class="order-titles"> {{ $complete_order }} </h2>
-                                        <span class="order-para">{{ __('Order Completed ') }}</span>
+                                        <span class="order-para">{{ __('Pesanan Selesai ') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                             @php
                                 $amount_settings = App\AmountSettings::first();
                             @endphp
-                            <small class="text-danger margin-bottom-10 d-block">{{sprintf(__('You can make a request only if your remaining balance in a range set by the site admin. Like admin set minimum request amount %1$s and maximum request amount %2$s. than you can request a payment between %1$s to %2$s.'),$amount_settings->min_amount,$amount_settings->max_amount)}}</small>
+                            <small class="text-danger margin-bottom-10 d-block">{{sprintf(__('Anda dapat mengajukan penarikan dana minimal Rp.50.000.'),$amount_settings->min_amount,$amount_settings->max_amount)}}</small>
                             <textarea class="form-control" name="seller_note" id="seller_note" cols="30" rows="7"></textarea>
                         </div>
 
