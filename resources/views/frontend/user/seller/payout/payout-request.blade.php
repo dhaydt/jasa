@@ -178,7 +178,7 @@
                             <select name="payment_gateway" id="payment_gateway" class="form-control nice-select">
                                 <option value="">{{ __('Select Payment gateway') }}</option>
                                 @php
-                                    $all_gateways = ['paypal','manual_payment','mollie','paytm','stripe','razorpay','flutterwave','paystack','marcadopago','instamojo','cashfree','payfast','midtrans'];
+                                    $all_gateways = ['paypal','manual_payment','mollie','paytm','stripe','razorpay','flutterwave','paystack','marcadopago','instamojo','cashfree','payfast','midtrans', 'xendit'];
                                 @endphp
                                 @foreach($all_gateways as $gateway)
                                     @if(!empty(get_static_option($gateway.'_gateway')))
