@@ -32,11 +32,12 @@
                     @endphp
                 
                         <div class="col-lg-3 col-6 col-md-6">
+                            <a href="{{route('about.seller.profile',$seller->username)}}">
                         <div class="single_seller_profile gray_bg">
                             <div class="thumb" {!! $seller_image !!}></div>
                             <div class="content_area_wrap">
                                 <h4 class="title">
-                                    <a href="{{route('about.seller.profile',$seller->username)}}">{{$seller->name}}</a>
+                                    {{$seller->name}}
                                     @if(optional($seller->sellerVerify)->status==1)
                                         <div data-toggle="tooltip" data-placement="top" title="{{__('This seller is verified by the site admin according his national id card.')}}"> <span class="seller-verified"> <i class="las la-check"></i> </span></div>
                                     @endif
@@ -52,6 +53,7 @@
                                 <span class="order_completation">{{$seller->order->where('status', 2)->count() ?? 0}} {{__('Order Completed')}}</span> 
                             </div>
                         </div>
+                    </a>
                     </div>
                     @endforeach
                     @if($seller_lists->count() >= 12)

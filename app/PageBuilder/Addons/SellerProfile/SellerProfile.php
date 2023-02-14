@@ -146,17 +146,19 @@ class SellerProfile extends \App\PageBuilder\PageBuilderBase
 
             $profile_markup.=<<<PROFILE
             <div class="col-lg-3 col-md-6 col-6 seller-card">
+            <a href="{$profile_page}">
                 <div class="single_seller_profile">
                     <div class="thumb" {$seller_image}></div>
-                    <div class="content_area_wrap">
-                        <h4 class="title">
-                            <a href="{$profile_page}">$seller_name</a>
-                            {$seller_verify}
-                        </h4>
-                        $service_rating_and_review
-                        <span class="order_completation">{$completed_order} {$order_completed_text}</span> 
+                        <div class="content_area_wrap">
+                            <h4 class="title">
+                                $seller_name
+                                {$seller_verify}
+                            </h4>
+                            $service_rating_and_review
+                            <span class="order_completation">{$completed_order} {$order_completed_text}</span> 
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             PROFILE;
 

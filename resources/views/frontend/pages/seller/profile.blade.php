@@ -118,7 +118,7 @@
                     <div class="col-lg-3 col-md-6 margin-top-30">
                         <div class="profile-author-contents">
                             <ul class="profile-about">
-                                <li> {{ __('From:') }} <span> {{ optional($seller->country)->country }} </span> </li>
+                                <li> Kota <span> {{ optional($seller->country)->country }} </span> </li>
                                 <li> {{ __('Seller Since:') }} <span> {{ Carbon\Carbon::parse($seller_since->created_at)->year }}  </span> </li>
                             </ul>
                         </div>
@@ -217,7 +217,7 @@
                                                 <span class="prices"> {{ amount_with_currency_symbol( $service->price) }} </span>
                                             </div>
                                             <div class="btn-wrapper">
-                                                <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-appoinment btn-bg-1">{{ __('Book Appoinment') }} </a>
+                                                <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-appoinment btn-bg-1">Pesan </a>
                                             </div>
                                         </div>
                                     </div>
