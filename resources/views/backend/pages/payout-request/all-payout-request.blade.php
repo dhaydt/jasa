@@ -36,7 +36,7 @@
                                     </div>
                                 </th>
                                 <th>{{__('ID')}}</th>
-                                <th>{{__('Payment Gateway')}}</th>
+                                <th>Pembayaran</th>
                                 <th>{{__('Request Date')}}</th>
                                 <th>{{__('Request Amount')}}</th>
                                 <th>{{__('Image')}}</th>
@@ -53,7 +53,7 @@
                                             </div>
                                         </td>
                                         <td>#{{$data->id}}</td>
-                                        <td>{{$data->payment_gateway}}</td>
+                                        <td>Transfer Bank</td>
                                         <td>{{ $data->created_at->toFormattedDateString()}}</td>
                                         <td>{{ float_amount_with_currency_symbol($data->amount) }}</td>
                                         <td>

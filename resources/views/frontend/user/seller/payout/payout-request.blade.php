@@ -110,7 +110,7 @@
                                         <thead>
                                             <tr>
                                                 <th> {{ __('ID') }}</th>
-                                                <th> {{ __('Payment Gateway') }} </th>
+                                                <th> Pembayaran </th>
                                                 <th> {{ __('Request Date') }} </th>
                                                 <th> {{ __('Request Amount') }} </th>
                                                 <th> {{ __('Request Status') }} </th>
@@ -121,7 +121,7 @@
                                             @foreach($all_payout_request as $pay_request)
                                             <tr>
                                                 <td data-label="{{ __('ID') }}">{{ $pay_request->id }} </td>
-                                                <td data-label="{{ __('Payment Gateway') }}">{{ __($pay_request->payment_gateway) }}</td>
+                                                <td data-label="{{ __('Payment Gateway') }}">Transfer Bank</td>
                                                 <td data-label="{{ __('Request Date') }}">{{ $pay_request->created_at->diffForHumans() }} </td>
                                                 <td data-label="{{ __('Request Amount') }}"> {{ float_amount_with_currency_symbol($pay_request->amount) }} </td>
                                                 <td data-label="{{ __('Request Status') }}">
@@ -173,7 +173,8 @@
                             <label for="amount">{{ __('Amount') }}</label>
                             <input type="number" class="form-control" name="amount" id="amount">
                         </div>
-                        <div class="form-group">
+                        <input type="hidden" value="transfer" name="payment_gateway">
+                        {{-- <div class="form-group">
                             <label for="payment_gateway">{{ __('Payment Gateway') }}</label>
                             <select name="payment_gateway" id="payment_gateway" class="form-control nice-select">
                                 <option value="">{{ __('Select Payment gateway') }}</option>
@@ -186,8 +187,8 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="form-group mt-5">
+                        </div> --}}
+                        <div class="form-group mt-3">
                             <label class="payout-request-note d-block pt-4" for="amount">{{ __('Note (your payment account details)') }}</label>
                             @php
                                 $amount_settings = App\AmountSettings::first();
