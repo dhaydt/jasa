@@ -1636,7 +1636,7 @@ class SellerController extends Controller
 
             $available_balance = $remaning_balance - $total_earnings;
             if($request->amount<=0 || $request->amount >$available_balance){
-                toastr_error(__('Masukan nilai yang benar atau saldo balance anda tidak mencukupi!'));
+                toastr_error(__('Masukan nilai yang benar atau saldo anda tidak mencukupi!'));
                 return redirect()->back();
             }
 
