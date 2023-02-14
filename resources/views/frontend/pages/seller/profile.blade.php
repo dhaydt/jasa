@@ -86,7 +86,7 @@
                                     <h4 class="title">
                                         <a href="{{ route('about.seller.profile',$seller->username) }}"> {{ $seller->name }} </a>
                                         @if(optional($seller->sellerVerify)->status==1)
-                                            <div data-toggle="tooltip" data-placement="top" title="{{__('This seller is verified by the site admin according his national id card.')}}">
+                                            <div data-toggle="tooltip" data-placement="top" title="{{__('Vendor telah diverifikasi oleh Jasakita')}}">
                                                 <span class="seller-verified"> <i class="las la-check"></i> </span>
                                             </div>
                                         @endif
@@ -119,7 +119,7 @@
                         <div class="profile-author-contents">
                             <ul class="profile-about">
                                 <li> Kota <span> {{ optional($seller->country)->country }} </span> </li>
-                                <li> {{ __('Seller Since:') }} <span> {{ Carbon\Carbon::parse($seller_since->created_at)->year }}  </span> </li>
+                                <li> {{ __('Bergabung :') }} <span> {{ Carbon\Carbon::parse($seller_since->created_at)->year }}  </span> </li>
                             </ul>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                                         </div>
                                         <div class="contents margin-top-10">
                                             <h3 class="title">@if(!empty($completed_order)){{ $completed_order }} @endif</h3>
-                                            <span class="ratings-span"> {{ __('Order Completed') }}</span>
+                                            <span class="ratings-span"> {{ __('Order Selesai') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -217,13 +217,13 @@
                                                 <span class="prices"> {{ amount_with_currency_symbol( $service->price) }} </span>
                                             </div>
                                             <div class="btn-wrapper">
-                                                <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-appoinment btn-bg-1">Pesan </a>
+                                                <a href="{{ route('service.list.book',$service->slug) }}" class="cmn-btn btn-appoinment btn-bg-1">{{ __('Book Appoinment') }} </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             @empty
-                            <h3 class="text-warning">{{__('No Service Found')}}</h3>
+                            <h3 class="text-warning">{{__('Layanan tidak ditemukan')}}</h3>
                             @endforelse
                         </div>
                     </div>
