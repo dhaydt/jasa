@@ -118,7 +118,7 @@
                     <div class="col-lg-3 col-md-6 margin-top-30">
                         <div class="profile-author-contents">
                             <ul class="profile-about">
-                                <li> Kota <span> {{ optional($seller->country)->country }} </span> </li>
+                                <li> Kota :<span> {{ optional(getCity($seller->service_city))->service_city }} </span> </li>
                                 <li> {{ __('Bergabung :') }} <span> {{ Carbon\Carbon::parse($seller_since->created_at)->year }}  </span> </li>
                             </ul>
                         </div>

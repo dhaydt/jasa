@@ -12,6 +12,7 @@ use App\Brand;
 use App\Helpers\FlashMsg;
 use App\Mail\OrderMail;
 use App\Order;
+use App\ServiceCity;
 use App\User;
 use Illuminate\Support\Str;
 use Xgenious\Paymentgateway\Facades\XgPaymentGateway;
@@ -25,6 +26,11 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
         $output = ' <meta property="twitter:description" content="' . $image_details['img_url'] . '">';
     }
     return $output;
+}
+
+function getCity($id){
+    $city = ServiceCity::find($id);
+    return $city;
 }
 
 function send_order_mail($order_id)
