@@ -29,7 +29,7 @@
                     <div class="single-category-service">
                         <div class="single-select">
                             <select id="search_by_category">
-                                <option>{{ __('Select Category') }}</option>
+                                <option>{{ __('Pilih kategori') }}</option>
                                 @foreach($categories as $category)
                                 <option value="{{  $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -42,7 +42,7 @@
                     <div class="single-category-service">
                         <div class="single-select">
                             <select id="search_by_subcategory">
-                                <option>{{ __('Select Subcategory') }}</option>
+                                <option>{{ __('Pilih Subkategori') }}</option>
                                 @foreach($sub_categories as $subcategory)
                                 <option value="{{  $subcategory->id }}">{{ $subcategory->name }}</option>
                                 @endforeach
@@ -54,12 +54,12 @@
                     <div class="single-category-service">
                         <div class="single-select">
                             <select id="search_by_rating">
-                                <option>{{ __('Select Star') }}</option>
-                                <option value="1">{{ __('One Star') }}</option>
-                                <option value="2">{{ __('Two Star') }}</option>
-                                <option value="3">{{ __('Three Star') }}</option>
-                                <option value="4">{{ __('Four Star') }}</option>
-                                <option value="5">{{ __('Five Star') }}</option>
+                                <option>{{ __('Pilih bintang') }}</option>
+                                <option value="1">{{ __('Satu Bintang') }}</option>
+                                <option value="2">{{ __('Dua Bintang') }}</option>
+                                <option value="3">{{ __('Tiga Bintang') }}</option>
+                                <option value="4">{{ __('Empat Bintang') }}</option>
+                                <option value="5">{{ __('Lima Bintang') }}</option>
                             </select>
                         </div>
                     </div>
@@ -67,12 +67,12 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-category-service flex-category-service">
                         <div class="single-select">
-                            <span class="select-sort">{{ __('Sort By:') }}</span>
+                            <span class="select-sort">{{ __('Urutkan dari:') }}</span>
                             <select id="search_by_sorting">
                                 <option>{{ __('Sort By') }}</option>
-                                <option value="latest_service">{{ __('Latest Service') }}</option>
-                                <option value="price_lowest">{{ __('Lowest Price') }}</option>
-                                <option value="price_highest">{{ __('Highest Price') }}</option>
+                                <option value="latest_service">{{ __('Jasa Terakhir') }}</option>
+                                <option value="price_lowest">{{ __('Termurah') }}</option>
+                                <option value="price_highest">{{ __('Termahal') }}</option>
                             </select>
                         </div>
                     </div>

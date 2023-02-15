@@ -926,7 +926,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             @if(Auth::guard('web')->check())
                                             {{-- <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
                                                 get_static_option('service_order_confirm_title') ?? __('Bayar & Booking') }} </button> --}}
-                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Bayar & Booking</button>
+                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Pesan & Bayar</button>
                                             @else
                                             <a class="cmn-btn btn-appoinment btn-bg-1"
                                                 href="{{route('user.login')}}?return={{request()->path()}}">{{ __('Sign
@@ -938,7 +938,7 @@ $country_tax = App\Tax::select('id','tax')->where('country_id',$service_country)
                                             {{-- <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">{{
                                                 get_static_option('service_order_confirm_title') ?? __('Pay & Confirm
                                                 Your Order') }} </button> --}}
-                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Bayar & Booking </button>
+                                            <button type="submit" class="cmn-btn btn-appoinment btn-bg-1">Pesan & Bayar</button>
                                             @endif
                                         </div>
                                     </div>

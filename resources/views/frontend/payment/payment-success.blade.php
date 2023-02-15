@@ -42,13 +42,13 @@
                     <!-- Successful Complete -->
                     <fieldset class="padding-top-80 padding-bottom-100">
                         <div class="form-card successful-card">
-                            <h2 class="title-step"> {{ get_static_option('success_title') ?? __('SUCCESSFUL') }}</h2>
+                            <h2 class="title-step">BERHASIL !</h2>
                             <a href="{{ route('homepage') }}" class="succcess-icon">
                                 <i class="las la-check"></i>
                             </a>
-                            <h5 class="purple-text text-center">{{ get_static_option('success_subtitle') ?? __('Your Order Successfully Completed') }}</h5>
+                            <h5 class="purple-text text-center">Pesanan Anda berhasil diselesaikan</h5>
                             <div class="btn-wrapper margin-top-35">
-                                <h4 class="mb-3">{{ get_static_option('success_details_title') ?? __('Your Order Details') }}</h4>
+                                <h4 class="mb-3">Detail pesanan anda</h4>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -78,7 +78,8 @@
                                                     <label><strong>{{ __('Coupon Amount:') }} </strong>{{ float_amount_with_currency_symbol($order_details->coupon_amount) }}</label> <br>
                                                 @endif
                                                 <label><strong>{{ __('Total:') }} </strong>{{ float_amount_with_currency_symbol($order_details->total) }}</label> <br>
-                                                <label><strong>{{ __('Payment Gateway:') }} </strong>{{ __(ucwords(str_replace("_", " ", $order_details->payment_gateway))) }}</label> <br>
+                                                {{-- <label><strong>{{ __('Payment Gateway:') }} </strong>{{ __(ucwords(str_replace("_", " ", $order_details->payment_gateway))) }}</label> <br> --}}
+                                                <label><strong>{{ __('Payment Gateway:') }} </strong>Transfer Bank</label> <br>
                                                 <label><strong>{{ __('Payment Status:') }} </strong>{{ __(ucfirst($order_details->payment_status)) }}</label> <br>
                                             </td>
                                             <td>
@@ -103,7 +104,7 @@
                                     @endphp
                                     <a href="{{ route($route_prefix.'.dashboard') }}" class="cmn-btn btn-bg-1">{{__('Go To Dashboard') }}</a>
                                     <a href="{{ route($route_prefix.'.orders') }}" class="cmn-btn btn-bg-1">{{__('All Orders') }}</a>
-                                    <div class="cmn-btn btn-bg-1 new-cal"></div>
+                                    {{-- <div class="cmn-btn btn-bg-1 new-cal"></div> --}}
                                 @endif
                             </div>
                         </div>

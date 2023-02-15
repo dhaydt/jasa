@@ -27,14 +27,14 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-3 col-sm-3">
                                <div class="form-group">
-                                   <input type="text" class="search-input form-control" id="search_by_query" placeholder="{{__('write minimum 3 character to search')}}" name="q" value="{{request()->get('q')}}">
+                                   <input type="text" class="search-input form-control" id="search_by_query" placeholder="Ketik minimal 3 huruf untuk cari" name="q" value="{{request()->get('q')}}">
                                </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="single-category-service">
                                     <div class="single-select">
                                         <select id="search_by_city" name="city">
-                                            <option value="">{{ __('Select City') }}</option>
+                                            <option value="">{{ __('Pilih kota') }}</option>
                                             @foreach ($cities as $city)
                                             @if (count($city['service']) != 0)
                                                 <option value="{{ $city['id'] }}" @if(!empty(request()->get('city')) && request()->get('city') == $city['id'] ) selected @endif>{{ $city['service_city'] }}</option>
@@ -48,12 +48,12 @@
                                 <div class="single-category-service">
                                     <div class="single-select">
                                         <select id="search_by_rating" name="rating">
-                                            <option value="">{{ __('Select Rating Star') }}</option>
-                                            <option value="1" @if(!empty(request()->get('rating')) && request()->get('rating') == 1 ) selected @endif>{{ __('One Star') }}</option>
-                                            <option value="2" @if(!empty(request()->get('rating')) && request()->get('rating') == 2 ) selected @endif>{{ __('Two Star') }}</option>
-                                            <option value="3" @if(!empty(request()->get('rating')) && request()->get('rating') == 3 ) selected @endif>{{ __('Three Star') }}</option>
-                                            <option value="4" @if(!empty(request()->get('rating')) && request()->get('rating') == 4 ) selected @endif>{{ __('Four Star') }}</option>
-                                            <option value="5" @if(!empty(request()->get('rating')) && request()->get('rating') == 5 ) selected @endif>{{ __('Five Star') }}</option>
+                                            <option value="">{{ __('Pilih rating bintang') }}</option>
+                                            <option value="1" @if(!empty(request()->get('rating')) && request()->get('rating') == 1 ) selected @endif>{{ __('Satu Bintang') }}</option>
+                                            <option value="2" @if(!empty(request()->get('rating')) && request()->get('rating') == 2 ) selected @endif>{{ __('Dua Bintang') }}</option>
+                                            <option value="3" @if(!empty(request()->get('rating')) && request()->get('rating') == 3 ) selected @endif>{{ __('Tiga Bintang') }}</option>
+                                            <option value="4" @if(!empty(request()->get('rating')) && request()->get('rating') == 4 ) selected @endif>{{ __('Empat Bintang') }}</option>
+                                            <option value="5" @if(!empty(request()->get('rating')) && request()->get('rating') == 5 ) selected @endif>{{ __('Lima Bintang') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -62,10 +62,10 @@
                                 <div class="single-category-service flex-category-service">
                                     <div class="single-select">
                                         <select id="search_by_sorting" name="sortby">
-                                            <option value="">{{ __('Sort By') }}</option>
-                                            <option value="latest_service" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'latest_service') selected @endif>{{ __('Latest Service') }}</option>
-                                            <option value="lowest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'lowest_price') selected @endif>{{ __('Lowest Price') }}</option>
-                                            <option value="highest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'highest_price') selected @endif>{{ __('Highest Price') }}</option>
+                                            <option value="">{{ __('Urutkan dari') }}</option>
+                                            <option value="latest_service" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'latest_service') selected @endif>{{ __('Jasa terakhir') }}</option>
+                                            <option value="lowest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'lowest_price') selected @endif>{{ __('Termurah') }}</option>
+                                            <option value="highest_price" @if(!empty(request()->get('sortby')) && request()->get('sortby') == 'highest_price') selected @endif>{{ __('Termahal') }}</option>
                                         </select>
                                     </div>
                                 </div>

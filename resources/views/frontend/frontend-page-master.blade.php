@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="banner-inner-contents">
                         <ul class="inner-menu">
-                            <li class="list"><a href="{{url('/')}}">{{__('Home')}} </a></li>
+                            <li class="list"><a href="{{url('/')}}">{{__('Beranda')}} </a></li>
                             <li class="list">@yield('page-title')  </li>
                         </ul>
                         <h2 class="banner-inner-title"> {{ $page_post->title ?? '' }} @yield('inner-title')</h2>
