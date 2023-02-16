@@ -46,7 +46,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::post('/register',[UserController::class,'register']);
     Route::post('/login',[UserController::class,'login']);
     Route::post('social/login',[UserController::class,'socialLogin']);
-    Route::post('/send-otp-in-mail',[UserController::class,'sendOTP']);
+    Route::post('/send-otp',[UserController::class,'sendOTP']);
     Route::post('/reset-password',[UserController::class,'resetPassword']);
    
     /*--------------------------
@@ -101,7 +101,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
         Route::post('/support-tickets',[UserController::class,'allTickets']);
         Route::get('/view-ticket/{id}',[UserController::class,'viewTickets']);
         Route::post('ticket/message-send',[UserController::class,'sendMessage']);
-        Route::post('/send-otp-in-mail/success',[UserController::class,'sendOTPSuccess']);
+        Route::post('/send-otp/success',[UserController::class,'sendOTPSuccess']);
         Route::post('ticket/create',[UserController::class,'createTicket']);
         Route::post('payment-status-update',[ServiceController::class,'paymentStatusUpdate']);
         

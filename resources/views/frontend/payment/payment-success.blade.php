@@ -96,7 +96,7 @@
                                 </table>
                             </div>
                             <div class="btn-wrapper text-center margin-top-35">
-                                <a href="{{ get_static_option('button_url') ?? route('homepage') }}" class="cmn-btn btn-bg-1">{{ get_static_option('button_title') ?? __('Back To Home') }}</a>
+                                <a href="{{ get_static_option('button_url') ?? route('homepage') }}" class="cmn-btn btn-bg-1">Kembali ke Home</a>
                                 @if(auth('web')->check())
                                     @php
                                     $user_details = auth('web')->user();

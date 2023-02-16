@@ -181,22 +181,26 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $count = strlen(preg_replace("/[^\d]/", '', $request->email));
+        if ($count >= 10 && $count <= 15) {
+            $login_type = 'phone';
+        } else {
+            $login_type = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        }
+        $request->validate([ 
             'email' => 'required|string|max:191',
             'password' => 'required',
         ]);
 
-        $login_type = 'email';
-        if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
-            $login_type = 'username';
-        }
-        $user_type = 1;
-        if($request->has('user_type')){
-            $user_type = 0;
-        }
-        $user = User::select('id', 'email','user_type', 'password','country_id','state','username')->where([$login_type => $request->email,'user_type' => $user_type])->first();
-
-
+        // $login_type = 'email';
+        // if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+        //     $login_type = 'username';
+        // }
+        $user_type = $request->user_type;
+        // if($request->has('user_type')){
+        //     $user_type = 0;
+        // }
+        $user = User::select('id','phone', 'email','user_type', 'password','country_id','state','username')->where([$login_type => $request->email,'user_type' => $user_type])->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->error([
@@ -354,7 +358,7 @@ class UserController extends Controller
             $token = $user->createToken(Str::slug(get_static_option('site_title', 'qixer')) . 'api_keys')->plainTextToken;
             return response()->success([
                 'users' => $user,
-                'token' => $token,
+                'token' => $ma,
                 'status' => 'ok',
             ]);
         }
@@ -368,7 +372,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_id' => 'required|integer',
-            'email_verified' => 'required|integer',
+            'phone_verified' => 'required|integer',
         ]);
 
         if(!in_array($request->email_verified,[0,1])){
@@ -378,7 +382,7 @@ class UserController extends Controller
         }
 
         $user = User::where('id', $request->user_id)->update([
-            'email_verified' =>  $request->email_verified
+            'email_verified' =>  $request->phone_verified
         ]);
 
         if(is_null($user)){
@@ -395,28 +399,35 @@ class UserController extends Controller
     public function sendOTP(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'phone' => 'required',
         ]);
 
-        $otp_code = sprintf("%d", random_int(1234, 9999));
-        $user_email = User::where('email', $request->email)->first();
+        // $otp_code = sprintf("%d", random_int(1234, 9999));
+        $user_email = User::where('phone', $request->phone)->first();
+        $email_verify_tokn = rand(1231,7879);
+        $token = $email_verify_tokn;
 
         if (!is_null($user_email)) {
-            try {
-                $message_body = __('Here is your otp code') . ' <span class="verify-code">' . $otp_code . '</span>';
-                Mail::to($request->email)->send(new BasicMail([
-                    'subject' => __('Your OTP Code'),
-                    'message' => $message_body
-                ]));
-            } catch (\Exception $e) {
-                return response()->error([
-                    'message' => __($e->getMessage()),
-                ]);
-            }
+            // $user_email->phone_verify_token = $token;
+            // $user_email->email_verify_token = $token;
+            // $user_email->save();
+            // $message_body = __('Here is your otp code') . ' <span class="verify-code">' . $otp_code . '</span>';
+            // try {
+            //     Mail::to($request->email)->send(new BasicMail([
+            //         'subject' => __('Your OTP Code'),
+            //         'message' => $message_body
+            //     ]));
+            // } catch (\Exception $e) {
+            //     return response()->error([
+            //         'message' => __($e->getMessage()),
+            //     ]);
+            // }
+            $message = getenv('ZENZIVA_TEMPLATE') . $token;
+            zenziva_sms($request->phone, $message);
 
             return response()->success([
-                'email' => $request->email,
-                'otp' => $otp_code,
+                'phone' => $request->phone,
+                'otp' => $token,
             ]);
 
         } else {
