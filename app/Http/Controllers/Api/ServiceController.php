@@ -138,6 +138,70 @@ class ServiceController extends Controller
             'message'=>__('Service Not Available'),
         ]);
     }
+    
+    public function availableCity()
+    {
+        $latest_services_query = Service::query()->select('id','title','image','price','seller_id')
+            ->with('reviews_for_mobile')
+            ->where('status','1')
+            ->where('is_service_on','1')
+            ->when(subscriptionModuleExistsAndEnable('Subscription'),function($q){
+                $q->whereHas('seller_subscription');
+            });
+        
+        $serv = Service::where('status', 1)->get();
+        $cities = [];
+        $ids = [];
+        $merged = [];
+        foreach ($serv as $s) {
+            if($s->serviceCity){
+                $id_city = $s->serviceCity->id;
+                $name = $s->serviceCity->service_city;
+                array_push($ids, $id_city);
+                array_push($cities, $name);
+            }
+        }
+
+        foreach(array_unique($cities) as $key => $cit){
+            $data = [
+                'id' => $ids[$key],
+                'name' => $cities[$key]
+            ];
+            array_push($merged, $data);
+        }
+
+        // dd($merged);
+            
+        if(!empty(request()->get('state_id'))){
+            $latest_services_query->where('service_city_id',request()->get('state_id'));
+        }
+        
+        $latest_services  = $latest_services_query->latest()
+            ->take(10)
+            ->get();
+        $service_image=[];
+        $service_seller_name=[];
+        $reviewer_image=[];
+        foreach($latest_services as $service){
+            $service_image[]= get_attachment_image_by_id($service->image);
+            $service_seller_name[]= optional($service->seller_for_mobile)->name;
+            foreach($service->reviews_for_mobile as $review){
+                $reviewer_image[]=get_attachment_image_by_id(optional($review->buyer_for_mobile)->image);
+            }
+        }
+
+        if($latest_services){
+            return response()->success([
+                'list_service_city'=>$merged,
+                // 'service_image'=>$service_image,
+                // 'service_seller_name'=>$service_seller_name,
+                // 'reviewer_image'=>$reviewer_image,
+            ]);
+        }
+        return response()->error([
+            'message'=>__('Service Not Available'),
+        ]);
+    }
 
     // service details
     public function serviceDetails($id=null){

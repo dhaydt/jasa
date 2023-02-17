@@ -147,6 +147,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::get('/category/sub-category/{category_id}',[CategoryController::class,'subCategory']);
 
     Route::get('/top-services',[ServiceController::class,'topService']);
+    Route::get('/available-city',[ServiceController::class,'availableCity']);
     Route::get('/latest-services',[ServiceController::class,'latestService']);
     Route::get('/service-details/{id}',[ServiceController::class,'serviceDetails']);
     
