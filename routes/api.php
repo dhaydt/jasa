@@ -107,6 +107,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
         
         //payment gateway list
         Route::post('payment-gateway-list',[PaymentGatewayController::class,'gatewayList']);
+        Route::get('brand-service/list/{id}',[UserController::class,'getBrands']);
 
         //buyer chat
         if(moduleExists("LiveChat")) {

@@ -26,6 +26,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Xendit\Xendit;
 use Xgenious\Paymentgateway\Facades\XgPaymentGateway;
 
 
@@ -239,9 +240,13 @@ class ServiceController extends Controller
         foreach($service_details->reviews_for_mobile as $review){
             $reviewer_image[]=get_attachment_image_by_id(optional($review->buyer_for_mobile)->image);
         }
+        $service_brands = [];
+        foreach(json_decode($service_details->brands) as $b){
+            array_push($service_brands, getBrands($b));
+        }
 
         $service_video_url = $service_details->video;
-         preg_match('/src="([^"]+)"/', $service_video_url, $service_video_url_match);
+        preg_match('/src="([^"]+)"/', $service_video_url, $service_video_url_match);
 
         if($service_details){
             return response()->success([
@@ -258,6 +263,7 @@ class ServiceController extends Controller
                 'service_benifits'=>$service_benifits,
                 'service_reviews'=>$service_reviews,
                 'reviewer_image'=>$reviewer_image,
+                'service_brands'=>$service_brands,
                 'video_url' => is_null($service_video_url) ? null : end($service_video_url_match)
             ]);
         }
@@ -690,9 +696,9 @@ class ServiceController extends Controller
                 'email' => 'required|max:191',
                 'phone' => 'required|max:191',
                 'address' => 'nullable|max:191',
-                'choose_service_city' => 'nullable',
-                'choose_service_area' => 'nullable',
-                'choose_service_country' => 'nullable',
+                // 'choose_service_city' => 'nullable',
+                // 'choose_service_area' => 'nullable',
+                // 'choose_service_country' => 'nullable',
                 'date' => 'nullable|max:191',
                 'schedule' => 'nullable|max:191',
                 'include_services' => 'nullable',
@@ -749,6 +755,7 @@ class ServiceController extends Controller
             'order_note' => $request->order_note,
             'payment_gateway' => $request->selected_payment_gateway,
             'payment_status' => $payment_status,
+            'brands' => $request->brands,
         ]);
 
         $last_order_id = DB::getPdo()->lastInsertId();
@@ -801,6 +808,7 @@ class ServiceController extends Controller
             $tax_amount = ($sub_total * $country_tax->tax) / 100;
         }
         $total = $sub_total + $tax_amount;
+        // dd($sub_total);
 
         //calculate coupon amount
         $coupon_code = '';
@@ -870,6 +878,7 @@ class ServiceController extends Controller
         $seller->notify(new OrderNotification($last_order_id,$request->service_id, $request->seller_id, $request->buyer_id,$order_message));
 
         $order_details = Order::find($last_order_id);
+        
 
         //Send order email to buyer for cash on delivery
         try {
@@ -886,6 +895,53 @@ class ServiceController extends Controller
         $random_order_id_2 = Str::random(30);
         $new_order_id = $random_order_id_1.$last_order_id.$random_order_id_2;
         $paytm_details = null;
+
+        $payment_url = '';
+
+        if($request->payment_method == 'xendit'){
+                $user_info = Auth::guard('sanctum')->user();
+                $user_name = $user_info['name'];
+                $user_email = $user_info['email'];
+                $order = $last_order_id;
+                $value = $total;
+                $tran = rand(1000, 9999).'-'.Str::random(5).'-'.time();
+                $order = Order::find($last_order_id);
+                $type = '';
+                $xendit_key = getenv('XENDIT_SECRET');
+                
+                session()->put('order_id', $last_order_id);
+                
+                Xendit::setApiKey($xendit_key);
+                
+                $user = [
+                    'given_names' => $user_name ? $user_name : 'invalid name',
+                    'email' => $user_email,
+                    'mobile_number' => $request->phone,
+                    'address' => 'no data',
+                ];
+
+                // dd($user);
+                $redirect_url = route('frontend.order.payment.xendit.success', [$last_order_id,$tran]);
+
+                $params = [
+                    'external_id' => 'jasakita' . $request->phone . $last_order_id,
+                    'amount' => round($value, 0) + 5,
+                    'payer_email' => $user_email,
+                    'description' => env('APP_NAME') ? env('APP_NAME') : 'JasaKita',
+                    // 'payment_methods' => [$type],
+                    'fixed_va' => true,
+                    'should_send_email' => true,
+                    'customer' => $user,
+                    'success_redirect_url' => $redirect_url,
+                ];
+
+                // dd($params);
+
+                $checkout_session = \Xendit\Invoice::create($params);
+
+                // return redirect()->away($checkout_session['invoice_url']);
+                $payment_url = $checkout_session['invoice_url'];
+        }
 
         if ($request->has('paytm') && !empty($request->has('paytm'))){
             $user_info = Auth::guard('sanctum')->user();
@@ -920,7 +976,8 @@ class ServiceController extends Controller
             'commission_amount'=>float_amount_with_currency_symbol($commission_amount),
             'success_url' => route('frontend.order.payment.success',$new_order_id),
             'cancel_url' => route('frontend.order.payment.cancel.static',$last_order_id),
-            'paytm_details' => $paytm_details
+            'paytm_details' => $paytm_details,
+            // 'payment_url' => $payment_url
         ]);
     }
 

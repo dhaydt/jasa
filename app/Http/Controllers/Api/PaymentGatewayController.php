@@ -32,7 +32,8 @@ class PaymentGatewayController extends Controller
             'cinetpay',
             'paytabs',
             'billplz',
-            'zitopay'
+            'zitopay',
+            'xendit'
         ];
         
         // implemented payment gateways in mobile app:  Paypal, cashmere, flutter wave, instamojo, mercado, paystack, razor pay, stripe, bank transfer, cash on delivery
@@ -40,6 +41,9 @@ class PaymentGatewayController extends Controller
         
         foreach($gateway_list as $glist ){
             switch($glist){
+                case("xendit"):
+                    
+                    break;
                 case("paypal"):
                     
                     if(!empty(get_static_option('paypal_gateway'))){

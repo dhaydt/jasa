@@ -22,6 +22,7 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\OrderCompleteDecline;
+use App\Service;
 use Modules\Wallet\Entities\Wallet;
 use Modules\Wallet\Entities\WalletHistory;
 
@@ -730,6 +731,20 @@ class UserController extends Controller
         $extra_service_list = ExtraService::where('order_id',$id)->get(['id','order_id','title','quantity','price','tax','sub_total','total','status']);
         return response()->success([
             'extra_service_list' => $extra_service_list,
+        ]);
+    }
+    
+    public function getBrands($id)
+    {
+        // $extra_service_list = ExtraService::where('order_id',$id)->get(['id','order_id','title','quantity','price','tax','sub_total','total','status']);
+        $brands = Service::find($id);
+        $brands = json_decode($brands['brands']);
+        $brandsMerge = [];
+        foreach($brands as $b){
+            array_push($brandsMerge, getBrands($b));
+        }
+        return response()->success([
+            'brands' => $brandsMerge,
         ]);
     }
 
