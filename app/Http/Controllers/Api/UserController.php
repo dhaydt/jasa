@@ -358,7 +358,7 @@ class UserController extends Controller
             $token = $user->createToken(Str::slug(get_static_option('site_title', 'qixer')) . 'api_keys')->plainTextToken;
             return response()->success([
                 'users' => $user,
-                'token' => $ma,
+                'token' => $token,
                 'status' => 'ok',
             ]);
         }
