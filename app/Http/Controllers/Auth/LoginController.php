@@ -215,7 +215,7 @@ class LoginController extends Controller
 
                 return redirect()->back()->with(['msg' => __('Password baru berhasil dibuat. Cek whatsapp anda untuk melihat'),'type' => 'success' ]);
             }
-            return redirect()->back()->with(Session::flash('msg', __('Email does not exists') ));
+            return redirect()->back()->with(Session::flash('msg', __('Nomor handphone tidak terdaftar') ));
         }
         return view('frontend.user.forget-password-form');
     }
