@@ -8,7 +8,7 @@
         <div class="signup-wrapper">
             <div class="signup-contents">
                 <h3 class="signup-title"> {{ __('Lupa Password.')}} </h3>
-                <h6 class="text-center">{{ __('Masukan nomor whatsapp anda untuk password baru.') }}</h6>
+                <h6 class="text-center">{{ __('Masukan nomor handphone whatsapp anda untuk password baru.') }}</h6>
                 
                 <x-session-msg/>
                 <x-msg.error/>
