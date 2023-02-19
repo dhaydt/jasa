@@ -759,6 +759,8 @@ class ServiceController extends Controller
             ]);
         }
 
+        // dd(json_decode($request->include_services,true));
+
         Order::create([
             'service_id' => $request->service_id,
             'seller_id' => $request->seller_id,
@@ -797,8 +799,11 @@ class ServiceController extends Controller
         $package_fee = $is_service_online_bool ? $service_details->price : 0;
 
         if (isset($request->include_services)) {
+            // dd(current(json_decode($request->include_services, true)));
             $included_services = !empty($request->include_services) ? json_decode($request->include_services, true) : (object) [];
-            foreach (current($included_services) as $requested_service) {
+            // foreach (current($included_services) as $requested_service) {
+            foreach ($included_services as $requested_service) {
+                // dd($requested_service);
                 $package_fee += $requested_service['quantity'] * $requested_service['price'];
                 OrderInclude::create([
                     'order_id' => $last_order_id,
@@ -955,7 +960,7 @@ class ServiceController extends Controller
 
             $params = [
                 'external_id' => 'jasakita' . $request->phone . $last_order_id,
-                'amount' => round($value, 0) + 5,
+                'amount' => round($value, 0),
                 'payer_email' => $user_email,
                 'description' => env('APP_NAME') ? env('APP_NAME') : 'JasaKita',
                 // 'payment_methods' => [$type],
@@ -965,12 +970,14 @@ class ServiceController extends Controller
                 'success_redirect_url' => $redirect_url,
             ];
 
-            // dd($params);
-
+            
             $checkout_session = \Xendit\Invoice::create($params);
 
             // return redirect()->away($checkout_session['invoice_url']);
             $payment_url = $checkout_session['invoice_url'];
+
+
+            return response()->json(['payment_redirect_url' => $payment_url]);
         }
 
         if ($request->has('paytm') && !empty($request->has('paytm'))) {
