@@ -11,6 +11,7 @@ use App\PageBuilder\Fields\Text;
 use App\PageBuilder\Traits\LanguageFallbackForPageBuilder;
 use App\Category;
 use App\ServiceCity;
+use App\Slider as AppSlider;
 use App\User;
 
 class HeaderStyleThree extends \App\PageBuilder\PageBuilderBase
@@ -126,24 +127,29 @@ class HeaderStyleThree extends \App\PageBuilder\PageBuilderBase
         $service_markup = '';
         $category_markup = '';
         $each_banner = '';
-        $main_banner = [
-            [
-                'url' => '',
-                'photo' => 'banner.png'
-            ],
-            [
-                'url' => '',
-                'photo' => 'banner2.png'
-            ]
-        ];
+        $slider = AppSlider::select('background_image','title','sub_title')->get();
+        $main_banner = [];
+        foreach($slider as $sli){
+            $main_banner[]= get_attachment_image_by_id($sli->background_image);
+        }
+        // $main_banner = [
+        //     [
+        //         'url' => '',
+        //         'photo' => 'banner.png'
+        //     ],
+        //     [
+        //         'url' => '',
+        //         'photo' => 'banner2.png'
+        //     ]
+        // ];
 
         foreach ($main_banner as $key => $banner) {
             $each_banner .= <<<EACHBANNER
             <div class="banner-card p-0">
-                                        <a href="{$banner['url']}">
+                                        <a href="javascript:">
                                             <img class="d-block w-100"
                                                 onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
-                                                src="assets/frontend/img/{$banner['photo']}"
+                                                src="{$banner['img_url']}"
                                                 alt="">
                                         </a>
                                     </div>
