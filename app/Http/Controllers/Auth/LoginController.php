@@ -191,27 +191,29 @@ class LoginController extends Controller
 
         if($request->isMethod('post')){
             $this->validate($request,[
-                'email' => 'required|email'
+                'email' => 'required'
             ],[
-                'email.required' => __('Email is required')
+                'email.required' => __('Nomor Handphone dibutuhkan')
             ]);
 
-            $email = User::select('email')->where('email',$request->email)->count();
+            $email = User::select('phone')->where('phone',$request->email)->count();
             if($email >= 1){
-                $password = Str::random(6);
+                $password = rand(123451,777879);
                 $new_password = Hash::make($password );
-                User::where('email',$request->email)->update(['password'=>$new_password]);
-                try {
-                    $message_body = __('Here is your new password').' <span class="verify-code">'.$password.'</span>';
-                    Mail::to($request->email)->send(new BasicMail([
-                        'subject' => __('Your new password send'),
-                        'message' => $message_body
-                    ]));
-                }catch (\Exception $e){
-                    
-                }
+                User::where('phone',$request->email)->update(['password'=>$new_password]);
 
-                return redirect()->back()->with(['msg' => __('Password generate success.Check email for new password'),'type' => 'success' ]);
+                zenziva_sms($request->email, getenv('ZENZIVA_FORGOT_PASSWORD') . $password);
+                // try {
+                //     $message_body = __('Here is your new password').' <span class="verify-code">'.$password.'</span>';
+                //     Mail::to($request->email)->send(new BasicMail([
+                //         'subject' => __('Your new password send'),
+                //         'message' => $message_body
+                //     ]));
+                // }catch (\Exception $e){
+                    
+                // }
+
+                return redirect()->back()->with(['msg' => __('Password baru berhasil dibuat. Cek whatsapp anda untuk melihat'),'type' => 'success' ]);
             }
             return redirect()->back()->with(Session::flash('msg', __('Email does not exists') ));
         }
