@@ -759,8 +759,6 @@ class ServiceController extends Controller
             ]);
         }
 
-        // dd(json_decode($request->include_services,true));
-
         Order::create([
             'service_id' => $request->service_id,
             'seller_id' => $request->seller_id,
@@ -799,10 +797,10 @@ class ServiceController extends Controller
         $package_fee = $is_service_online_bool ? $service_details->price : 0;
 
         if (isset($request->include_services)) {
-            // dd(current(json_decode($request->include_services, true)));
             $included_services = !empty($request->include_services) ? json_decode($request->include_services, true) : (object) [];
-            // foreach (current($included_services) as $requested_service) {
-            foreach ($included_services as $requested_service) {
+            // dd(json_decode($request->include_services));
+            foreach (current($included_services) as $requested_service) {
+            // foreach ($included_services as $requested_service) {
                 // dd($requested_service);
                 $package_fee += $requested_service['quantity'] * $requested_service['price'];
                 OrderInclude::create([

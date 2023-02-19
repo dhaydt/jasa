@@ -1,0 +1,44 @@
+{
+  "service_id": "36",
+  "seller_id": "1",
+  "buyer_id": "1409",
+  "name": "Muhammad Syabandi",
+  "email": "bandi@gmail.com",
+  "phone": "08558374414",
+  "post_code": "5456",
+  "address": "sdfsd",
+  "choose_service_city": 1,
+  "choose_service_area": 112,
+  "choose_service_country": 1,
+  "date": "February 19",
+  "schedule": "10.00AM-11.00AM",
+  "include_services": {"include_services":[{"order_id":"","title":"serv AC","price":20000,"quantity":1},{"order_id":"","title":"Roof Clean","price":20000,"quantity":1}]},
+  "additional_services": "{\"additional_services\":[]}",
+  "coupon_code": "null",
+  "selected_payment_gateway": "cash_on_delivery",
+  "is_service_online": 0,
+  "paytm": true
+}
+
+
+
+service_id:69
+seller_id:1392
+buyer_id:1387
+name:"Muhammad"
+email:"bandi@gmail.com" 
+phone:08558374414
+post_code:5456
+address:sdfsd
+choose_service_city:1
+choose_service_area:1
+choose_service_country:1
+date:February 19
+schedule:10.00AM-11.00AM
+coupon_code:null
+selected_payment_gateway:cash_on_delivery
+is_service_online:0
+include_services[include_services][price]:20000
+include_services[include_services][title]:serv AC
+include_services[include_services][quantity]:1
+include_services[include_services][order_id]:117
