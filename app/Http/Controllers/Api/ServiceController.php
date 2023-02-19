@@ -97,73 +97,39 @@ class ServiceController extends Controller
         ]);
     }
 
-    public function service_per_category()
+    public function service_per_categories($city)
     {
         $cat = Category::with('services')->where('status', 1)->get();
-        $cat->map(function ($data) {
-            $data['services'] = Service::query()->select('id', 'title', 'image', 'price', 'seller_id')
-                ->with('reviews_for_mobile')
-                ->whereHas('reviews_for_mobile')
-                ->where('status', '1')
-                ->where('is_service_on', '1')
-                ->where('category_id', $data['id'])
-                ->when(subscriptionModuleExistsAndEnable('Subscription'), function ($q) {
-                    $q->whereHas('seller_subscription')->inRandomOrder()->take(12);
-                });
-
-                $top_services_query = $data['services'];
-
-                if (!empty(request()->get('state_id'))) {
-                    $top_services_query->where('service_city_id', request()->get('state_id'));
-                }
-        
-                $top_services_query->orderBy('sold_count', 'Desc');
-        
-                if (!empty(request()->get('paginate'))) {
-                    $top_services = $top_services_query->paginate(request()->get('paginate'))->withQueryString();
-                } else {
-                    $top_services = $top_services_query->take(10)->get();
-                }
-        
-        
-        
-                $service_image = [];
-                $service_seller_name = [];
-                $reviewer_image = [];
-                foreach ($top_services as $service) {
-                    $service_image[] = get_attachment_image_by_id($service->image);
-                    $service_seller_name[] = optional($service->seller_for_mobile)->name;
-                    foreach ($service->reviews_for_mobile as $review) {
-                        $reviewer_image[] = get_attachment_image_by_id(optional($review->buyer_for_mobile)->image);
+        $city = ServiceCity::where('service_city', $city)->first();
+        if($city){
+            $city_id = $city['id'];
+        }
+        $mapped = [];
+        foreach($cat as $c){
+            // dd($c);
+            $d['id'] = $c['id'];
+            $d['name'] = $c['name'];
+            $d['slug'] = $c['slug'];
+            $d['icon'] = $c['icon'];
+            $d['image'] = get_attachment_image_by_id($c->image);
+            $d['status'] = $c['status'];
+            $d['mobile_icon'] = $c['mobile_icon'];
+            $d['services'] = [];
+            if(isset($city_id)){
+                foreach($c['services'] as $s){
+                        if($s->service_city_id == $city_id){
+                            $d['services'] = $s;
+                        }
                     }
                 }
-
-                $data['service_image'] = $service_image;
-                $data['service_seller_name'] = $service_seller_name;
-                $data['reviewer_image'] = $reviewer_image;
-        });
-        // $top_services_query = Service::query()->select('id','title','image','price','seller_id')
-        //     ->with('reviews_for_mobile')
-        //     ->whereHas('reviews_for_mobile')
-        //     ->where('status','1')
-        //     ->where('is_service_on','1')
-        //     ->when(subscriptionModuleExistsAndEnable('Subscription'),function($q){
-        //         $q->whereHas('seller_subscription');
-        //     });
-
-
-       
-
-        if ($cat) {
-            return response()->success([
-                'service_per_category' => $cat,
-                // 'service_image' => $service_image,
-                // 'service_seller_name' => $service_seller_name,
-                // 'reviewer_image' => $reviewer_image,
-            ]);
+            else{
+                $d['services'] = $c['services'];
+            }
+            array_push($mapped, $d);
         }
-        return response()->error([
-            'message' => __('Service Not Available'),
+
+        return response()->json([
+            'service_per_categories' => $mapped,
         ]);
     }
 

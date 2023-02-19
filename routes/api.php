@@ -153,7 +153,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::get('/service-details/{id}',[ServiceController::class,'serviceDetails']);
     
     Route::get('/service-list/all-services',[ServiceController::class,'allServices']);
-    Route::get('service_per_category',[ServiceController::class,'service_per_category']);
+    Route::get('service_per_categories/{city}',[ServiceController::class,'service_per_categories']);
     Route::get('/service-list/search-by-category/{category_id}',[ServiceController::class,'searchByCategory']);
     Route::get('/service-list/category-subcategory-search/{category_id}/{subcategory_id}',[ServiceController::class,'searchBySubCategory']);
     Route::get('/service-list/category-subcategory-rating-search/{category_id?}/{subcategory_id?}/{rating?}',[ServiceController::class,'searchByRating']);
