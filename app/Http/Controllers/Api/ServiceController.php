@@ -975,7 +975,7 @@ class ServiceController extends Controller
             $payment_url = $checkout_session['invoice_url'];
 
 
-            return response()->json(['payment_redirect_url' => $payment_url]);
+            return response()->json(['payment_redirect_url' => $payment_url, 'order_id' => $last_order_id]);
         }
 
         if ($request->has('paytm') && !empty($request->has('paytm'))) {

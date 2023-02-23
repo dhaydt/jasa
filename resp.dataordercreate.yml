@@ -13,7 +13,7 @@
   "date": "February 19",
   "schedule": "10.00AM-11.00AM",
   "include_services": {"include_services":[{"order_id":"","title":"serv AC","price":20000,"quantity":1},{"order_id":"","title":"Roof Clean","price":20000,"quantity":1}]},
-  "additional_services": "{\"additional_services\":[]}",
+  "additional_services": {"additional_services":[]},
   "coupon_code": "null",
   "selected_payment_gateway": "cash_on_delivery",
   "is_service_online": 0,
