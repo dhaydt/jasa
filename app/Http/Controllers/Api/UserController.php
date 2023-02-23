@@ -443,14 +443,14 @@ class UserController extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'phone' => 'required',
             'password' => 'required',
         ]);
 
-        $email = $request->email;
-        $user = User::select('email')->where('email', $email)->first();
+        $phone = $request->phone;
+        $user = User::select('phone')->where('phone', $phone)->first();
         if (!is_null($user)) {
-            User::where('email', $user->email)->update([
+            User::where('phone', $user->phone)->update([
                 'password' => Hash::make($request->password),
             ]);
             return response()->success([
@@ -458,9 +458,38 @@ class UserController extends Controller
             ]);
         } else {
             return response()->error([
-                'message' => __('Email Not Found'),
+                'message' => __('phone Not Found'),
             ]);
         }
+    }
+
+    public function resetNewPassword(Request $request){
+        $request->validate([
+            'phone' => 'required'
+        ],[
+            'phone.required' => __('Nomor Handphone dibutuhkan')
+        ]);
+
+        $phone = User::select('phone')->where('phone',$request->phone)->count();
+        if($phone >= 1){
+            $password = rand(123451,777879);
+            $new_password = Hash::make($password );
+            User::where('phone',$request->phone)->update(['password'=>$new_password]);
+
+            zenziva_sms($request->phone, getenv('ZENZIVA_FORGOT_PASSWORD') . $password);
+            // try {
+            //     $message_body = __('Here is your new password').' <span class="verify-code">'.$password.'</span>';
+            //     Mail::to($request->phone)->send(new BasicMail([
+            //         'subject' => __('Your new password send'),
+            //         'message' => $message_body
+            //     ]));
+            // }catch (\Exception $e){
+                
+            // }
+
+            return response()->json(['msg' => 'Password baru berhasil dibuat. Cek whatsapp anda untuk melihat','type' => 'success' ]);
+        }
+        return response()->json(['msg' => 'Nomor handphone tidak terdaftar', 'type' => 'fail']);
     }
 
     //logout

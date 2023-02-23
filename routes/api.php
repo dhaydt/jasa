@@ -48,6 +48,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::post('social/login',[UserController::class,'socialLogin']);
     Route::post('/send-otp',[UserController::class,'sendOTP']);
     Route::post('/reset-password',[UserController::class,'resetPassword']);
+    Route::post('/reset-new-password', [UserController::class, 'resetNewPassword']);
    
     /*--------------------------
         Buyer Api Routes
