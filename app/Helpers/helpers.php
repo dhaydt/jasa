@@ -29,6 +29,24 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
     return $output;
 }
 
+function getAreaService($service){
+    $seller = User::find($service->seller_id);
+    if($seller){
+        if($seller->service_area){
+            $area = ServiceArea::find($seller->service_area);
+            if($area){
+                return $area->service_area;
+            }else{
+                return 'invalid Area';
+            }
+        }else{
+            return 'Invalid Seller Area';
+        }
+    }else{
+        return 'Invalid Seller';
+    }
+}
+
 function getArea($id){
     $area = ServiceArea::where(['service_city_id' => $id, 'status' => 1])->get();
     return $area;

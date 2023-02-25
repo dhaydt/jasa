@@ -205,15 +205,12 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         $serv = Service::where('status', 1)->get();
         $cities = [];
         $ids = [];
-        $areas = [];
         $merged = [];
         foreach ($serv as $s) {
             if($s->serviceCity){
                 $id_city = $s->serviceCity->id;
                 $name = $s->serviceCity->service_city;
-                $service_area = getArea($id_city);
                 array_push($ids, $id_city);
-                array_push($areas, $service_area);
                 array_push($cities, $name);
             }
         }
@@ -221,20 +218,15 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
         foreach(array_unique($cities) as $key => $cit){
             $data = [
                 'id' => $ids[$key],
-                'name' => $cities[$key],
-                'service_area' => $areas[$key]
+                'name' => $cities[$key]
             ];
             array_push($merged, $data);
         }
 
         $cit = session()->get('city_id');
+        
         foreach ($merged as $city) {
             $cityN = $city['name'];
-            $serArean = [];
-            foreach($city['service_area'] as $sa){
-                array_push($serArean, $sa['service_area']);
-            }
-            $ar = implode(', ',$serArean);
             if($cit == $city['id']){
                 $active = 'active';
             }else{
@@ -244,10 +236,7 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
             // $setCity = route('set_city', $city['id']);
             $setCity = route('set_city', $city['id']);
             $city_markup .= <<<CITY
-            <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">
-            {$ar}
-            </a>
-            <!-- <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a> -->
+            <a href="service-list?cat=&city={$city['id']}&rating=&sortby=" class="badge badge-custom mx-2 mb-3">{$cityN}</a>
             <!-- <a href="{$setCity}" class="badge badge-custom mx-2 mb-3 {$active}">{$cityN}</a> -->
             CITY;
         }
@@ -283,7 +272,9 @@ class PopularServiceTwo extends \App\PageBuilder\PageBuilderBase
                     $servisService_city =  __('Service');
                     $servisService_country =  __('Online');
                 } else {
-                    $servisService_city =  optional($servis->serviceCity)->service_city;
+                    // $servisService_city =  optional($servis->serviceCity)->service_city;
+                    $servisService_city = getAreaService($servis);
+
                     $servisService_country =  optional(optional($servis->serviceCity)->countryy)->country;
                 }
 
