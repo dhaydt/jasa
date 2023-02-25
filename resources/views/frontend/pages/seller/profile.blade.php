@@ -182,7 +182,8 @@
                                                 </div> --}}
                                             @endif
                                             <div class="country_city_location">
-                                                <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ optional($service->serviceCity)->service_city }}</span>
+                                                {{-- <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ optional($service->serviceCity)->service_city }}</span> --}}
+                                                <span class="single_location"> <i class="las la-map-marker-alt"></i> {{ getAreaService($service) }}</span>
                                             </div>
                                         </a>
                                         <div class="services-contents">
