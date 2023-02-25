@@ -251,7 +251,8 @@ foreach ($all_services as $service)
         $service_city =  'Service';
         $service_country =  'Online';
     }else{
-        $service_city =  optional($service->serviceCity)->service_city;
+        // $service_city =  optional($service->serviceCity)->service_city;
+        $service_city =  getAreaService($service);
         $service_country =  optional(optional($service->serviceCity)->countryy)->country;
     }
 
