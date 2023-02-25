@@ -12,6 +12,7 @@ use App\Brand;
 use App\Helpers\FlashMsg;
 use App\Mail\OrderMail;
 use App\Order;
+use App\ServiceArea;
 use App\ServiceCity;
 use App\User;
 use Illuminate\Support\Str;
@@ -26,6 +27,11 @@ function render_twitter_meta_image_by_attachment_id($id, $size = 'full')
         $output = ' <meta property="twitter:description" content="' . $image_details['img_url'] . '">';
     }
     return $output;
+}
+
+function getArea($id){
+    $area = ServiceArea::where(['service_city_id' => $id, 'status' => 1])->get();
+    return $area;
 }
 
 function getCity($id){
