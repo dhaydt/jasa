@@ -97,6 +97,15 @@ class ServiceController extends Controller
         ]);
     }
 
+    // Seller list
+    public function sellerList(){
+        $seller_lists = User::whereNotNull('image')->where(['user_type'=>0,'user_status' => 1])->orderBy('created_at','desc')->take(6)->get();
+
+        return response()->json([
+            'seller_list' => $seller_lists,
+        ]);
+    }
+
     public function service_per_categories($city)
     {
         $cat = Category::with('services')->where('status', 1)->get();
