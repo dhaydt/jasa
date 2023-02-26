@@ -124,7 +124,7 @@ class BrowseCategoryTwo extends \App\PageBuilder\PageBuilderBase
 
         $all_category = Category::with('services')
         ->where('status',1)
-        ->whereHas('services')
+        // ->whereHas('services')
         ->take($items)
         ->OrderBy($order_by,$IDorDate)
         ->get();
