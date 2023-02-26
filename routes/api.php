@@ -163,6 +163,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::get('service-list/service-schedule/{day?}/{seller_id?}',[ServiceController::class,'scheduleByDay']);
     Route::post('service-list/coupon-apply',[ServiceController::class,'couponApply']);
     Route::get('seller/seller-list',[ServiceController::class,'sellerList']);
+    Route::get('seller/seller-detail/{id}',[ServiceController::class,'sellerDetail']);
 
     Route::get('city/service-city',[ServiceController::class,'serviceCity']);
     Route::post('home/home-search', [ServiceController::class,'homeSearch']);

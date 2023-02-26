@@ -164,7 +164,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title-two">
-                            <h3 class="title">{{ __('Services of this Seller') }} </h3>
+                            <h3 class="title">{{ __('Services of this Seller') }}</h3>
                         </div>
                     </div>
                 </div>
