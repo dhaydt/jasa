@@ -136,9 +136,30 @@
         }
         .logo-wrapper .logo img{
                 max-height: 70px;
+        }
+        .row-category{
+                justify-content: center;
             }
+        .category-child{
+                box-shadow: 1px 1px 4px #a337ab;
+                border: 1px solid #a337ab;
+                border-radius: 10px;
+                padding: 10px;
+                margin-right: 12px;
+        }
+
 
         @media(max-width: 500px){
+            .row-category{
+                justify-content: space-evenly;
+            }
+            .category-child{
+                box-shadow: 1px 1px 4px #a337ab;
+                border: 1px solid #a337ab;
+                border-radius: 10px;
+                padding: 5px 8px 5px 10px;
+    margin: 0 5px 10px 0;
+            }
             .logo-wrapper .logo img{
                 height: 38px;
                 max-height: 38px;
