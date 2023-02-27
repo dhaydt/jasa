@@ -149,6 +149,10 @@
                 /* margin-right: 12px;  */
         }
 
+        .category-child .category-bg-thumb-format{
+            height: 90px !important;
+        }
+
 
         @media(max-width: 500px){
             .row-category{
