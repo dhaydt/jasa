@@ -145,7 +145,7 @@
                 border: 1px solid #a337ab;
                 border-radius: 10px;
                 width: 15%;
-                padding: 30px 0px;
+                padding: 45px 0px;
                 /* margin-right: 12px;  */
         }
 
