@@ -101,8 +101,33 @@ class ServiceController extends Controller
     public function sellerList(){
         $seller_lists = User::whereNotNull('image')->where(['user_type'=>0,'user_status' => 1])->orderBy('created_at','desc')->take(6)->get();
 
+        $mapped = [];
+        foreach($seller_lists as $c){
+            $d['id'] = $c['id'];
+            $d['name'] = $c['name'];
+            $d['email'] = $c['email'];
+            $d['username'] = $c['username'];
+            $d['profile_background'] = $c->profile_background;
+            $d['image'] = get_attachment_image_by_id($c->image);
+            $d['service_city'] = $c['service_city'];
+            $d['service_area'] = $c['service_area'];
+            $d['user_type'] = $c['user_type'];
+            $d['about'] = $c['about'];
+            if(isset($city_id)){
+                foreach($c['services'] as $s){
+                        if($s->service_city_id == $city_id){
+                            $d['services'] = $s;
+                        }
+                    }
+                }
+            else{
+                $d['services'] = $c['services'];
+            }
+            array_push($mapped, $d);
+        }
+
         return response()->json([
-            'seller_list' => $seller_lists,
+            'seller_list' => $mapped,
         ]);
     }
 
@@ -120,6 +145,13 @@ class ServiceController extends Controller
         ->inRandomOrder()
         ->get();
 
+        $mapped = [];
+        foreach($services as $s){
+            $s['image'] = get_attachment_image_by_id($s['image']);
+
+            array_push($mapped, $s);
+        }
+
         $service_rating = Review::where('seller_id', $id)->avg('rating');
         $service_reviews = Review::where('seller_id', $id)->get();
 
@@ -128,7 +160,7 @@ class ServiceController extends Controller
             'seller_since' => $seller_since,
             'completed_order' => $completed_order,
             'seller_rating_percentage_value' => $seller_rating_percentage_value,
-            'services' => $services,
+            'services' => $mapped,
             'service_rating' => $service_rating,
             'service_reviews' => $service_reviews,
         ];
