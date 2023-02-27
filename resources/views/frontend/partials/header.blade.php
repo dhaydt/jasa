@@ -98,6 +98,7 @@
     @if(!empty( get_static_option('site_third_party_tracking_code')))
     {!! get_static_option('site_third_party_tracking_code') !!}
     @endif
+    @stack('css_or_js')
     <style>
         .banner-bottom-content.custom-search .banner-search-form .single-input{
             border: 2px solid var(--primary-custom);

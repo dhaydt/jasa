@@ -23,7 +23,25 @@
 @endif
 
 @endsection 
+@push('css_or_js')
+    <style>
+        .category-child {
+            margin-right: 20px;
+        }
+        
+        @media(max-width: 500px){
+            #services_sub_category_load_wrap .category-child {
+                margin-right: 14px;
+                margin-bottom: 14px;
+            }
 
+            #services_sub_category_load_wrap .row  {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    </style>
+@endpush
 @section('content')
     <section class="category-services-area padding-top-70 padding-bottom-100">
         <div class="container">
@@ -35,7 +53,7 @@
               <div id="services_sub_category_load_wrap">
                 <div class="row">
                 @foreach($subcategory_under_category as $sub_cat)
-                    <div class="col-lg-3 col-sm-6 margin-top-30 category-child">
+                    <div class=" margin-top-30 category-child">
                         <div class="single-category style-02 wow fadeInUp" data-wow-delay=".2s">
                             <div class="icon category-bg-thumb-format" {!! render_background_image_markup_by_attachment_id($sub_cat->image) !!}></div>
                             <div class="category-contents">
