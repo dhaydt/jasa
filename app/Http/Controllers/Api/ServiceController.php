@@ -136,6 +136,8 @@ class ServiceController extends Controller
         $seller_since = User::select('created_at')->where('id', $id)->where('user_status', 1)->first();
         $completed_order = Order::where('seller_id', $id)->where('status', 2)->count();
 
+        $seller['image'] = get_attachment_image_by_id($seller['image']);
+
         $seller_rating = Review::where('seller_id', $id)->avg('rating');
         $seller_rating_percentage_value = $seller_rating * 20;
 
