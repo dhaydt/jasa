@@ -194,6 +194,8 @@ class ServiceController extends Controller
                 foreach($c['services'] as $s){
                         if($s->service_city_id == $city_id){
                             $d['services'] = $s;
+                            $d['service_area_name'] = getAreaService($s);
+                            $d['service_city_name'] = getAreaService($s, 'city');
                         }
                     }
                 }
@@ -448,6 +450,8 @@ class ServiceController extends Controller
             foreach ($all_services as $service) {
                 $service_image[] = get_attachment_image_by_id($service->image);
                 $service_country[] = optional(optional($service->serviceCity)->countryy)->country;
+                $service['service_area_name'] = getAreaService($service);
+                $service['service_city_name'] = getAreaService($service, 'city');
             }
             return response()->success([
                 'all_services' => $all_services,
