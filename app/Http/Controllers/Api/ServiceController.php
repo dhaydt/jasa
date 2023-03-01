@@ -249,6 +249,13 @@ class ServiceController extends Controller
         foreach ($latest_services as $service) {
             $service_image[] = get_attachment_image_by_id($service->image);
             $service_seller_name[] = optional($service->seller_for_mobile)->name;
+            $seller = User::select('image')->find($service['seller_id']);
+            $service['seller'] = $seller;
+            $service['service_area_name'] = getAreaService($service);
+            $service['service_city_name'] = getAreaService($service, 'city');
+            if($seller){
+                $service['seller']['image'] = get_attachment_image_by_id($seller['image']);
+            }
             foreach ($service->reviews_for_mobile as $review) {
                 $reviewer_image[] = get_attachment_image_by_id(optional($review->buyer_for_mobile)->image);
             }
