@@ -150,6 +150,8 @@ class ServiceController extends Controller
         $mapped = [];
         foreach($services as $s){
             $s['image'] = get_attachment_image_by_id($s['image']);
+            $s['service_area_name'] = getAreaService($s);
+            $s['service_city_name'] = getAreaService($s, 'city');
 
             array_push($mapped, $s);
         }
@@ -194,14 +196,27 @@ class ServiceController extends Controller
                 foreach($c['services'] as $s){
                         if($s->service_city_id == $city_id){
                             $d['services'] = $s;
-                            $d['service_area_name'] = getAreaService($s);
-                            $d['service_city_name'] = getAreaService($s, 'city');
+                            $d['services']['service_area_name'] = getAreaService($s);
+                            $d['services']['service_city_name'] = getAreaService($s, 'city');
+                            $seller = User::find($s['seller_id']);
+                            $d['services']['seller'] = $seller;
+                            if($seller){
+                                $seller['image'] = get_attachment_image_by_id($seller['image']);
+                            }
                         }
                     }
                 }
             else{
                 $d['services'] = $c['services'];
+                foreach($c['services'] as $s){
+                    $seller = User::find($s['seller_id']);
+                    $d['services']['seller'] = $seller;
+                    if($seller){
+                        $seller['image'] = get_attachment_image_by_id($seller['image']);
+                    }
+                }
             }
+
             array_push($mapped, $d);
         }
 
@@ -484,6 +499,16 @@ class ServiceController extends Controller
         $all_services  =   $all_services_query->OrderBy('id', 'desc')
             ->paginate(10)
             ->withQueryString();
+
+        foreach($all_services as $a){
+            $a['service_area_name'] = getAreaService($a);
+            $a['service_city_name'] = getAreaService($a, 'city');
+            $seller = User::find($a['seller_id']);
+            $a['seller'] = $seller;
+            if($seller){
+                $seller['image'] = get_attachment_image_by_id($seller['image']);
+            }
+        }
 
         if ($all_services->count() >= 1) {
             foreach ($all_services as $service) {
