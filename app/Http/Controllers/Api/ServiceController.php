@@ -228,7 +228,7 @@ class ServiceController extends Controller
     //latest services
     public function latestService()
     {
-        $latest_services_query = Service::query()->select('id', 'title', 'image', 'price', 'seller_id')
+        $latest_services_query = Service::query()->select('id', 'title', 'image', 'price', 'seller_id', 'category_id')
             ->with('reviews_for_mobile')
             ->where('status', '1')
             ->where('is_service_on', '1')
