@@ -785,6 +785,7 @@ class ServiceController extends Controller
     // home search
     public function homeSearch(Request $request)
     {
+        // dd($request->service_city_id);
         $services = Service::query();
         $services->with('seller_for_mobile', 'reviews_for_mobile', 'serviceCity');
         $services->where('status', 1)
@@ -798,14 +799,18 @@ class ServiceController extends Controller
             $services->Where('title', 'LIKE', '%' . $request->search_text . '%')
                 ->orWhere('description', 'LIKE', '%' . $request->search_text . '%');
         } else {
-            $services->where('service_city_id', $request->service_city_id)
-                ->Where('title', 'LIKE', '%' . $request->search_text . '%')
+            $services->where('service_city_id', $request->service_city_id)->where(function($q) use($request){
+                $q->Where('title', 'LIKE', '%' . $request->search_text . '%')
                 ->orWhere('description', 'LIKE', '%' . $request->search_text . '%');
+            })
+                ;
         }
         $services->where('status', 1);
         $services =  $services->orderBy('id', 'desc')->get();
 
-        if ($services) {
+        // dd($services);
+
+        if (count($services) > 0) {
             foreach ($services as $service) {
                 $service_image[] = get_attachment_image_by_id($service->image);
             }
