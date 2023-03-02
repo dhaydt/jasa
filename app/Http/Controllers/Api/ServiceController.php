@@ -200,7 +200,7 @@ class ServiceController extends Controller
                             $d['services']['service_city_name'] = getAreaService($s, 'city');
                             $seller = User::find($s['seller_id']);
                             $d['services']['seller'] = $seller;
-                            $d['services']['image'] = get_attachment_image_by_id($s['image']);
+                            $s['image'] = get_attachment_image_by_id($s['image']);
                             if($seller){
                                 $seller['image'] = get_attachment_image_by_id($seller['image']);
                             }
@@ -212,10 +212,10 @@ class ServiceController extends Controller
                 foreach($c['services'] as $s){
                     $seller = User::find($s['seller_id']);
                     $d['services']['seller'] = $seller;
-                    $d['services']['image'] = get_attachment_image_by_id($s['image']);
                     if($seller){
                         $seller['image'] = get_attachment_image_by_id($seller['image']);
                     }
+                    $s['image'] = get_attachment_image_by_id($s['image']);
                 }
             }
 
