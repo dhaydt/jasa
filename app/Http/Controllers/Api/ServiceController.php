@@ -212,6 +212,7 @@ class ServiceController extends Controller
                 foreach($c['services'] as $s){
                     $seller = User::find($s['seller_id']);
                     $d['services']['seller'] = $seller;
+                    $d['services']['image'] = get_attachment_image_by_id($s['image']);
                     if($seller){
                         $seller['image'] = get_attachment_image_by_id($seller['image']);
                     }
