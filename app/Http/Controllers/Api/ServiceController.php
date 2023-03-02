@@ -141,7 +141,7 @@ class ServiceController extends Controller
         $seller_rating = Review::where('seller_id', $id)->avg('rating');
         $seller_rating_percentage_value = $seller_rating * 20;
 
-        $services = Service::with('serviceCity')->select('id','seller_id','title','description','price','slug','image','featured','service_city_id')
+        $services = Service::with('serviceCity')->select('id','seller_id','category_id','title','description','price','slug','image','featured','service_city_id')
         ->where(['seller_id'=>$id,'status'=>1,'is_service_on'=>1])
         ->take(4)
         ->inRandomOrder()
@@ -200,6 +200,7 @@ class ServiceController extends Controller
                             $d['services']['service_city_name'] = getAreaService($s, 'city');
                             $seller = User::find($s['seller_id']);
                             $d['services']['seller'] = $seller;
+                            $d['services']['image'] = get_attachment_image_by_id($s['image']);
                             if($seller){
                                 $seller['image'] = get_attachment_image_by_id($seller['image']);
                             }
@@ -820,6 +821,11 @@ class ServiceController extends Controller
         if (count($services) > 0) {
             foreach ($services as $service) {
                 $service_image[] = get_attachment_image_by_id($service->image);
+                $seller = User::select('image')->find($service->seller_id);
+                $service['seller'] = $seller;
+                if($seller){
+                    $service['seller']['image'] = get_attachment_image_by_id($seller->image);
+                }
             }
             return response()->success([
                 'services' => $services,
