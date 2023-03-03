@@ -15,6 +15,7 @@ use App\OrderInclude;
 use App\Review;
 use App\Schedule;
 use App\Service;
+use App\ServiceArea;
 use App\Servicebenifit;
 use App\ServiceCity;
 use App\ServiceCoupon;
@@ -109,8 +110,8 @@ class ServiceController extends Controller
             $d['username'] = $c['username'];
             $d['profile_background'] = $c->profile_background;
             $d['image'] = get_attachment_image_by_id($c->image);
-            $d['service_city'] = $c['service_city'];
-            $d['service_area'] = $c['service_area'];
+            $d['service_city'] = ServiceCity::find($c['service_city']) ? ServiceCity::find($c['service_city'])['service_city'] : '';
+            $d['service_area'] = ServiceArea::find($c['service_area']) ? ServiceArea::find($c['service_area'])['service_area'] : '';
             $d['user_type'] = $c['user_type'];
             $d['about'] = $c['about'];
             if(isset($city_id)){
