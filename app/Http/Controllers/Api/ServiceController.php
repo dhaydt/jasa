@@ -866,11 +866,12 @@ class ServiceController extends Controller
 
         $commission = AdminCommission::first();
 
-        if ($request->selected_payment_gateway == 'cash_on_delivery' || $request->selected_payment_gateway == 'manual_payment') {
-            $payment_status = 'pending';
-        } else {
-            $payment_status = 'pending';
-        }
+        $payment_status = 'pending';
+        // if ($request->selected_payment_gateway == 'cash_on_delivery' || $request->selected_payment_gateway == 'manual_payment') {
+        //     $payment_status = 'pending';
+        // } else {
+        //     $payment_status = 'pending';
+        // }
 
 
         if (empty($request->seller_id)) {
@@ -879,11 +880,11 @@ class ServiceController extends Controller
             ]);
         }
 
-        if ($request->selected_payment_gateway === 'manual_payment') {
-            $this->validate($request, [
-                'manual_payment_image' => 'required|mimes:jpg,jpeg,png,pdf'
-            ]);
-        }
+        // if ($request->selected_payment_gateway === 'manual_payment') {
+        //     $this->validate($request, [
+        //         'manual_payment_image' => 'required|mimes:jpg,jpeg,png,pdf'
+        //     ]);
+        // }
 
         Order::create([
             'service_id' => $request->service_id,
@@ -922,6 +923,8 @@ class ServiceController extends Controller
 
         $package_fee = $is_service_online_bool ? $service_details->price : 0;
 
+        // dd($package_fee);
+
         if (isset($request->include_services)) {
             $included_services = !empty($request->include_services) ? json_decode($request->include_services, true) : (object) [];
             // dd(json_decode($request->include_services));
@@ -956,7 +959,7 @@ class ServiceController extends Controller
                 ]);
             }
         }
-
+        
         $tax_amount = 0;
         $tax = Service::select('tax')->where('id', $request->service_id)->first();
         $service_details_for_book = Service::select('id', 'service_city_id')->where('id', $request->service_id)->first();
@@ -1019,7 +1022,10 @@ class ServiceController extends Controller
             }
         }
 
-        Order::where('id', $last_order_id)->update([
+        // dd($sub_total);
+
+
+        $order = Order::where('id', $last_order_id)->update([
             'package_fee' => $package_fee,
             'extra_service' => $extra_service,
             'sub_total' => $sub_total,
@@ -1031,6 +1037,8 @@ class ServiceController extends Controller
             'commission_amount' => $commission_amount,
         ]);
 
+        // dd($order);
+
         //Send order notification to seller
         $seller = User::where('id', $request->seller_id)->first();
         $order_message = __('You have a new order');
@@ -1040,14 +1048,14 @@ class ServiceController extends Controller
 
 
         //Send order email to buyer for cash on delivery
-        try {
-            $subject = __('You have successfully created order');
-            Mail::to($order_details->email)->send(new OrderMail($subject, $order_details));
-            Mail::to($seller->email)->send(new OrderMail($subject, $order_details));
-            Mail::to(get_static_option('site_global_email'))->send(new OrderMail($subject, $order_details));
-        } catch (\Exception $e) {
-            //return response()->error($e->getMessage());
-        }
+        // try {
+        //     $subject = __('You have successfully created order');
+        //     Mail::to($order_details->email)->send(new OrderMail($subject, $order_details));
+        //     Mail::to($seller->email)->send(new OrderMail($subject, $order_details));
+        //     Mail::to(get_static_option('site_global_email'))->send(new OrderMail($subject, $order_details));
+        // } catch (\Exception $e) {
+        //     return response()->error($e->getMessage());
+        // }
         //todo send success/cancel url
         //todo is it has paytm parameter then return paytm object instance
         $random_order_id_1 = Str::random(30);
