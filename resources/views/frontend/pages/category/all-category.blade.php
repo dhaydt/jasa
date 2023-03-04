@@ -18,9 +18,9 @@
     }
     @media(max-width: 500px){
         .category-child{
-        width: 130px;
-        margin-right: 5px;
-    }
+            width: 130px;
+            margin-right: 5px;
+        }
     }
 </style>
 @section('content')
