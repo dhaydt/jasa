@@ -83,7 +83,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
         Route::post('update-profile',[UserController::class,'updateProfile']);
         Route::post('/add-service-rating/{id}',[ServiceController::class,'serviceRating']);
         Route::post('/my-orders',[UserController::class,'myOrders']);
-         
+        
         Route::post('/my-orders/{id}',[UserController::class,'singleOrder']);
         Route::post('/order/request/status/complete/approve',[UserController::class,'orderCompleteRequestApprove']);
         Route::post('/order/request/status/complete/decline',[UserController::class,'orderCompleteRequestDecline']);

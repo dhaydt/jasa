@@ -23,8 +23,10 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\OrderCompleteDecline;
 use App\Service;
+use Auth;
 use Modules\Wallet\Entities\Wallet;
 use Modules\Wallet\Entities\WalletHistory;
+use Xendit\Xendit;
 
 class UserController extends Controller
 {
@@ -730,6 +732,7 @@ class UserController extends Controller
         }
 
         $orderInfo = Order::where('id',$request->id)->first();
+        $val = $orderInfo->total;
         $orderInfo->payment_status = !empty($orderInfo->payment_status) ? $orderInfo->payment_status : 'pending';
         $orderInfo->total = amount_with_currency_symbol($orderInfo->total);
         $orderInfo->tax = amount_with_currency_symbol($orderInfo->tax);
@@ -746,6 +749,61 @@ class UserController extends Controller
         if(is_null($orderInfo)){
             return response()->success([
                 'message'=>__('Order Not Found')
+            ]);
+        }
+
+        // dd($orderInfo);
+
+        if($orderInfo->payment_status == 'pending'){
+            $id = $request->id;
+            $user_info = Auth::guard('sanctum')->user();
+            $user_name = $user_info['name'];
+            $user_email = $user_info['email'];
+            $order = $id;
+            $value = $val;
+
+            // dd($value);
+            $tran = rand(1000, 9999) . '-' . Str::random(5) . '-' . time();
+            $order = $orderInfo;
+            $type = '';
+            $xendit_key = getenv('XENDIT_SECRET');
+
+            session()->put('order_id', $id);
+
+            Xendit::setApiKey($xendit_key);
+
+            $user = [
+                'given_names' => $orderInfo['name'] ?? 'invalid name',
+                'email' => $orderInfo['email'],
+                'mobile_number' => $orderInfo['phone'],
+                'address' => 'no data',
+            ];
+
+            // dd($orderInfo['email']);
+            $redirect_url = route('frontend.order.payment.xendit.success', [$id, $tran]);
+
+            $params = [
+                'external_id' => 'jasakita' . $orderInfo['phone'] . $id,
+                'amount' => $value,
+                'payer_email' => $orderInfo['email'],
+                'description' => env('APP_NAME') ? env('APP_NAME') : 'JasaKita',
+                // 'payment_methods' => [$type],
+                'fixed_va' => true,
+                'should_send_email' => true,
+                'customer' => $user,
+                'success_redirect_url' => $redirect_url,
+            ];
+// dd($params);
+            
+            $checkout_session = \Xendit\Invoice::create($params);
+
+            // return redirect()->away($checkout_session['invoice_url']);
+            $payment_url = $checkout_session['invoice_url'];
+
+
+            return response()->success([
+                'payment_redirect_url' => $payment_url,
+                'orderInfo'=> $orderInfo
             ]);
         }
 
