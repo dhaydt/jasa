@@ -598,7 +598,7 @@ class UserController extends Controller
         }
     }
 
-    public function myOrders($id=null)
+    public function myOrders(Request $request, $id=null)
     {
        $uesr_info = auth('sanctum')->user()->id;
         $my_orders = Order::query();
@@ -613,7 +613,7 @@ class UserController extends Controller
             $my_orders->where("status",$request->status);
         }
         
-        $my_orders_all = $my_orders->where('buyer_id',$uesr_info)->get()->transform(function($item){
+        $my_orders_all = $my_orders->where('buyer_id',$uesr_info)->orderBy('created_at', 'desc')->get()->transform(function($item){
             $item->payment_status =  !empty($item->payment_status) ? $item->payment_status : 'pending';
             return $item;
         });
