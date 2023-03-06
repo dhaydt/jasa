@@ -350,6 +350,8 @@ class ServiceController extends Controller
         if (is_null($service_details)) {
             return response(["msg" => __("service not found")], 500);
         }
+        $service_details['service_area_name'] = getAreaService($service_details);
+        $service_details['service_city_name'] = getAreaService($service_details, 'city');
         $service_image = get_attachment_image_by_id($service_details->image);
         $service_seller_name = optional($service_details->seller_for_mobile)->name;
         $service_seller_image_Id = optional($service_details->seller_for_mobile)->image;
@@ -388,7 +390,7 @@ class ServiceController extends Controller
         preg_match('/src="([^"]+)"/', $service_video_url, $service_video_url_match);
 
         if ($service_details) {
-            return response()->success([
+            return response()->success([ 
                 'service_details' => $service_details,
                 'service_image' => $service_image,
                 'service_seller_name' => $service_seller_name,
