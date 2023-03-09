@@ -179,14 +179,16 @@ class ServiceController extends Controller
 
     public function service_per_categories($city)
     {
-        $cat = Category::with('services')->where('status', 1)->get();
+        $cat = Category::with('services')->where('status', 1)->whereHas('services', function($q){
+            $q->where('status', 1)
+            ->where('is_service_on', 1);
+        })->get();
         $city = ServiceCity::where('service_city', $city)->first();
         if($city){
-            $city_id = $city['id'];
+            $city_id = $city['id']; 
         }
         $mapped = [];
         foreach($cat as $c){
-            // dd($c);
             $d['id'] = $c['id'];
             $d['name'] = $c['name'];
             $d['slug'] = $c['slug'];
@@ -198,15 +200,16 @@ class ServiceController extends Controller
             if(isset($city_id)){
                 foreach($c['services'] as $s){
                         if($s->service_city_id == $city_id){
-                            $d['services'] = $s;
-                            $d['services']['service_area_name'] = getAreaService($s);
-                            $d['services']['service_city_name'] = getAreaService($s, 'city');
+                            $e = $s;
+                            $e['service_area_name'] = getAreaService($s);
+                            $e['service_city_name'] = getAreaService($s, 'city');
                             $seller = User::find($s['seller_id']);
-                            $d['services']['seller'] = $seller;
+                            $e['seller'] = $seller;
                             $s['image'] = get_attachment_image_by_id($s['image']);
                             if($seller){
                                 $seller['image'] = get_attachment_image_by_id($seller['image']);
                             }
+                            array_push($d['services'], $e);
                         }
                     }
                 }
@@ -214,7 +217,7 @@ class ServiceController extends Controller
                 $d['services'] = $c['services'];
                 foreach($c['services'] as $s){
                     $seller = User::find($s['seller_id']);
-                    $d['services']['seller'] = $seller;
+                    $e['seller'] = $seller;
                     if($seller){
                         $seller['image'] = get_attachment_image_by_id($seller['image']);
                     }
