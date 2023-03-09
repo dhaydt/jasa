@@ -832,6 +832,8 @@ class ServiceController extends Controller
                 $service_image[] = get_attachment_image_by_id($service->image);
                 $seller = User::select('image')->find($service->seller_id);
                 $service['seller'] = $seller;
+                $service['service_area_name'] = getAreaService($service);
+                $service['service_city_name'] = getAreaService($service, 'city');
                 if($seller){
                     $service['seller']['image'] = get_attachment_image_by_id($seller->image);
                 }

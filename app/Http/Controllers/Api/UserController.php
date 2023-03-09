@@ -600,7 +600,7 @@ class UserController extends Controller
 
     public function myOrders(Request $request, $id=null)
     {
-       $uesr_info = auth('sanctum')->user()->id;
+        $uesr_info = auth('sanctum')->user()->id;
         $my_orders = Order::query();
         
 
@@ -617,6 +617,9 @@ class UserController extends Controller
             $item->payment_status =  !empty($item->payment_status) ? $item->payment_status : 'pending';
             return $item;
         });
+        foreach($my_orders_all as $my){
+            $my['service_name'] = $my['service']['title'];
+        }
         return response()->success([
             'my_orders' => $my_orders_all,
             'user_id' => $uesr_info,
