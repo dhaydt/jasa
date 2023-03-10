@@ -206,6 +206,7 @@ class ServiceController extends Controller
                             $seller = User::find($s['seller_id']);
                             $e['seller'] = $seller;
                             $s['image'] = get_attachment_image_by_id($s['image']);
+                            $e['reviews_for_mobile'];
                             if($seller){
                                 $seller['image'] = get_attachment_image_by_id($seller['image']);
                             }
