@@ -452,7 +452,7 @@ class ServiceController extends Controller
                 'message' => __('Order not found'),
             ]);
         }
-        if($order['status'] != 2){
+        if($order['status'] != "2" || $order['status'] != 2){
             return response()->error([
                 'message' => __('Order must be completed for post a review!'),
             ]);
