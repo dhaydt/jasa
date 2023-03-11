@@ -446,8 +446,12 @@ class ServiceController extends Controller
             'message' => 'required',
         ]);
 
-        $service_details = Service::select('id', 'seller_id')->where('id', $id)->first();
-        $order_count = Order::where(['service_id' => $service_details->id, 'buyer_id' => auth('sanctum')->user()->id, 'status' => 'complete'])->count();
+        $order = Order::find($id);
+        if(!$order){
+            return response()->json(['msg' => 'Order not found']);
+        }
+        $service_details = Service::select('id', 'seller_id')->where('id', $order['service_id'])->first();
+        $order_count = Order::where(['id' => $id, 'buyer_id' => auth('sanctum')->user()->id, 'status' => 'complete'])->count();
 
 
 
