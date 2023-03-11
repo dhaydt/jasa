@@ -112,7 +112,12 @@ class ServiceController extends Controller
             if($c->image){
                 $d['image'] = get_attachment_image_by_id($c->image);
             }else{
-                $d['image'] = asset('assets/frontend/img/ip.png');
+                $d['image'] = [
+                    "image_id" => '01',
+                    "path" => "ip.png",
+                    "img_url" => asset('assets/frontend/img/ip.png'),
+                    "img_alt" => 'default image'
+                ];
             }
             $d['service_city'] = $c['service_city'];
             $d['service_area'] = $c['service_area'];
