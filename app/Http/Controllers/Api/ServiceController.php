@@ -100,7 +100,7 @@ class ServiceController extends Controller
 
     // Seller list
     public function sellerList(){
-        $seller_lists = User::whereNotNull('image')->where(['user_type'=>0,'user_status' => 1])->orderBy('created_at','desc')->take(6)->get();
+        $seller_lists = User::where(['user_type'=>0,'user_status' => 1])->orderBy('created_at','desc')->take(6)->get();
 
         $mapped = [];
         foreach($seller_lists as $c){
