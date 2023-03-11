@@ -125,6 +125,7 @@ class ServiceController extends Controller
             $d['service_area_name'] = ServiceArea::find($c['service_area']) ? ServiceArea::find($c['service_area'])['service_area'] : '';
             $d['user_type'] = $c['user_type'];
             $d['about'] = $c['about'];
+
             if(isset($city_id)){
                 foreach($c['services'] as $s){
                         if($s->service_city_id == $city_id){
@@ -148,7 +149,16 @@ class ServiceController extends Controller
         $seller_since = User::select('created_at')->where('id', $id)->where('user_status', 1)->first();
         $completed_order = Order::where('seller_id', $id)->where('status', 2)->count();
 
-        $seller['image'] = get_attachment_image_by_id($seller['image']);
+        if($seller['image']){
+            $seller['image'] = get_attachment_image_by_id($seller['image']);
+        }else{
+            $seller['image'] = [
+                "image_id" => '01',
+                "path" => "ip.png",
+                "img_url" => asset('assets/frontend/img/ip.png'),
+                "img_alt" => 'default image'
+            ];
+        }
 
         $seller_rating = Review::where('seller_id', $id)->avg('rating');
         $seller_rating_percentage_value = $seller_rating * 20;
