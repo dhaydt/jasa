@@ -1904,7 +1904,7 @@ class ServiceListController extends Controller
 
     public function allSellers()
     {
-        $seller_lists = User::with(['review', 'sellerVerify', 'order'])->whereNotNull('image')->where('user_type', 0)->orderBy('id', 'desc')->paginate(12);
+        $seller_lists = User::with(['review', 'sellerVerify', 'order'])->where('user_status', 1)->where('user_type', 0)->orderBy('id', 'desc')->paginate(12);
 
         return view('frontend.pages.seller.all-seller', compact('seller_lists'));
     }

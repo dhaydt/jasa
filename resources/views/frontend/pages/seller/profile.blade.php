@@ -80,7 +80,11 @@
                         <div class="profile-author-contents">
                             <div class="profile-flex-content">
                                 <div class="thumb">
+                                @if ($seller->image)
                                     {!! render_image_markup_by_attachment_id($seller->image) !!}
+                                @else
+                                    <img src="{{ asset('assets/frontend/img/ip.png') }}" alt="">
+                                @endif
                                 </div>
                                 <div class="profile-contents">
                                     <h4 class="title">

@@ -102,16 +102,25 @@ class SellerProfile extends \App\PageBuilder\PageBuilderBase
         $section_bg = $settings['section_bg'];
         $profile_markup = '';
         $section_title = $settings['title'];
-        $seller_lists = User::whereNotNull('image')->where(['user_type'=>0,'user_status' => 1])->orderBy($order_by,$IDorDate)->take($items)->get();
+        $seller_lists = User::where(['user_type'=>0,'user_status' => 1])->orderBy($order_by,$IDorDate)->take($items)->get();
 
         foreach ($seller_lists as $seller){
             $seller_name =  $seller->name;
             $seller_username =  $seller->username;
-            $img_url = get_attachment_image_by_id($seller->image);
+            if($seller->image){
+                $img_url = get_attachment_image_by_id($seller->image);
+            }else{
+                $img_url = [ 
+                    "image_id" => '01',
+                    "path" => "ip.png",
+                    "img_url" => null,
+                    "img_alt" => 'default image'
+                ];
+            }
             if($img_url['img_url']){
                 $seller_image =  render_background_image_markup_by_attachment_id($seller->image);
             }else{
-                $seller_image = 'style="background-image:url('.asset('assets/uploads/no-image.png').')"';
+                $seller_image = 'style="background-image:url('.asset('assets/frontend/img/ip.png').')"';
             }
 
             $seller_since = User::select('created_at')->where('id', $seller->id)->where('user_status', 1)->first();
