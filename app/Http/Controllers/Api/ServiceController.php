@@ -109,7 +109,11 @@ class ServiceController extends Controller
             $d['email'] = $c['email'];
             $d['username'] = $c['username'];
             $d['profile_background'] = $c->profile_background;
-            $d['image'] = get_attachment_image_by_id($c->image);
+            if($c->image){
+                $d['image'] = get_attachment_image_by_id($c->image);
+            }else{
+                $d['image'] = asset('assets/frontend/img/ip.png');
+            }
             $d['service_city'] = $c['service_city'];
             $d['service_area'] = $c['service_area'];
             $d['service_city_name'] = ServiceCity::find($c['service_city']) ? ServiceCity::find($c['service_city'])['service_city'] : '';
