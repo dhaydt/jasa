@@ -111,14 +111,14 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
         Route::get('brand-service/list/{id}',[UserController::class,'getBrands']);
 
         //buyer chat
-        if(moduleExists("LiveChat")) {
+        // if(moduleExists("LiveChat")) {
             Route::group(['prefix' => 'chat'], function () {
                 Route::get('/seller-lists', [BuyerChatController::class, 'liveChat'])->name('buyer.live.chat');
                 Route::get('/all-messages', [BuyerChatController::class, 'allMessages']);
                 Route::post('/send', [BuyerChatController::class, 'postSendMessage']);
                 Route::get('pusher/credentials', [BuyerChatController::class, 'getPusherCredentials']);
             });
-        }
+        // }
 
 
         //buyer jobs
